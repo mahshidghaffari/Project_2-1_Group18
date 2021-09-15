@@ -4,6 +4,9 @@
 package Project_2._Group18;
 
 import org.junit.jupiter.api.Test;
+
+import controller.App;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
