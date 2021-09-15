@@ -116,4 +116,10 @@ public class ChessBoard{
             System.out.println(" ");
         }
     }
+
+    public Square[][] makeBoardCopy(){
+        Square [][] board_copy = new Square[8][8];
+        board_copy = board;
+        return board_copy; 
+    }
 }

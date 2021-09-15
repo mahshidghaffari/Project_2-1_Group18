@@ -1,12 +1,15 @@
 package controller;
 import java.util.ArrayList;
 
+import jdk.nashorn.api.tree.LabeledStatementTree;
+
 public abstract class Piece {
     private boolean isAlive = true;
     private boolean isWhite  = true;
     private Square currentPos;
     private double value;
     private boolean checkingKing=false;
+    private Square[] lastMove= new Square[2];
     String pieceName;
 
     public Piece(){}
@@ -30,22 +33,18 @@ public abstract class Piece {
     public Square getCurrentPosition(){
         return currentPos;
     }
-
     public void setCurrentPosition(Square s){
         currentPos = s;
     }
-
     public double getValue(){
         return value;
     }
     public void setValue(double value){
         this.value = value;
     }
-
     public boolean getCheckingKing(){
         return checkingKing;
     }
-
     public void checkingKing(ArrayList<Square> legalMoves){
             for(Square sq : legalMoves){
                 if(sq.isTakenSquare() && sq.getPieceOnSq().pieceName.equals("King")){
@@ -57,7 +56,7 @@ public abstract class Piece {
             }
         }
       //checks whether the two pieces have the same color 
-      public boolean sameTeam(Piece otherP){
+    public boolean sameTeam(Piece otherP){
         if(this.isWhite() == otherP.isWhite()){
             return true;
         }
@@ -70,6 +69,8 @@ public abstract class Piece {
     }
 
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
+        lastMove[0]= currentPos;
+        lastMove[1]= target;
         currentPos.removePiece(this);
         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
             Piece captured = target.getPieceOnSq();
@@ -84,6 +85,8 @@ public abstract class Piece {
         target.placePiece(this);
         checkingKing(legalMoves);
     }
+
+    public Square[] getLastMove() {return lastMove;}
 
     abstract ArrayList<Square> getLegalMoves(ChessBoard cb);
     //abstract boolean isCheckingKing(Square location, Square OpposingKing); 
