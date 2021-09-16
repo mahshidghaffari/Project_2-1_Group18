@@ -5,11 +5,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.Properties;
 import java.util.Random;
 
 public class DicePanel implements ActionListener {
 
-    private ImageIcon image = new ImageIcon(getClass().getResource("/resources/GreenButton.png"));
+    private BufferedImage image = ImageLoader.loadImage("app/src/main/java/view/resources/GreenButton.png");
     private JButton diceButton = new JButton();
     private JLabel resultLabel = new JLabel();
     private JPanel dicePanel = new JPanel();
@@ -22,7 +24,7 @@ public class DicePanel implements ActionListener {
         dicePanel.setLayout(new GridLayout(1, 2));
         dicePanel.setBackground(Color.LIGHT_GRAY);
 
-        diceButton.setIcon(image);
+        diceButton.setIcon(new ImageIcon(image));
         diceButton.setBorderPainted(false);
         diceButton.addActionListener(this);
 
@@ -47,27 +49,27 @@ public class DicePanel implements ActionListener {
             switch (diceNumber){
 
                 case 0:
-                    resultLabel.setIcon(new ImageIcon(getClass().getResource("/resources/wbishop.png")));
+                    resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png")));
                     break;
 
                 case 1:
-                    resultLabel.setIcon(new ImageIcon(getClass().getResource("/resources/wking.png")));
+                    resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wking.png")));
                     break;
 
                 case 2:
-                    resultLabel.setIcon(new ImageIcon(getClass().getResource("/resources/wknight.png")));
+                    resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png")));
                     break;
 
                 case 3:
-                    resultLabel.setIcon(new ImageIcon(getClass().getResource("/resources/wpawn.png")));
+                    resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wpawn.png")));
                     break;
 
                 case 4:
-                    resultLabel.setIcon(new ImageIcon(getClass().getResource("/resources/wqueen.png")));
+                    resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png")));
                     break;
 
                 case 5:
-                    resultLabel.setIcon(new ImageIcon(getClass().getResource("/resources/wrook.png")));
+                    resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png")));
                     break;
             }
         }

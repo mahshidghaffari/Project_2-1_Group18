@@ -50,18 +50,19 @@ public class MainPanel implements ActionListener {
      * White at the bottom and Black on top
      */
     public void initialPositions() {
-        ImageIcon bBishop = new ImageIcon(getClass().getResource("/resources/bbishop.png"));
-        ImageIcon bKing = new ImageIcon(getClass().getResource("/resources/bking.png"));
-        ImageIcon bKnight = new ImageIcon(getClass().getResource("/resources/bknight.png"));
-        ImageIcon bPawn = new ImageIcon(getClass().getResource("/resources/bpawn.png"));
-        ImageIcon bRook = new ImageIcon(getClass().getResource("/resources/brook.png"));
-        ImageIcon bQueen = new ImageIcon(getClass().getResource("/resources/bqueen.png"));
-        ImageIcon wBishop = new ImageIcon(getClass().getResource("/resources/wbishop.png"));
-        ImageIcon wKing = new ImageIcon(getClass().getResource("/resources/wking.png"));
-        ImageIcon wKnight = new ImageIcon(getClass().getResource("/resources/wknight.png"));
-        ImageIcon wPawn = new ImageIcon(getClass().getResource("/resources/wpawn.png"));
-        ImageIcon wQueen = new ImageIcon(getClass().getResource("/resources/wqueen.png"));
-        ImageIcon wRook = new ImageIcon(getClass().getResource("/resources/wrook.png"));
+
+        ImageIcon bBishop = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bbishop.png"));
+        ImageIcon bKing = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bking.png"));
+        ImageIcon bKnight = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bknight.png"));
+        ImageIcon bPawn = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bpawn.png"));
+        ImageIcon bRook = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/brook.png"));
+        ImageIcon bQueen = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bqueen.png"));
+        ImageIcon wBishop = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png"));
+        ImageIcon wKing = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wking.png"));
+        ImageIcon wKnight = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png"));
+        ImageIcon wPawn = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wpawn.png"));
+        ImageIcon wQueen = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png"));
+        ImageIcon wRook = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png"));
 
         // Initialize Pawns
         for (int i = 0; i < squares.length; i++) {
@@ -101,6 +102,7 @@ public class MainPanel implements ActionListener {
                 }
             }
         }
+
     }
 
     public JPanel getMainPanel() { return mainPanel; }
