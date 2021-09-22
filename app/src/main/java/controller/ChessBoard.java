@@ -61,6 +61,15 @@ public class ChessBoard{
         board[7][4].placePiece(new King(true));  //White King
         board[0][4].placePiece(new King(false)); //Black King
         board[0][3].placePiece(new Queen(false)); // Black Queen
+        
+        board[6][0].placePiece(new Pawn(true)); 
+        board[6][1].placePiece(new Pawn(true)); 
+        board[6][2].placePiece(new Pawn(true)); 
+        board[6][3].placePiece(new Pawn(true)); 
+        board[6][4].placePiece(new Pawn(true)); 
+        board[6][5].placePiece(new Pawn(true)); 
+        board[6][6].placePiece(new Pawn(true)); 
+        board[6][7].placePiece(new Pawn(true)); 
 
         //Adding white pieces then black pieces to livePieces ArrayList
 
