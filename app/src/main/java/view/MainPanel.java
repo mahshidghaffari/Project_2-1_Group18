@@ -90,7 +90,7 @@ public class MainPanel implements ActionListener  {
                     });
             
 
-                cb.getBoard()[i][j].setButtonOnSqaure(button);
+                cb.getBoard()[i][j].setButtonOnSquare(button);
                 mainPanel.add(button, i, j);
             }
         }

@@ -12,6 +12,7 @@ public abstract class Piece {
     private boolean isWhite  = true;
     private Square currentPos;
     private double value;
+    private boolean promoted;
     private boolean checkingKing=false;
     public Square[] lastMove= new Square[2];
     String pieceName;
@@ -82,8 +83,8 @@ public abstract class Piece {
     }
 
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
-        lastMove[0]= currentPos;
-        lastMove[1]= target;
+        Square[] moveDescription = {currentPos, target};
+        cb.setLastPlyPlayed(moveDescription);
 
         currentPos.removePiece(this);
         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
@@ -102,6 +103,14 @@ public abstract class Piece {
     }
 
     public Square[] getLastMove() {return lastMove;}
+
+    public boolean getPromoted(){
+        return this.promoted;
+    }
+    public void setPromoted(boolean isPromoted){
+        this.promoted = isPromoted;
+    }
+
 
     public abstract ArrayList<Square> getLegalMoves(ChessBoard cb);
     //abstract boolean isCheckingKing(Square location, Square OpposingKing); 

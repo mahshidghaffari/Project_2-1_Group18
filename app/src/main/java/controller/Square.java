@@ -8,7 +8,7 @@ public class Square{
 
     private int x; //columns
     private int y; //rows
-    private Piece piece=null;
+    private Piece piece = null;
     private boolean isOccupied;
     SquareButton button = null; 
 
@@ -32,12 +32,9 @@ public class Square{
     }
 
     public void removePiece(Piece toRemove){
-        if(toRemove != null && button != null){
-            piece = null;
-            isOccupied = false;
-            button.setPiece(new ImageIcon());
-        }
-       
+        piece = null;
+        isOccupied = false;
+        if(button != null)      button.setPiece(new ImageIcon());
     }
 
     public int getXPos(){
@@ -61,7 +58,7 @@ public class Square{
     public SquareButton getButtonOnSquare(){
         return button;
     }
-    public void setButtonOnSqaure(SquareButton button){
+    public void setButtonOnSquare(SquareButton button){
         this.button = button;
     }
     public String toString(){

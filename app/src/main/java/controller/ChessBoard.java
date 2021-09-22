@@ -7,6 +7,7 @@ public class ChessBoard{
 
     private Square [][] board;
     private ArrayList<Piece> livePieces;
+    private Square[] lastPlyPlayed = new Square[2];
 
 
 
@@ -144,5 +145,12 @@ public class ChessBoard{
         Square [][] board_copy = new Square[8][8];
         board_copy = board;
         return board_copy; 
+    }
+    public void setLastPlyPlayed(Square[] lastMove){
+        lastPlyPlayed[0] = lastMove[0];
+        lastPlyPlayed[1] = lastMove[1];
+    }
+    public Square[] getLastPlyPlayed(){
+        return this.lastPlyPlayed;
     }
 }

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch PawnTest",
+            "request": "launch",
+            "mainClass": "test.PawnTest",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "Launch PawnTest",
+            "request": "launch",
+            "mainClass": "test.PawnTest",
+            "projectName": "Project_2-1_Group18"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
