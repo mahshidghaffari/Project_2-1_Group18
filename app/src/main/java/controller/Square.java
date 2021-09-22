@@ -32,9 +32,12 @@ public class Square{
     }
 
     public void removePiece(Piece toRemove){
-        piece = null;
-        isOccupied = false;
-        button.setPiece(new ImageIcon());
+        if(toRemove != null && button != null){
+            piece = null;
+            isOccupied = false;
+            button.setPiece(new ImageIcon());
+        }
+       
     }
 
     public int getXPos(){
