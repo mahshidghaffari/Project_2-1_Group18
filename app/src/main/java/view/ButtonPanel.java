@@ -9,28 +9,34 @@ public class ButtonPanel implements ActionListener {
 
     JButton helpButton = new JButton("HELP");
     JButton saveButton = new JButton("SAVE");
-    JButton rulesButton = new JButton("RULES");
+    JButton promotionButton = new JButton("PROMOTE");
+    JButton castlingButton = new JButton("CASTLING");
     JPanel buttonPanel = new JPanel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     ButtonPanel() {initialize();}
 
     public void initialize() {
-        buttonPanel.setLayout(new GridLayout(3, 1));
+        buttonPanel.setLayout(new GridLayout(4, 1));
         buttonPanel.setBackground(Color.LIGHT_GRAY);
         buttonPanel.setLayout(null);
 
-        helpButton.setBounds((screenSize.height/2)/3, 0, (screenSize.height/2)/3, 70);
-        saveButton.setBounds((screenSize.height/2)/3, (screenSize.height/3)/3, (screenSize.height/2)/3, 70);
-        rulesButton.setBounds((screenSize.height/2)/3, ((screenSize.height/3)/3)*2, (screenSize.height/2)/3, 70);
+        helpButton.setBounds((screenSize.height/2)/3, 0, (screenSize.height/2)/3, 50);
+        saveButton.setBounds((screenSize.height/2)/3, (screenSize.height/4)/4, (screenSize.height/2)/3, 50);
+        castlingButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)* 2), (screenSize.height/2)/3, 50);
+        promotionButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)*3),  (screenSize.height/2)/3, 50);
 
         helpButton.addActionListener(this);
         saveButton.addActionListener(this);
-        rulesButton.addActionListener(this);
+        castlingButton.addActionListener(this);
+        promotionButton.addActionListener(this);
+
+        promotionButton.setVisible(true);
 
         buttonPanel.add(helpButton);
         buttonPanel.add(saveButton);
-        buttonPanel.add(rulesButton);
+        buttonPanel.add(castlingButton);
+        buttonPanel.add(promotionButton);
     }
 
     @Override
@@ -47,9 +53,7 @@ public class ButtonPanel implements ActionListener {
             SaveFrame frame2 = new SaveFrame();
             frame2.setVisible(true);
 
-        } else if (e.getSource() == rulesButton){
-            RulesFrame frame3 = new RulesFrame();
-            frame3.setVisible(true);
+        } else if (e.getSource() == castlingButton){
 
         }
     }
