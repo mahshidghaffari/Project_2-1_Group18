@@ -1,6 +1,8 @@
 package controller;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class King extends Piece {
 
     private boolean notYetMoved = true;
@@ -46,7 +48,25 @@ public class King extends Piece {
     @Override
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalmoves){
         if(notYetMoved){ notYetMoved=false;}
-    }
+          //  lastMove[0]= getCurrentPosition();
+          //  lastMove[1]= target;
+    
+            getCurrentPosition().removePiece(this);
+            if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
+                Piece captured = target.getPieceOnSq();
+                System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
+                cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+                if(captured.pieceName.equals("King")){
+                    System.out.println("The "+ captured.getColorName() + " King has fallen");
+                    System.out.println(this.getColorName() + " Wins!!!");
+                    JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            target.placePiece(this);
+    
+            checkingKing(getLegalMoves(cb));
+        }
+    
     /** 
      * This method @return true if a king side castle is possible
      * Rules for castling:

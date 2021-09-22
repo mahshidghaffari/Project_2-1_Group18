@@ -1,6 +1,8 @@
 package controller;
 import java.util.ArrayList;
 
+import view.SquareButton;
+
 public class ChessBoard{
 
     private Square [][] board;
@@ -35,10 +37,10 @@ public class ChessBoard{
     }
 
     public void setUpBoard(){
-        // for(int i=0; i<8; i++ ){ 
-        //     board[6][i].placePiece(new Pawn(true));  //White Pawns     
-        //     board[1][i].placePiece(new Pawn(false)); //Black Pawns
-        // }
+        for(int i=0; i<8; i++ ){ 
+            board[6][i].placePiece(new Pawn(true));  //White Pawns     
+            board[1][i].placePiece(new Pawn(false)); //Black Pawns
+        }
         
         board[7][0].placePiece(new Rook(true));//White rook
         board[7][7].placePiece(new Rook(true));  //White rook
@@ -90,6 +92,18 @@ public class ChessBoard{
         }
         return getSquare(y, x).getPieceOnSq();
     }
+
+    public Square getSquare(SquareButton sqb){
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                if(board[i][j].getButtonOnSquare().equals(sqb)){
+                    return board[i][j];
+                }
+            }
+        }
+        return null;
+    }
+
 
     public Square getSquare(int y, int x)
     {

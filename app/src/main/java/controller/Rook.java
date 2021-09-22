@@ -1,6 +1,8 @@
 package controller;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Rook extends Piece {
 
     private boolean notYetMoved=true;
@@ -90,5 +92,19 @@ public class Rook extends Piece {
     @Override
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
         if(notYetMoved){ notYetMoved=false;}
+        super.getCurrentPosition().removePiece(this);
+        if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
+            Piece captured = target.getPieceOnSq();
+            System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
+            cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+            if(captured.pieceName.equals("King")){
+                System.out.println("The "+ captured.getColorName() + " King has fallen");
+                System.out.println(this.getColorName() + " Wins!!!");
+                JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        target.placePiece(this);
+
+        checkingKing(legalMoves);
     }
 }

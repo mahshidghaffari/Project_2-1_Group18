@@ -9,10 +9,12 @@ public class WhitePlayer extends Player{
     
     public WhitePlayer(ChessBoard cb) {
         super(cb);
+        super.setColor("White");
         livePieces = cb.getLivePieces();
         whiteLivePieces = new ArrayList<Piece>();
+        setIsMyTurn(true);
         for(Piece p: livePieces){
-            if(p!=null&& p.isWhite()){ 
+            if(p!=null && p.isWhite()){ 
                 whiteLivePieces.add(p);
             }
         }
@@ -43,6 +45,7 @@ public class WhitePlayer extends Player{
         }
         return false;
     }
+    
 
 }
     

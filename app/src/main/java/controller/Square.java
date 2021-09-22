@@ -1,10 +1,16 @@
 package controller;
+
+import javax.swing.ImageIcon;
+
+import view.SquareButton;
+
 public class Square{
 
     private int x; //columns
     private int y; //rows
     private Piece piece=null;
     private boolean isOccupied;
+    SquareButton button = null; 
 
     public Square(int y, int x){
        this.x = x;
@@ -21,12 +27,14 @@ public class Square{
     public void placePiece(Piece toPut){
         piece = toPut;
         isOccupied = true;
-        piece.setCurrentPosition(this);     
+        piece.setCurrentPosition(this);  
+        if(button != null)     button.setPiece(piece.getImgIcon());   
     }
 
     public void removePiece(Piece toRemove){
         piece = null;
         isOccupied = false;
+        button.setPiece(new ImageIcon());
     }
 
     public int getXPos(){
@@ -46,6 +54,12 @@ public class Square{
     }
     public boolean isTakenSquare(){
         return isOccupied;
+    }
+    public SquareButton getButtonOnSquare(){
+        return button;
+    }
+    public void setButtonOnSqaure(SquareButton button){
+        this.button = button;
     }
     public String toString(){
         String msg ="";

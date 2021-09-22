@@ -1,7 +1,11 @@
 package controller;
+
+import view.*;
 import java.util.ArrayList;
 
-import jdk.nashorn.api.tree.LabeledStatementTree;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 
 public abstract class Piece {
     private boolean isAlive = true;
@@ -9,15 +13,18 @@ public abstract class Piece {
     private Square currentPos;
     private double value;
     private boolean checkingKing=false;
-    private Square[] lastMove= new Square[2];
+    public Square[] lastMove= new Square[2];
     String pieceName;
+    private ImageIcon imgIcon = new ImageIcon(); 
 
     public Piece(){}
 
     public Piece(Square position){
         currentPos = position;
     }
-    
+    public String getPieceName(){
+        return pieceName;
+    }
     public boolean isWhite(){
         return isWhite;
     }
@@ -41,6 +48,12 @@ public abstract class Piece {
     }
     public void setValue(double value){
         this.value = value;
+    }
+    public ImageIcon getImgIcon(){
+        return imgIcon;
+    }
+    public void setImgIcon(ImageIcon imgIcon){
+        this.imgIcon = imgIcon;
     }
     public boolean getCheckingKing(){
         return checkingKing;
@@ -71,6 +84,7 @@ public abstract class Piece {
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
         lastMove[0]= currentPos;
         lastMove[1]= target;
+
         currentPos.removePiece(this);
         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
             Piece captured = target.getPieceOnSq();
@@ -79,16 +93,17 @@ public abstract class Piece {
             if(captured.pieceName.equals("King")){
                 System.out.println("The "+ captured.getColorName() + " King has fallen");
                 System.out.println(this.getColorName() + " Wins!!!");
-                
+                JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         target.placePiece(this);
+
         checkingKing(legalMoves);
     }
 
     public Square[] getLastMove() {return lastMove;}
 
-    abstract ArrayList<Square> getLegalMoves(ChessBoard cb);
+    public abstract ArrayList<Square> getLegalMoves(ChessBoard cb);
     //abstract boolean isCheckingKing(Square location, Square OpposingKing); 
 
 }

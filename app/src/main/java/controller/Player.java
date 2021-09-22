@@ -8,6 +8,7 @@ public abstract class Player {
     private King playerKing;
     private ArrayList<Piece> livePieces;
     private boolean isMyTurn;
+    private String color="Black";
     //private boolean turn;
     //private Piece piece2Move;
     Random rnd;
@@ -16,7 +17,12 @@ public abstract class Player {
         this.cb= cb;
         livePieces = cb.getLivePieces();
         rnd = new Random();
-
+    }
+    public void setColor(String color){
+        this.color =color;
+    }
+    public String getColor(){
+        return color;
     }
 
     public String rollDice(){

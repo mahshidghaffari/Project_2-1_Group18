@@ -11,6 +11,7 @@ public class BlackPlayer extends Player{
         super(cb);
         livePieces = cb.getLivePieces();
         blackLivePieces = new ArrayList<Piece>();
+        setIsMyTurn(false);
         for(Piece p: livePieces){
             if(p!=null && !p.isWhite()){ 
                 blackLivePieces.add(p);
