@@ -16,13 +16,15 @@ public class QueenTest {
     void queenNoLegalMovesAvaiable() {
         ChessBoard cb = new ChessBoard();
         Queen queen = (Queen) cb.getOccupingPiece(7, 3);
+        cb.getSquare(7, 3).removePiece(queen);
         assertTrue(queen.getLegalMoves(cb).isEmpty());
     }
 
     @Test
     void queenLegalMovesAvaiable() {
         ChessBoard cb = new ChessBoard();
-        Queen queen = new Queen(true);
+        Queen queen = (Queen) cb.getOccupingPiece(7, 3);
+        cb.getSquare(7, 3).removePiece(queen);
         cb.getSquare(5, 4).placePiece(queen);
 
         ArrayList<Square> ActualLegalMoves = queen.getLegalMoves(cb);
@@ -60,7 +62,8 @@ public class QueenTest {
 
     @Test void queenMoveTest() {
         ChessBoard cb = new ChessBoard();
-        Queen queen = new Queen(true);
+        Queen queen = (Queen) cb.getOccupingPiece(7, 3);
+        cb.getSquare(7, 3).removePiece(queen);
         cb.getSquare(5, 4).placePiece(queen);
         queen.move(cb.getSquare(2, 7), cb, queen.getLegalMoves(cb));
         assertEquals(cb.getSquare(2,7), queen.getCurrentPosition());
@@ -68,7 +71,8 @@ public class QueenTest {
 
     @Test void queenCaptureTest() {
         ChessBoard cb = new ChessBoard();
-        Queen queen = new Queen(true);
+        Queen queen = (Queen) cb.getOccupingPiece(7, 3);
+        cb.getSquare(7, 3).removePiece(queen);
         cb.getSquare(5, 4).placePiece(queen);
         queen.move(cb.getSquare(1, 4), cb, queen.getLegalMoves(cb));
         assertEquals(cb.getSquare(1,4), queen.getCurrentPosition());
