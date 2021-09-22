@@ -47,10 +47,11 @@ public class King extends Piece {
 
     @Override
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalmoves){
+        
+        Square[] moveDescription = {this.getCurrentPosition(), target};
+        cb.setLastPlyPlayed(moveDescription);
+        
         if(notYetMoved){ notYetMoved=false;}
-          //  lastMove[0]= getCurrentPosition();
-          //  lastMove[1]= target;
-    
             getCurrentPosition().removePiece(this);
             if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
                 Piece captured = target.getPieceOnSq();

@@ -6,12 +6,14 @@ import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 public class Pawn extends Piece{
 
+    private boolean promote = false;
+
     public Pawn(boolean white){
         super.setWhite(white);
         super.pieceName = "Pawn";
         super.setValue(1.0);
     }
-    
+
     /*
     method legalMovesCalc
     @param cb is the current state of the chessboard
@@ -172,11 +174,13 @@ public class Pawn extends Piece{
             if(target.getYPos() == 0){
                 promote(target);
                 board[1][target.getXPos()].removePiece(this);
+                this.setPromote(true);
             }
         } else {
             if(target.getYPos() == 7){
                 promote(target);
                 board[6][target.getXPos()].removePiece(this);
+                this.setPromote(true);
             }
         }
     }
@@ -224,5 +228,12 @@ public class Pawn extends Piece{
                 break;
         }
         return p;
+    }
+
+    public boolean getPromote(){
+        return this.promote;
+    }
+    public void setPromote(boolean bool){
+        this.promote = bool;
     }
 }

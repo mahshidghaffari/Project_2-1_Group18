@@ -28,7 +28,6 @@ public class PawnTest {
         board[6][0].removePiece(blackPawn1);
         System.out.println("Here the black pawn on row 6 should be out");
         whitePawn.move(board[0][0], cb, whitePawnLM);
-        board[1][0].removePiece(whitePawn);
         cb.printBoard();
         
         System.out.println("----------------------------------");
