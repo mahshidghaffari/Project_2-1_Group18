@@ -61,6 +61,7 @@ public class Square{
     public void setButtonOnSquare(SquareButton button){
         this.button = button;
     }
+    
     public String toString(){
         String msg ="";
         if(piece!=null){

@@ -19,6 +19,17 @@ public class WhitePlayer extends Player{
             }
         }
     }
+
+    public ArrayList<Piece> getWhiteLivePieces(){ return whiteLivePieces;}
+
+    public Piece getLivePiece(String pName){
+        for(Piece lp : whiteLivePieces ){
+            if(lp.getPieceName().equals(pName)){
+                return lp;
+            }
+        }
+        return null;
+    }
     // public boolean getIsWhiteTurn(){
     //     return whiteTurn;
     // }

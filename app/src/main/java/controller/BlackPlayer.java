@@ -18,13 +18,7 @@ public class BlackPlayer extends Player{
             }
         }
     }
-    // public boolean getIsBlackTurn(){
-    //     return blackTurn;
-    // }
-    // public void setIsBlackTurn(boolean isBlackTurn){
-    //     blackTurn = isBlackTurn;
-    // }
-
+    
     
     public ArrayList<Piece> getMovablePieces(String chosenPiece){
         ArrayList<Piece> movablePieces = new ArrayList<Piece>();
@@ -42,6 +36,19 @@ public class BlackPlayer extends Player{
             return true;
         }
         return false;
+    }
+
+    public ArrayList<Piece> getBlackLivePieces(){ 
+        return blackLivePieces;
+    }
+
+    public Piece getLivePiece(String pName){
+        for(Piece lp : blackLivePieces ){
+            if(lp.getPieceName().equals(pName)){
+                return lp;
+            }
+        }
+        return null;
     }
 
 }

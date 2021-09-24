@@ -6,28 +6,38 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 
 public class Game{
 
     private boolean gameOver=false;
-    ChessBoard cb;
+    private ChessBoard cb;
     public boolean newTurn=true;
     private Dice dice;
     private Player playing = null;
     private WhitePlayer wPlayer;
     private BlackPlayer bPlayer;
     private Piece heldPiece;
-    // public static void main(String[] args) {
-    //     // new Game();
-    //     Dice d = new Dice();
-    //     for(int  i=0;i<10;i++){
-    //         System.out.println(d.getRoleDice());
-    //     }
-    // }
+    private ButtonPanel buttonPanel;
+    private boolean showCastleButton= false;
+    private JButton castleButton;
+    
     
     public Game(){
         cb  = new ChessBoard();
+         cb.getBoard()[7][5].removePiece(cb.getOccupingPiece(7, 5));
+         cb.getBoard()[7][6].removePiece(cb.getOccupingPiece(7, 6));
+         cb.getBoard()[7][1].removePiece(cb.getOccupingPiece(7, 1));
+         cb.getBoard()[7][2].removePiece(cb.getOccupingPiece(7, 2));
+         cb.getBoard()[7][3].removePiece(cb.getOccupingPiece(7, 3));
+         cb.getBoard()[6][2].removePiece(cb.getOccupingPiece(6, 2));
+         cb.getBoard()[6][2].placePiece(cb.getBoard()[0][3].getPieceOnSq());
+         //  cb.getBoard()[0][1].removePiece(cb.getOccupingPiece(0, 1));
+        //  cb.getBoard()[0][2].removePiece(cb.getOccupingPiece(0, 2));
+        //  cb.getBoard()[0][5].removePiece(cb.getOccupingPiece(0, 5));
+        //  cb.getBoard()[0][6].removePiece(cb.getOccupingPiece(0, 6));
+        //  cb.getBoard()[0][3].removePiece(cb.getOccupingPiece(0, 3));
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
@@ -48,8 +58,18 @@ public class Game{
     public void newTurn(){
         wPlayer.flipTurns(bPlayer);
         newTurn=true;
+        castleButton.setVisible(false);
         updateBoard();
     } 
+    public boolean getShowCastleButton(){
+        return showCastleButton;
+    }
+    public void setButtonPanel(ButtonPanel buttonPanel){
+        this.buttonPanel = buttonPanel;
+        castleButton = buttonPanel.getCastleButton();
+    }
+    
+    //public Castle getCastling(){ return castling;}
     public WhitePlayer getWhitePlayer(){return wPlayer;}
     public BlackPlayer getBlackPlayer(){return bPlayer;}
     
@@ -64,9 +84,13 @@ public class Game{
                 System.out.println("Sorry white , you have no possible moves. Turn goes to black");
                 newTurn();
             }
-        //     else{
-        //     return;
-        // }
+            // else if( wPlayer.canMove(chosen) && chosen.equals("King")){    // if the white king can move check for castlig wPlayer 
+            //     Piece whiteKing = (King)wPlayer.getLivePiece("King");     //get the king
+            //     if(castling.canCastle(((King)whiteKing),cb)){            //if king has any castling possibilities
+            //         castleButton.setVisible(true);                              //display castling button
+                    
+            //     }              
+            // }
         }   
         else if(bPlayer.getIsMyTurn()){
             playing = bPlayer;
@@ -76,6 +100,12 @@ public class Game{
                 System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
                 newTurn();
             }
+            // else if( bPlayer.canMove(chosen) && chosen.equals("King")){    // if the white king can move check for castlig wPlayer 
+            //     Piece blackKing = (King)bPlayer.getLivePiece("King");     //get the king
+            //     if(castling.canCastle(((King)blackKing),cb)){            //if king has any castling possibilities
+            //         castleButton.setVisible(true);                      //display castling button      
+            //     }              
+            // }
         }
     }
 
@@ -83,6 +113,7 @@ public class Game{
     public boolean isLegalChoice(boolean clickedOnce, SquareButton clickedButton){
         Square clickedSquare = cb.getSquare(clickedButton); //get clicked square 
         Piece clickedPiece = clickedSquare.getPieceOnSq();
+        
         if(wPlayer.getIsMyTurn()){ //if its the white turn
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
@@ -100,13 +131,34 @@ public class Game{
                     return true;
                 }
                 else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to
-                    heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there
-                    System.out.println("legal second click");
-                    newTurn();
-                    return true;                    
+                   
+                    int distance = Math.abs(clickedSquare.getXPos()-heldPiece.getCurrentPosition().getXPos());    //calculating the distance from the piece to desired moving location                
+                    if(heldPiece.getPieceName().equals("King") && distance>1){                  //if the size of this movement is larger than 1 for the king it means this is castling
+                        heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));
+
+                        if(clickedSquare.getXPos()>4){             //if it is  a close castling
+                            Piece rook = cb.getBoard()[7][7].getPieceOnSq();
+                            rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));
+                        }
+
+                        else {                                      //if it is a far castling
+                            Piece rook = cb.getBoard()[7][0].getPieceOnSq();
+                            rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
+                        }
+                        newTurn();
+                        return true;
+                    }
+
+                    else{  //if its just a non castling move
+                        heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there    
+                        System.out.println("legal second click");
+                        newTurn();
+                        return true;
+                    }                    
                 }
             }
         }
+
         else if(bPlayer.getIsMyTurn()){ //if its the black turn
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
@@ -124,13 +176,32 @@ public class Game{
                     return true;
                 }
                 else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to
-                    heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there
-                    newTurn();
-                    System.out.println("legal second click");
                     
-                    return true;                    
+                    int distance = Math.abs(clickedSquare.getXPos()-heldPiece.getCurrentPosition().getXPos());    //calculating the distance from the piece to desired moving location                
+                    if(heldPiece.getPieceName().equals("King") && distance>1){                  //if the size of this movement is larger than 1 for the king it means this is castling
+                        heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));           //move the king to desired location
+
+                        if(clickedSquare.getXPos()>4){             //if it is  a close castling
+                            Piece rook = cb.getBoard()[0][7].getPieceOnSq();
+                            rook.move(cb.getBoard()[0][5], cb, rook.getLegalMoves(cb));  //move the rook to correct location next to king
+                        }
+
+                        else {                                      //if it is a far castling
+                            Piece rook = cb.getBoard()[0][0].getPieceOnSq();
+                            rook.move(cb.getBoard()[0][3],cb,rook.getLegalMoves(cb));   //move the rook to correct location next to king
+                        }
+                        newTurn();
+                        return true;
+                    }
+
+                    else{  //if its just a non castling move
+                        heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there
+                        newTurn();
+                        System.out.println("legal second click");
+                        return true;                    
+                    }
                 }
-            }
+            }    
         }
         return false;
     }

@@ -14,7 +14,6 @@ public abstract class Piece {
     private double value;
     private boolean promoted;
     private boolean checkingKing=false;
-    public Square[] lastMove= new Square[2];
     String pieceName;
     private ImageIcon imgIcon = new ImageIcon(); 
 
@@ -102,7 +101,6 @@ public abstract class Piece {
         checkingKing(legalMoves);
     }
 
-    public Square[] getLastMove() {return lastMove;}
 
     public boolean getPromoted(){
         return this.promoted;

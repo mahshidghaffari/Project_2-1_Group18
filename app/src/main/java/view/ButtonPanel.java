@@ -1,5 +1,6 @@
 package view;
 
+import controller.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,8 +14,12 @@ public class ButtonPanel implements ActionListener {
     JButton castlingButton = new JButton("CASTLING");
     JPanel buttonPanel = new JPanel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    Game game;
 
-    ButtonPanel() {initialize();}
+    ButtonPanel(Game game) { 
+        this.game = game;
+        initialize();
+    }
 
     public void initialize() {
         buttonPanel.setLayout(new GridLayout(4, 1));
@@ -32,11 +37,14 @@ public class ButtonPanel implements ActionListener {
         promotionButton.addActionListener(this);
 
         promotionButton.setVisible(true);
+        castlingButton.setVisible(false);
 
         buttonPanel.add(helpButton);
         buttonPanel.add(saveButton);
         buttonPanel.add(castlingButton);
         buttonPanel.add(promotionButton);
+
+        game.setButtonPanel(this);
     }
 
     @Override
@@ -54,9 +62,11 @@ public class ButtonPanel implements ActionListener {
             frame2.setVisible(true);
 
         } else if (e.getSource() == castlingButton){
-
+            //game.getCastling()
         }
     }
+
+    public JButton getCastleButton(){ return castlingButton;}
 
     public JPanel getButtonPanel() { return buttonPanel; }
 }

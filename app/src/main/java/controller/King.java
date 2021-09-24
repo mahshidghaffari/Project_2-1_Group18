@@ -14,6 +14,9 @@ public class King extends Piece {
         super.setValue(0);
     }
 
+    public boolean getIfNotMoved(){ return notYetMoved;}
+
+
 
     public ArrayList <Square> getLegalMoves(ChessBoard cb) {
         ArrayList <Square> legalMoves = new ArrayList <>();
@@ -89,7 +92,7 @@ public class King extends Piece {
             }
             for (Piece blackPiece: cb.getLivePieces()) {
                 if (!blackPiece.isWhite()) { //making sure its an oponents piece
-                    for (int col = 4; col < 8; col++) { //loop through all the steps from the King's to Rook's location 
+                    for (int col = 4; col < 7; col++) { //loop through all the steps from the King's to Rook's location 
                         Square sqOnPath = cb.getSquare(7, col);
                         if (blackPiece.getLegalMoves(cb).contains(sqOnPath)) { //if any of the oposing pieces are attacking the king in all its sqaurs on its path 
                             return; //RULE 3 & 4, making sure the king is not in check in any step from start-finish 
@@ -99,7 +102,7 @@ public class King extends Piece {
                 }
             }
             System.out.println("close castling possible");
-            legalMoves.add(cb.getSquare(7, 7));
+            legalMoves.add(cb.getSquare(7, 6));
             
         } else if (!isWhite()) { //if its the Black King
             if (board[0][5].isTakenSquare() || board[0][6].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal
@@ -107,7 +110,7 @@ public class King extends Piece {
             }
             for (Piece whitePiece: cb.getLivePieces()) {
                 if (whitePiece.isWhite()) { //making sure its an oponents piece
-                    for (int col = 4; col < 8; col++) { //loop through all the steps from the King's to Rook's location 
+                    for (int col = 4; col < 7; col++) { //loop through all the steps from the King's to Rook's location 
                         Square sqOnPath = cb.getSquare(0, col);
                         if (whitePiece.getLegalMoves(cb).contains(sqOnPath)) { //if any of the oposing pieces are attacking the king in all its sqaurs on its path 
                             return; //RULE 3 & 4, making sure the king is not in check in any step from start-finish 
@@ -116,7 +119,7 @@ public class King extends Piece {
                 }
             }
             System.out.println("close castling possible");
-            legalMoves.add(cb.getSquare(0, 7));
+            legalMoves.add(cb.getSquare(0,  6));
         }
     }
 
@@ -145,7 +148,7 @@ public class King extends Piece {
             }
             for (Piece blackPiece: cb.getLivePieces()) {
                 if (!blackPiece.isWhite()) { //making sure its an oponents piece
-                    for (int col = 4; col >= 0; col--) { //loop through all the steps from the King's to Rook's location 
+                    for (int col = 4; col >= 2; col--) { //loop through all the steps from the King's to Rook's location 
                         Square sqOnPath = cb.getSquare(7, col);
                         if (blackPiece.getLegalMoves(cb).contains(sqOnPath)) { //if any of the oposing pieces are attacking the king in all its sqaurs on its path 
                             return; //RULE 3 & 4, making sure the king is not in check in any step from start-finish 
@@ -154,7 +157,7 @@ public class King extends Piece {
                 }
             }
             System.out.println("far castling possible");
-            legalMoves.add(cb.getSquare(7, 0));
+            legalMoves.add(cb.getSquare(7, 2));
 
         } else { //if its the Black King
             if (board[0][3].isTakenSquare() || board[0][2].isTakenSquare() || board[0][1].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal
@@ -162,7 +165,7 @@ public class King extends Piece {
             }
             for (Piece whitePiece: cb.getLivePieces()) {
                 if (whitePiece.isWhite()) { //making sure its an oponents piece
-                    for (int col = 4; col >= 0; col--) { //loop through all the steps from the King's to Rook's location 
+                    for (int col = 4; col >= 2; col--) { //loop through all the steps from the King's to Rook's location 
                         Square sqOnPath = cb.getSquare(0, col);
                         if (whitePiece.getLegalMoves(cb).contains(sqOnPath)) { //if any of the oposing pieces are attacking the king in all its sqaurs on its path 
                             return; //RULE 3 & 4, making sure the king is not in check in any step from start-finish 
@@ -171,7 +174,7 @@ public class King extends Piece {
                 }
             }
             System.out.println("far castling possible");
-            legalMoves.add(cb.getSquare(0, 0));
+            legalMoves.add(cb.getSquare(0, 2));
         }
 
     }

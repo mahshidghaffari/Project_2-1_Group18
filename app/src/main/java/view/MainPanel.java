@@ -88,7 +88,6 @@ public class MainPanel implements ActionListener  {
                             }
                         }
                     });
-            
 
                 cb.getBoard()[i][j].setButtonOnSquare(button);
                 mainPanel.add(button, i, j);
@@ -102,7 +101,6 @@ public class MainPanel implements ActionListener  {
      * White at the bottom and Black on top
      */
     public void initialPositions() {
-        Square[][] board = cb.getBoard();
 
         ImageIcon bBishop = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bbishop.png"));
         ImageIcon bKing = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bking.png"));
@@ -148,7 +146,6 @@ public class MainPanel implements ActionListener  {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 SquareButton b =  cb.getBoard()[i][j].getButtonOnSquare(); //get the clicked button
-                Square square = cb.getSquare(b);                           //get the clicked corresponding square
                 if (e.getSource() == b) {
                     if(game.isLegalChoice(clickedOnce, b)){   //if this click is relevant to the game/ either correct chosen piece to move or correct sqaure to move the piece to
                         clickedOnce = !clickedOnce; 
