@@ -16,6 +16,7 @@ public class Game{
     private BlackPlayer bPlayer;
     private Piece heldPiece = null;
     private JFrame f;
+    private ButtonPanel buttonpanel;
 
     public Game(JFrame f){
         this.f=f;
@@ -23,6 +24,7 @@ public class Game{
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
+        buttonpanel= new ButtonPanel(this);
     }
     public JFrame getFrame(){
         return f;
@@ -59,6 +61,7 @@ public class Game{
             String chosen = dice.getRoleDice(); //roll the dice
             if(!wPlayer.canMove(chosen)){         //if player has no pieces to move we switch turns
                 System.out.println("Sorry white , you have no possible moves. Turn goes to black");
+
                 newTurn();
             }
         }
@@ -86,6 +89,8 @@ public class Game{
                     heldPiece.setHighlighted(true);
                     highlightPiece(heldPiece, clickedSquare);
                     System.out.println("legal first click");
+                    buttonpanel.setText("legal first click");
+
                     return true;
                 }
             }
