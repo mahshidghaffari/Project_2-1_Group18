@@ -29,6 +29,7 @@ class KingTest {
 	Pawn blackPawn = new Pawn(false);
 	Rook whiteRook = new Rook(true);
 	Rook blackRook = new Rook(false);
+	
 
 	// check all of the movement options for all directions
 	// checking the white king
@@ -37,7 +38,7 @@ class KingTest {
 	void whiteKingLegalMoveInAllDirectionTest() {
 
 		cb.getSquare(4, 3).placePiece(whiteKing); // insert the king in the middle of chess board without any other
-													// pieces
+		whiteKing.setNotYetMoved(false);										// pieces
 
 		ArrayList<Square> ActualLegalMoves = whiteKing.getLegalMoves(cb);
 		ArrayList<Square> ExpectedLegalMoves = new ArrayList<>();
@@ -50,6 +51,7 @@ class KingTest {
 		assertTrue(
 				ActualLegalMoves.size() == ExpectedLegalMoves.size() && ExpectedLegalMoves.containsAll(ActualLegalMoves)
 						&& ActualLegalMoves.containsAll(ExpectedLegalMoves));
+		
 
 	}
 
@@ -60,7 +62,7 @@ class KingTest {
 	void blackKingLegalMoveInAllDirectionTest() {
 
 		cb.getSquare(4, 2).placePiece(blackKing); // insert the king in the middle of chess board without any other
-													// pieces
+		blackKing.setNotYetMoved(false);							// pieces
 
 		ArrayList<Square> ActualLegalMoves = blackKing.getLegalMoves(cb);
 		ArrayList<Square> ExpectedLegalMoves = new ArrayList<>();
@@ -86,6 +88,7 @@ class KingTest {
 		cb.getSquare(6, 0).placePiece(whitePawn);
 		cb.getSquare(6, 1).placePiece(whitePawn);
 		cb.getSquare(7, 1).placePiece(whiteRook);
+		whiteKing.setNotYetMoved(false);	
 
 		assertTrue(whiteKing.getLegalMoves(cb).isEmpty());
 
@@ -101,8 +104,11 @@ class KingTest {
 		cb.getSquare(1, 7).placePiece(blackPawn);
 		cb.getSquare(1, 6).placePiece(blackPawn);
 		cb.getSquare(0, 6).placePiece(blackRook);
+		blackKing.setNotYetMoved(false);	
+		
 
-		assertTrue(whiteKing.getLegalMoves(cb).isEmpty());
+
+		assertTrue(blackKing.getLegalMoves(cb).isEmpty());
 
 	}
 
@@ -117,6 +123,7 @@ class KingTest {
 		cb.getSquare(4, 1).placePiece(whiteRook);
 		cb.getSquare(3, 1).placePiece(blackRook);
 		cb.getSquare(3, 0).placePiece(blackPawn);
+		whiteKing.setNotYetMoved(false);
 
 		ArrayList<Square> ActualLegalMoves = whiteKing.getLegalMoves(cb);
 		ArrayList<Square> ExpectedLegalMoves = new ArrayList<>();
@@ -142,8 +149,9 @@ class KingTest {
 		cb.getSquare(3, 6).placePiece(blackRook);
 		cb.getSquare(4, 6).placePiece(whiteRook);
 		cb.getSquare(4, 7).placePiece(whitePawn);
+		blackKing.setNotYetMoved(false);	
 
-		ArrayList<Square> ActualLegalMoves = whiteKing.getLegalMoves(cb);
+		ArrayList<Square> ActualLegalMoves = blackKing.getLegalMoves(cb);
 		ArrayList<Square> ExpectedLegalMoves = new ArrayList<>();
 		Square[][] board = cb.getBoard();
 		// adding all the possible movements
@@ -155,5 +163,6 @@ class KingTest {
 						&& ActualLegalMoves.containsAll(ExpectedLegalMoves));
 
 	}
-
+	
+	
 }

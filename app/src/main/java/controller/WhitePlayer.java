@@ -3,34 +3,21 @@ import java.util.ArrayList;
 
 public class WhitePlayer extends Player{
 
-    private ArrayList<Piece> whiteLivePieces;
     private ArrayList<Piece> livePieces;
-    //private boolean whiteTurn= true;
     
     public WhitePlayer(ChessBoard cb) {
         super(cb);
         super.setColor("White");
         livePieces = cb.getLivePieces();
-        whiteLivePieces = new ArrayList<Piece>();
         setIsMyTurn(true);
-        for(Piece p: livePieces){
-            if(p!=null && p.isWhite()){ 
-                whiteLivePieces.add(p);
-            }
-        }
     }
-    // public boolean getIsWhiteTurn(){
-    //     return whiteTurn;
-    // }
-    // public void setIsWhiteTurn(boolean isWhiteTurn){
-    //     whiteTurn = isWhiteTurn;
 
-    // }
 
     public ArrayList<Piece> getMovablePieces(String chosenPiece){
         ArrayList<Piece> movablePieces = new ArrayList<Piece>();
-        for(Piece p: whiteLivePieces){
-            if(p.pieceName.equals(chosenPiece)){
+        //check if this piece is even a live or not
+        for(Piece p: livePieces){
+            if(p.isWhite() && p.pieceName.equals(chosenPiece)){
                 if(p.getLegalMoves(super.cb).size()>0){
                     movablePieces.add(p);
                 }

@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 public class Rook extends Piece {
 
-    private boolean notYetMoved=true;
+    //private boolean notYetMoved=true;
     
     public Rook(boolean white) {
         super.setWhite(white);
@@ -20,6 +20,7 @@ public class Rook extends Piece {
             return false;
         }
     }
+
 
     public ArrayList<Square> getLegalMoves(ChessBoard cb) {
         ArrayList<Square> legalMoves = new ArrayList<>();
@@ -94,12 +95,13 @@ public class Rook extends Piece {
         Square[] moveDescription = {this.getCurrentPosition(), target};
         cb.setLastPlyPlayed(moveDescription);
         
-        if(notYetMoved){ notYetMoved=false;}
+        if(getIfNotYetMoved()) { setNotYetMoved(false);}
         super.getCurrentPosition().removePiece(this);
         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
             Piece captured = target.getPieceOnSq();
             System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
             cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+            cb.getDeadPieces().add(captured);
             if(captured.pieceName.equals("King")){
                 System.out.println("The "+ captured.getColorName() + " King has fallen");
                 System.out.println(this.getColorName() + " Wins!!!");
@@ -108,7 +110,7 @@ public class Rook extends Piece {
             }
         }
         target.placePiece(this);
-
+        if(getIfNotYetMoved()){ setNotYetMoved(false); }
         checkingKing(legalMoves);
     }
 }

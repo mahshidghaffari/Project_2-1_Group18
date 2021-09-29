@@ -1,7 +1,6 @@
 package view;
 
-import controller.ChessBoard;
-
+import controller.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,12 +14,14 @@ public class ButtonPanel implements ActionListener {
     JButton resetButton = new JButton("RESET");
     JPanel buttonPanel = new JPanel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    ChessBoard cb;
+    Game game;
 
-    public ButtonPanel(ChessBoard chessBoard) {initialize(chessBoard);}
+    public ButtonPanel(Game game) { 
+        this.game = game;
+        initialize();
+    }
 
-    public void initialize(ChessBoard chessBoard) {
-        cb=chessBoard;
+    public void initialize() {
         buttonPanel.setLayout(new GridLayout(4, 1));
         buttonPanel.setBackground(Color.LIGHT_GRAY);
         buttonPanel.setLayout(null);
@@ -41,6 +42,8 @@ public class ButtonPanel implements ActionListener {
         buttonPanel.add(saveButton);
         buttonPanel.add(resetButton);
         buttonPanel.add(promotionButton);
+
+        game.setButtonPanel(this);
     }
 
     @Override
@@ -57,12 +60,10 @@ public class ButtonPanel implements ActionListener {
             SaveFrame frame2 = new SaveFrame();
             frame2.setVisible(true);
 
-        } else if (e.getSource() == resetButton){
-            System.out.println("Reset Clicked");
-            cb.setNewChessBoard();
-            cb.printBoard();
-        }
+        } 
     }
+
+
 
     public JPanel getButtonPanel() { return buttonPanel; }
 }

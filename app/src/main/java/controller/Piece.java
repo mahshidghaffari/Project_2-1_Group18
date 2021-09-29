@@ -14,9 +14,9 @@ public abstract class Piece {
     private double value;
     private boolean promoted;
     private boolean checkingKing=false;
-    public Square[] lastMove= new Square[2];
     String pieceName;
     private ImageIcon imgIcon = new ImageIcon(); 
+    private boolean notYetMoved = true; 
 
     public Piece(){}
 
@@ -59,6 +59,12 @@ public abstract class Piece {
     public boolean getCheckingKing(){
         return checkingKing;
     }
+    public boolean getIfNotYetMoved(){
+        return notYetMoved;
+    }
+    public void setNotYetMoved(boolean b){
+        notYetMoved=b;
+    }
     public void checkingKing(ArrayList<Square> legalMoves){
             for(Square sq : legalMoves){
                 if(sq.isTakenSquare() && sq.getPieceOnSq().pieceName.equals("King")){
@@ -91,6 +97,7 @@ public abstract class Piece {
             Piece captured = target.getPieceOnSq();
             System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
             cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+            cb.getDeadPieces().add(captured);
             if(captured.pieceName.equals("King")){
                 System.out.println("The "+ captured.getColorName() + " King has fallen");
                 System.out.println(this.getColorName() + " Wins!!!");
@@ -99,11 +106,12 @@ public abstract class Piece {
             }
         }
         target.placePiece(this);
-
+        if(notYetMoved){ 
+            notYetMoved = false;
+        }
         checkingKing(legalMoves);
     }
 
-    public Square[] getLastMove() {return lastMove;}
 
     public boolean getPromoted(){
         return this.promoted;
