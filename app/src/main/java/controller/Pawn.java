@@ -2,6 +2,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.event.*;
 
 public class Pawn extends Piece{
 
@@ -155,29 +158,31 @@ public class Pawn extends Piece{
             if(captured.pieceName.equals("King")){
                 System.out.println("The "+ captured.getColorName() + " King has fallen");
                 System.out.println(this.getColorName() + " Wins!!!");
+                JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
             }
+            
+        } else {
             if(target.getXPos() != this.getCurrentPosition().getXPos()){ //if the target and the current pos have the different x
                 //Pawn is going to go diagonally, but since target is null, it is doing en passant
                 //Have to remove piece captured en passant
                 Square squareToEmpty = board[this.getCurrentPosition().getYPos()][target.getXPos()];
                 cb.getLivePieces().remove(squareToEmpty.getPieceOnSq());
                 squareToEmpty.removePiece(squareToEmpty.getPieceOnSq());
-                
             }
-        } 
+        }
         
         target.placePiece(this);
         checkingKing(legalMoves);
 
         if(isWhite()){
             if(target.getYPos() == 0){
-                promote(target);
+                promote(target, cb);
                 board[1][target.getXPos()].removePiece(this);
                 this.setPromote(true);
             }
         } else {
             if(target.getYPos() == 7){
-                promote(target);
+                promote(target, cb);
                 board[6][target.getXPos()].removePiece(this);
                 this.setPromote(true);
             }
@@ -189,14 +194,10 @@ public class Pawn extends Piece{
          for white and 7 for black)
         @return void
     */
-    public void promote(Square target){
-        if(this.isWhite()){
+    public void promote(Square target, ChessBoard cb){
             target.removePiece(this);
-            target.placePiece(rollDice(true));
-        } else {
-            target.removePiece(this);
-            target.placePiece(rollDice(false));
-        }
+            rollDice(this.isWhite(), target, cb);
+        
         target.getPieceOnSq().setPromoted(true);
     }
     /*
@@ -204,30 +205,106 @@ public class Pawn extends Piece{
         @param isWhite : boolean says whether piece is white or not
         @retrun Piece : returns the new Piece created for the promotion
     */
-    public Piece rollDice(boolean isWhite){
+    public void rollDice(boolean isWhite, Square target, ChessBoard cb){
         Random rnd = new Random();
         int roll = rnd.nextInt(5)+1;
-        Piece p = null;
-        switch (roll){
+        Piece[] p = new Piece[1];
+        switch (1){
             case 1 :
                 //TODO : create a selection with the gui to promote into a piece chosen by the player
-                p = new Pawn(isWhite);
+                
+                JFrame frame = new JFrame("Promotion");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
+                JPanel pPanel = new JPanel();
+                JButton bishopButton = new JButton("Bishop");
+                JButton knightButton = new JButton("Knight");
+                JButton rookButton = new JButton("Rook");
+                JButton queenButton = new JButton("Queen");
+
+                bishopButton.addActionListener(new ActionListener(){  
+                    public void actionPerformed(ActionEvent e){  
+                        Bishop p = new Bishop(isWhite);
+                        target.placePiece(p);
+                        target.placeImage(p);
+                        frame.dispose();
+                        cb.printBoard();
+                    }  
+                });  
+                knightButton.addActionListener(new ActionListener(){  
+                    public void actionPerformed(ActionEvent e){  
+                        Knight p = new Knight(isWhite);
+                        target.placePiece(p);
+                        target.placeImage(p);
+                        frame.dispose();
+                        cb.printBoard();
+                    }  
+                });
+                rookButton.addActionListener(new ActionListener(){  
+                    public void actionPerformed(ActionEvent e){  
+                        Rook p = new Rook(isWhite);
+                        target.placePiece(p);
+                        target.placeImage(p);
+                        frame.dispose();
+                        cb.printBoard();
+                    }  
+                });
+                queenButton.addActionListener(new ActionListener(){  
+                    public void actionPerformed(ActionEvent e){ 
+                        Queen p = new Queen(isWhite);
+                        target.placePiece(p);
+                        target.placeImage(p);
+                        frame.dispose();
+                        cb.printBoard();
+                    }  
+                });
+                pPanel.add(bishopButton);
+                pPanel.add(knightButton);
+                pPanel.add(rookButton);
+                pPanel.add(queenButton);
+                frame.add(pPanel);
+                frame.pack();
+                frame.setVisible(true);
                break;
             case 2 : 
-                p = new Knight(isWhite);
+                Knight knight = new Knight(isWhite);
+                target.placePiece(knight);
                 break;
             case 3 :
-                p = new Bishop(isWhite);
+                Bishop bishop = new Bishop(isWhite);
+                target.placePiece(bishop);
                 break;
             case 4 :
-                p = new Rook(isWhite);
+                Rook rook = new Rook(isWhite);
+                target.placePiece(rook);
                 break;
             case 5 :
-                p = new Queen(isWhite);
+                Queen queen = new Queen(isWhite);
+                target.placePiece(queen);
                 break;
         }
-        return p;
     }
+
+
+        //     case 1 :
+        //         //TODO : create a selection with the gui to promote into a piece chosen by the player
+        //         p = new Pawn(isWhite);
+        //        break;
+        //     case 2 : 
+        //         p = new Knight(isWhite);
+        //         break;
+        //     case 3 :
+        //         p = new Bishop(isWhite);
+        //         break;
+        //     case 4 :
+        //         p = new Rook(isWhite);
+        //         break;
+        //     case 5 :
+        //         p = new Queen(isWhite);
+        //         break;
+        // }
+        // return p;
+    
 
     public boolean getPromote(){
         return this.promote;

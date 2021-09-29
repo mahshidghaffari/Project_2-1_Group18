@@ -61,6 +61,9 @@ public class Square{
     public void setButtonOnSquare(SquareButton button){
         this.button = button;
     }
+    public void placeImage(Piece piece){
+        this.button.setPieceIcon(piece.getImgIcon());
+    }
     
     public String toString(){
         String msg ="";

@@ -155,6 +155,7 @@ public class Game{
                             Piece rook = cb.getBoard()[7][0].getPieceOnSq();
                             rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
                         }
+
                         newTurn();
                         return true;
                     }
