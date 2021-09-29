@@ -2,6 +2,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class Pawn extends Piece{
 
     private boolean promote = false;
@@ -154,6 +156,8 @@ public class Pawn extends Piece{
             if(captured.pieceName.equals("King")){
                 System.out.println("The "+ captured.getColorName() + " King has fallen");
                 System.out.println(this.getColorName() + " Wins!!!");
+                JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
+                cb.setNewChessBoard();
             }
             if(target.getXPos() != this.getCurrentPosition().getXPos()){ //if the target and the current pos have the different x
                 //Pawn is going to go diagonally, but since target is null, it is doing en passant
