@@ -22,6 +22,7 @@ public class Game{
     private ButtonPanel buttonPanel;
     private boolean showCastleButton= false;
     private JButton castleButton;
+    private boolean diceClicked=false;
     
     
     public Game(){
@@ -77,6 +78,9 @@ public class Game{
         this.buttonPanel = buttonPanel;
         castleButton = buttonPanel.getCastleButton();
     }
+    public void setDiceClicked(boolean b) {
+        diceClicked = b;
+    }
     
     //public Castle getCastling(){ return castling;}
     public WhitePlayer getWhitePlayer(){return wPlayer;}
@@ -93,13 +97,6 @@ public class Game{
                 System.out.println("Sorry white , you have no possible moves. Turn goes to black");
                 newTurn();
             }
-            // else if( wPlayer.canMove(chosen) && chosen.equals("King")){    // if the white king can move check for castlig wPlayer 
-            //     Piece whiteKing = (King)wPlayer.getLivePiece("King");     //get the king
-            //     if(castling.canCastle(((King)whiteKing),cb)){            //if king has any castling possibilities
-            //         castleButton.setVisible(true);                              //display castling button
-                    
-            //     }              
-            // }
         }   
         else if(bPlayer.getIsMyTurn()){
             playing = bPlayer;
@@ -109,12 +106,6 @@ public class Game{
                 System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
                 newTurn();
             }
-            // else if( bPlayer.canMove(chosen) && chosen.equals("King")){    // if the white king can move check for castlig wPlayer 
-            //     Piece blackKing = (King)bPlayer.getLivePiece("King");     //get the king
-            //     if(castling.canCastle(((King)blackKing),cb)){            //if king has any castling possibilities
-            //         castleButton.setVisible(true);                      //display castling button      
-            //     }              
-            // }
         }
     }
 
@@ -124,6 +115,7 @@ public class Game{
         Piece clickedPiece = clickedSquare.getPieceOnSq();
         
         if(wPlayer.getIsMyTurn()){ //if its the white turn
+            if(!diceClicked){return false;}
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
                 else if (clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
@@ -169,6 +161,7 @@ public class Game{
         }
 
         else if(bPlayer.getIsMyTurn()){ //if its the black turn
+            if(!diceClicked){return false;}
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
                 else if (!clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
@@ -230,6 +223,7 @@ public class Game{
             }
         }
     }
+    
 }
 
 
