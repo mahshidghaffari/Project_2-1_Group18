@@ -103,6 +103,14 @@ public class Game{
             playing = bPlayer;
             newTurn= false;
             String chosen = dice.getRoleDice();
+            //loop through all live pieces to see if dice chosen piece piece is there
+            for(Piece p: cb.getLivePieces()){  
+                if(p.isWhite()){ continue; }   
+                
+                if(p.getPieceName().equals(chosen) ){ //if the chosen piece is not dead 
+                        break;
+                }
+            }
             if(!bPlayer.canMove(chosen)){    
                 System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
                 newTurn();

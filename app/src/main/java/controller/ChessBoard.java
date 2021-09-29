@@ -7,6 +7,7 @@ public class ChessBoard{
 
     private Square [][] board;
     private ArrayList<Piece> livePieces;
+    private ArrayList<Piece> deadPieces;
     private Square[] lastPlyPlayed = new Square[2];
 
 
@@ -19,6 +20,7 @@ public class ChessBoard{
             }
         }
         livePieces= new ArrayList<Piece>();
+        deadPieces = new ArrayList<Piece>();
        setUpBoard();      
     }
 
@@ -31,6 +33,7 @@ public class ChessBoard{
             }
         }
         livePieces= new ArrayList<Piece>();
+        deadPieces= new ArrayList<Piece>();
     }
 
     public Square[][] getBoard(){
@@ -89,7 +92,9 @@ public class ChessBoard{
     public ArrayList<Piece> getLivePieces(){
         return livePieces;
     } 
-
+    public ArrayList<Piece> getDeadPieces(){
+        return deadPieces;
+    }
        
     public Piece getOccupingPiece(int y, int x){
         

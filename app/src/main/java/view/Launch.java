@@ -18,8 +18,8 @@ public class Launch {
         f.setLayout(new BorderLayout());
         f.setBackground(Color.GREEN);
 
-        f.add(new SidePanel( game).getPane(), BorderLayout.WEST);
-        f.add(new MainPanel( game).getMainPanel(), BorderLayout.CENTER);
+        f.add(new SidePanel(game).getPane(), BorderLayout.WEST);
+        f.add(new MainPanel(game).getMainPanel(), BorderLayout.CENTER);
 
         f.setResizable(false);
         f.setLocationRelativeTo(null);
