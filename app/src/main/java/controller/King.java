@@ -1,12 +1,10 @@
 package controller;
+
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class King extends Piece {
-
-    //private boolean notYetMoved = true;
-
 
     public King(boolean white) {
         super.setWhite(white);
@@ -191,10 +189,5 @@ public class King extends Piece {
         }
 
     }
+
 }
-
-
-
-
-
-
