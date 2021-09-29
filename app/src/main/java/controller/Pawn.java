@@ -2,8 +2,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.plaf.synth.SynthSplitPaneUI;
-
 public class Pawn extends Piece{
 
     private boolean promote = false;
