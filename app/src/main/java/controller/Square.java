@@ -1,7 +1,5 @@
 package controller;
 
-import javax.swing.ImageIcon;
-
 import view.SquareButton;
 
 public class Square {
@@ -70,6 +68,7 @@ public class Square {
             this.button.setPieceIcon(piece.getImgIcon());
         }
     }
+
     public String toString(){
         String msg ="";
         if(piece!=null){

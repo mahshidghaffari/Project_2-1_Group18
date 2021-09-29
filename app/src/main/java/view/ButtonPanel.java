@@ -1,6 +1,5 @@
 package view;
 
-import controller.ChessBoard;
 import controller.Game;
 
 import javax.swing.*;
@@ -12,13 +11,12 @@ public class ButtonPanel implements ActionListener {
 
     JButton helpButton = new JButton("HELP");
     JButton saveButton = new JButton("RESET");
-    JButton promotionButton = new JButton("PROMOTE");
-    JButton castlingButton = new JButton("CASTLING");
+    JLabel label = new JLabel("INSERT TEXT HERE");
     JPanel buttonPanel = new JPanel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     Game game;
 
-    ButtonPanel(Game g) {initialize(g);}
+    ButtonPanel(Game g) { initialize(g); }
 
     public void initialize(Game g) {
         this.game=g;
@@ -28,21 +26,14 @@ public class ButtonPanel implements ActionListener {
 
         helpButton.setBounds((screenSize.height/2)/3, 0, (screenSize.height/2)/3, 50);
         saveButton.setBounds((screenSize.height/2)/3, (screenSize.height/4)/4, (screenSize.height/2)/3, 50);
-        castlingButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)* 2), (screenSize.height/2)/3, 50);
-        promotionButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)*3),  (screenSize.height/2)/3, 50);
+        label.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)* 2), (screenSize.height/2)/3, 50);
 
         helpButton.addActionListener(this);
         saveButton.addActionListener(this);
-        castlingButton.addActionListener(this);
-        promotionButton.addActionListener(this);
-
-        castlingButton.setVisible(false);
-        promotionButton.setVisible(false);
 
         buttonPanel.add(helpButton);
         buttonPanel.add(saveButton);
-        buttonPanel.add(castlingButton);
-        buttonPanel.add(promotionButton);
+        buttonPanel.add(label);
     }
 
     @Override
@@ -60,8 +51,6 @@ public class ButtonPanel implements ActionListener {
             game.getFrame().dispose();
             SetupMenu sm= new SetupMenu();
             sm.startGamebaord();
-
-        } else if (e.getSource() == castlingButton){
 
         }
     }

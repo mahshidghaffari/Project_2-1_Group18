@@ -140,7 +140,6 @@ public class Game{
         return false;
     }
 
-
     public void updateBoard(){
         Square[][] board = cb.getBoard();
         for(int i=0; i<8; i++){
@@ -157,7 +156,7 @@ public class Game{
     }
 
     public void highlightPiece(Piece piece, Square square) {
-        square.removeImage();
+       square.removeImage();
 
         updateBoard();
         square.placeImage(piece);

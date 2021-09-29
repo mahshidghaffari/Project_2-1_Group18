@@ -14,9 +14,7 @@ public class SetupMenu {
     private String GameMode= "PvP";//default
     private int GameTime= 10;//default
 
-    public SetupMenu(){
-
-    }
+    public SetupMenu(){ }
 
     private void PrintGame(){
         System.out.println();
@@ -261,9 +259,9 @@ public class SetupMenu {
     }
 
     public void startGamebaord() {
-
         JFrame f = new JFrame("Dice Chess");
         Game game = new Game(f);
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
         f.setLayout(new BorderLayout());
