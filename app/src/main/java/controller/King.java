@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 public class King extends Piece {
 
-    private boolean notYetMoved = true;
+    //private boolean notYetMoved = true;
 
 
     public King(boolean white) {
@@ -14,7 +14,7 @@ public class King extends Piece {
         super.setValue(0);
     }
 
-    public boolean getIfNotMoved(){ return notYetMoved;}
+    //public boolean getIfNotMoved(){ return super.notYetMoved;}
 
 
 
@@ -54,7 +54,7 @@ public class King extends Piece {
         Square[] moveDescription = {this.getCurrentPosition(), target};
         cb.setLastPlyPlayed(moveDescription);
         
-        if(notYetMoved){ notYetMoved=false;}
+        if(super.getIfNotYetMoved()){ setNotYetMoved(false);}
             getCurrentPosition().removePiece(this);
             if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
                 Piece captured = target.getPieceOnSq();
@@ -67,7 +67,7 @@ public class King extends Piece {
                 }
             }
             target.placePiece(this);
-    
+            if(getIfNotYetMoved()){ setNotYetMoved(false); }    
             checkingKing(getLegalMoves(cb));
         }
     
@@ -82,11 +82,13 @@ public class King extends Piece {
 
     public void closeCastle(ArrayList < Square > legalMoves, ChessBoard cb) {
         Square[][] board = cb.getBoard();
-        if (!this.notYetMoved) {
+        if (!this.getIfNotYetMoved()) {
             return; // RULE 1 if the king moved there is no possibilty for castling
         } 
         if (isWhite()) {                 //for a white king
-
+            if(board[7][7].isTakenSquare() && board[7][7].getPieceOnSq().getPieceName().equals("Rook") && !board[7][7].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
+                return;
+            }
             if (board[7][5].isTakenSquare() || board[7][6].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal
                 return;
             }
@@ -105,6 +107,9 @@ public class King extends Piece {
             legalMoves.add(cb.getSquare(7, 6));
             
         } else if (!isWhite()) { //if its the Black King
+            if(board[0][7].isTakenSquare() && board[0][7].getPieceOnSq().getPieceName().equals("Rook") && !board[0][7].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
+                return;
+            }
             if (board[0][5].isTakenSquare() || board[0][6].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal
                 return;
             }
@@ -137,12 +142,16 @@ public class King extends Piece {
 
     public void farCastle(ArrayList <Square> legalMoves, ChessBoard cb) {
         Square[][] board = cb.getBoard();
-        if (!this.notYetMoved) {
+        if (!this.getIfNotYetMoved()) {
             return;
         } // RULE 1 if the king moved there is no possibilty for castling
 
         //for a white king
         if (isWhite()) {
+            if(board[7][0].isTakenSquare() && board[7][0].getPieceOnSq().getPieceName().equals("Rook") && !board[7][0].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
+                return;
+            }
+
             if (board[7][3].isTakenSquare() || board[7][2].isTakenSquare() || board[7][1].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal
                 return;
             }
@@ -160,6 +169,9 @@ public class King extends Piece {
             legalMoves.add(cb.getSquare(7, 2));
 
         } else { //if its the Black King
+            if(board[0][0].isTakenSquare() && board[0][0].getPieceOnSq().getPieceName().equals("Rook") && !board[0][0].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
+                return;
+            }
             if (board[0][3].isTakenSquare() || board[0][2].isTakenSquare() || board[0][1].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal
                 return;
             }

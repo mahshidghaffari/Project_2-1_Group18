@@ -16,6 +16,7 @@ public abstract class Piece {
     private boolean checkingKing=false;
     String pieceName;
     private ImageIcon imgIcon = new ImageIcon(); 
+    private boolean notYetMoved = true; 
 
     public Piece(){}
 
@@ -58,6 +59,12 @@ public abstract class Piece {
     public boolean getCheckingKing(){
         return checkingKing;
     }
+    public boolean getIfNotYetMoved(){
+        return notYetMoved;
+    }
+    public void setNotYetMoved(boolean b){
+        notYetMoved=b;
+    }
     public void checkingKing(ArrayList<Square> legalMoves){
             for(Square sq : legalMoves){
                 if(sq.isTakenSquare() && sq.getPieceOnSq().pieceName.equals("King")){
@@ -97,6 +104,9 @@ public abstract class Piece {
             }
         }
         target.placePiece(this);
+        if(notYetMoved){ 
+            notYetMoved = false;
+        }
 
         checkingKing(legalMoves);
     }

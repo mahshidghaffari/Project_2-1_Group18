@@ -26,13 +26,22 @@ public class Game{
     
     public Game(){
         cb  = new ChessBoard();
-         cb.getBoard()[7][5].removePiece(cb.getOccupingPiece(7, 5));
-         cb.getBoard()[7][6].removePiece(cb.getOccupingPiece(7, 6));
-         cb.getBoard()[7][1].removePiece(cb.getOccupingPiece(7, 1));
-         cb.getBoard()[7][2].removePiece(cb.getOccupingPiece(7, 2));
-         cb.getBoard()[7][3].removePiece(cb.getOccupingPiece(7, 3));
-         cb.getBoard()[6][2].removePiece(cb.getOccupingPiece(6, 2));
-         cb.getBoard()[6][2].placePiece(cb.getBoard()[0][3].getPieceOnSq());
+        // King Wking = new King(true); 
+        // Rook Wrook = new Rook(true);
+        // Rook Wrook1 = new Rook(true);
+        // cb.getBoard()[7][4].placePiece(Wking);
+        // cb.getBoard()[7][0].placePiece(Wrook);
+        // cb.getBoard()[7][7].placePiece(Wrook1);
+        // cb.getLivePieces().add(Wking);
+        // cb.getLivePieces().add(Wrook);
+        // cb.getLivePieces().add(Wrook1);
+        //  cb.getBoard()[7][5].removePiece(cb.getOccupingPiece(7, 5));
+        //  cb.getBoard()[7][6].removePiece(cb.getOccupingPiece(7, 6));
+        //  cb.getBoard()[7][1].removePiece(cb.getOccupingPiece(7, 1));
+        //  cb.getBoard()[7][2].removePiece(cb.getOccupingPiece(7, 2));
+        //  cb.getBoard()[7][3].removePiece(cb.getOccupingPiece(7, 3));
+        //  cb.getBoard()[6][2].removePiece(cb.getOccupingPiece(6, 2));
+        //  cb.getBoard()[6][2].placePiece(cb.getBoard()[0][3].getPieceOnSq());
          //  cb.getBoard()[0][1].removePiece(cb.getOccupingPiece(0, 1));
         //  cb.getBoard()[0][2].removePiece(cb.getOccupingPiece(0, 2));
         //  cb.getBoard()[0][5].removePiece(cb.getOccupingPiece(0, 5));
