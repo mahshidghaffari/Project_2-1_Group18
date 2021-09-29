@@ -159,15 +159,15 @@ public class Pawn extends Piece{
                 JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
                 cb.setNewChessBoard();
             }
-            if(target.getXPos() != this.getCurrentPosition().getXPos()){ //if the target and the current pos have the different x
-                //Pawn is going to go diagonally, but since target is null, it is doing en passant
+        } else{ //If the target square is empty
+            if(target.getXPos() != this.getCurrentPosition().getXPos()){ //if target and current pos have the different x
+                //Pawn is going to go diagonally it is doing en passant
                 //Have to remove piece captured en passant
                 Square squareToEmpty = board[this.getCurrentPosition().getYPos()][target.getXPos()];
                 cb.getLivePieces().remove(squareToEmpty.getPieceOnSq());
                 squareToEmpty.removePiece(squareToEmpty.getPieceOnSq());
-                
             }
-        } 
+        }
         
         target.placePiece(this);
         checkingKing(legalMoves);
