@@ -36,6 +36,9 @@ public class Game{
     public ChessBoard getChessBoard(){
         return cb;
     }
+    public void setNewChessBoard(){
+        this.cb = new ChessBoard();
+    }
     public boolean isNewTurn(){
         return newTurn;
     }
