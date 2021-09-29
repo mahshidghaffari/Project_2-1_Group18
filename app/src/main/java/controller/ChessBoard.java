@@ -153,4 +153,17 @@ public class ChessBoard{
     public Square[] getLastPlyPlayed(){
         return this.lastPlyPlayed;
     }
+
+    public void setNewChessBoard(){
+        this.deletePieces();
+        this.setUpBoard();
+    }
+    public void deletePieces(){
+        for(int i = 0; i<=7; i++){
+            for(int j = 0; j<= 7; j++){
+                Piece p = board[i][j].getPieceOnSq();
+                board[i][j].removePiece(p);
+            }
+        }
+    }
 }
