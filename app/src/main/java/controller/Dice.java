@@ -18,5 +18,4 @@ public class Dice {
     public void randomize(){
         diceNumber=  rand.nextInt(6);
     }
-
 }

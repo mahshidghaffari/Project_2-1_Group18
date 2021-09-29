@@ -1,6 +1,5 @@
 package controller;
 
-import view.*;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -12,11 +11,12 @@ public abstract class Piece {
     private boolean isWhite  = true;
     private Square currentPos;
     private double value;
-    private boolean promoted;
     private boolean checkingKing=false;
     public Square[] lastMove= new Square[2];
     String pieceName;
-    private ImageIcon imgIcon = new ImageIcon(); 
+    private ImageIcon imgIcon = new ImageIcon();
+    private ImageIcon highlightedImgIcon = new ImageIcon();
+    private boolean highlighted = false;
 
     public Piece(){}
 
@@ -56,9 +56,14 @@ public abstract class Piece {
     public void setImgIcon(ImageIcon imgIcon){
         this.imgIcon = imgIcon;
     }
+    public void setHighlightedImgIcon(ImageIcon highlightedImgIcon) {this.highlightedImgIcon = highlightedImgIcon; }
+    public ImageIcon getHighlightedImgIcon() { return highlightedImgIcon;}
+    public void removeIcon() {this.imgIcon = null; }
     public boolean getCheckingKing(){
         return checkingKing;
     }
+    public void setHighlighted(boolean b) {this.highlighted = b;}
+    public boolean getHighlighted() {return highlighted; }
     public void checkingKing(ArrayList<Square> legalMoves){
             for(Square sq : legalMoves){
                 if(sq.isTakenSquare() && sq.getPieceOnSq().pieceName.equals("King")){
@@ -69,7 +74,8 @@ public abstract class Piece {
                 checkingKing=false;
             }
         }
-      //checks whether the two pieces have the same color 
+
+    //checks whether the two pieces have the same color
     public boolean sameTeam(Piece otherP){
         if(this.isWhite() == otherP.isWhite()){
             return true;
@@ -83,8 +89,8 @@ public abstract class Piece {
     }
 
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
-        Square[] moveDescription = {currentPos, target};
-        cb.setLastPlyPlayed(moveDescription);
+        lastMove[0]= currentPos;
+        lastMove[1]= target;
 
         currentPos.removePiece(this);
         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
@@ -103,14 +109,6 @@ public abstract class Piece {
     }
 
     public Square[] getLastMove() {return lastMove;}
-
-    public boolean getPromoted(){
-        return this.promoted;
-    }
-    public void setPromoted(boolean isPromoted){
-        this.promoted = isPromoted;
-    }
-
 
     public abstract ArrayList<Square> getLegalMoves(ChessBoard cb);
     //abstract boolean isCheckingKing(Square location, Square OpposingKing); 

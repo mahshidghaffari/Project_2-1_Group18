@@ -4,11 +4,11 @@ import javax.swing.ImageIcon;
 
 import view.SquareButton;
 
-public class Square{
+public class Square {
 
     private int x; //columns
     private int y; //rows
-    private Piece piece = null;
+    private Piece piece=null;
     private boolean isOccupied;
     SquareButton button = null; 
 
@@ -28,13 +28,13 @@ public class Square{
         piece = toPut;
         isOccupied = true;
         piece.setCurrentPosition(this);  
-        if(button != null)     button.setPiece(piece.getImgIcon());   
+        if(button != null)     button.setIcon(piece.getImgIcon());
     }
 
     public void removePiece(Piece toRemove){
         piece = null;
         isOccupied = false;
-        if(button != null)      button.setPiece(new ImageIcon());
+        button.setIcon(null);
     }
 
     public int getXPos(){
@@ -58,9 +58,11 @@ public class Square{
     public SquareButton getButtonOnSquare(){
         return button;
     }
-    public void setButtonOnSquare(SquareButton button){
+    public void setButtonOnSqaure(SquareButton button){
         this.button = button;
     }
+    public void removeImage() { this.button.setIcon(null);}
+    public void placeImage(Piece piece) {this.button.setIcon(piece.getImgIcon());}
     public String toString(){
         String msg ="";
         if(piece!=null){

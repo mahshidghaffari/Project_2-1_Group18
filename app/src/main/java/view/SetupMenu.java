@@ -1,5 +1,7 @@
 package view;
 
+import controller.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,7 +28,8 @@ public class SetupMenu {
 
         frame = new JFrame();
         frame.getContentPane().setBackground(Color.DARK_GRAY);
-        frame.setBounds(400, 100, WIDTH, HEIGHT);
+        //frame.setBounds(400, 100, WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
@@ -242,10 +245,7 @@ public class SetupMenu {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\nLAUNCHING GAME.....");
                 PrintGame();
-                //TODO
-                //At this point, we know the gamemode (PvP ,PvAI ,AIvAI)
-                //At this point, we know the Time (10 ,5 ,20)
-                //Launch game with variables GameMode and GameTime
+                startGamebaord();
                 frame.dispose();
             }
         });
@@ -258,8 +258,24 @@ public class SetupMenu {
 
         frame.setBounds(400, 100, WIDTH-1, HEIGHT-1);
         frame.setBounds(400, 100, WIDTH, HEIGHT);
+    }
 
+    public void startGamebaord() {
+        Game game = new Game();
+        JFrame f = new JFrame("Dice Chess");
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
+        f.setLayout(new BorderLayout());
+        f.setBackground(Color.GREEN);
+
+        f.add(new SidePanel(game).getPane(), BorderLayout.WEST);
+        f.add(new MainPanel(game).getMainPanel(), BorderLayout.CENTER);
+
+        f.setResizable(false);
+        f.setLocationRelativeTo(null);
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        f.setVisible(true);
     }
 }
 

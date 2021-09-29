@@ -30,35 +30,12 @@ public class MoveTest{
         ArrayList<Square> rookLM = rook.getLegalMoves(cb);   
         ArrayList<Square> pawnLM = pawn.getLegalMoves(cb);
         
-        // System.out.println("Queen Legal Moves \n");
-        // for(int i = 0; i<queenLM.size() ; i++){
-        //     System.out.println(queenLM.get(i));
-        // }
-        
-        // System.out.println("King Legal Moves \n");
-        // for(int i = 0; i<kingLM.size() ; i++){
-        //     System.out.println(kingLM.get(i));
-        // }
-
-        // System.out.println("Knight Legal Moves \n");
-        // for(int i = 0; i<knightLM.size() ; i++){
-        //     System.out.println(knightLM.get(i));
-        // }
-
-        // System.out.println("Bishop Legal Moves \n");
-        // for(int i = 0; i<bishopLM.size() ; i++){
-        //     System.out.println(bishopLM.get(i));
-        // }
-        
         System.out.println("Rook Legal Moves \n");
         for(int i = 0; i<pawnLM.size() ; i++){
             System.out.println(pawnLM.get(i));
         }
         
-         pawn.move(board[0][7], cb, pawnLM); 
-        // knight.move(knightLM.get(0), cb);
-        // printBoard(cb);
-        
+        pawn.move(board[0][7], cb, pawnLM);
     }
 
     public static void printBoard(ChessBoard cb){

@@ -91,9 +91,6 @@ public class Rook extends Piece {
     
     @Override
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
-        Square[] moveDescription = {this.getCurrentPosition(), target};
-        cb.setLastPlyPlayed(moveDescription);
-        
         if(notYetMoved){ notYetMoved=false;}
         super.getCurrentPosition().removePiece(this);
         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture

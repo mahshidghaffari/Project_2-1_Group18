@@ -5,7 +5,6 @@ public class BlackPlayer extends Player{
 
     private ArrayList<Piece> blackLivePieces;
     private ArrayList<Piece> livePieces;
-    //private boolean blackTurn= false;
     
     public BlackPlayer(ChessBoard cb) {
         super(cb);
@@ -18,14 +17,7 @@ public class BlackPlayer extends Player{
             }
         }
     }
-    // public boolean getIsBlackTurn(){
-    //     return blackTurn;
-    // }
-    // public void setIsBlackTurn(boolean isBlackTurn){
-    //     blackTurn = isBlackTurn;
-    // }
 
-    
     public ArrayList<Piece> getMovablePieces(String chosenPiece){
         ArrayList<Piece> movablePieces = new ArrayList<Piece>();
         for(Piece p: blackLivePieces){
@@ -43,6 +35,4 @@ public class BlackPlayer extends Player{
         }
         return false;
     }
-
 }
-    

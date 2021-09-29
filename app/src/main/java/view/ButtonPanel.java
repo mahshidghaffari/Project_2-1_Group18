@@ -31,7 +31,8 @@ public class ButtonPanel implements ActionListener {
         castlingButton.addActionListener(this);
         promotionButton.addActionListener(this);
 
-        promotionButton.setVisible(true);
+        castlingButton.setVisible(false);
+        promotionButton.setVisible(false);
 
         buttonPanel.add(helpButton);
         buttonPanel.add(saveButton);

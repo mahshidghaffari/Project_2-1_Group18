@@ -19,13 +19,6 @@ public class WhitePlayer extends Player{
             }
         }
     }
-    // public boolean getIsWhiteTurn(){
-    //     return whiteTurn;
-    // }
-    // public void setIsWhiteTurn(boolean isWhiteTurn){
-    //     whiteTurn = isWhiteTurn;
-
-    // }
 
     public ArrayList<Piece> getMovablePieces(String chosenPiece){
         ArrayList<Piece> movablePieces = new ArrayList<Piece>();
@@ -45,7 +38,4 @@ public class WhitePlayer extends Player{
         }
         return false;
     }
-    
-
 }
-    

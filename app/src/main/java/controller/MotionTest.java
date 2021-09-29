@@ -59,29 +59,6 @@ public class MotionTest {
 
         ChessBoard cb = new ChessBoard();
 
-    
-        //King test
-        // King myKing = (King) cb.getOccupingPiece(0, 4);
-        // cb.getBoard()[5][4].placePiece(myKing);
-        // ArrayList<Square> legalMoves = myKing.getLegalMoves(cb);
-
-   
-		
-    //     // Queen test
-    //     Queen myQueen = (Queen) cb.getOccupingPiece(7,3);
-    //     cb.getBoard()[5][4].placePiece(myQueen);
-   		
-    //     ArrayList<Square> legalMoves = myQueen.getLegalMoves(cb);
-
-    //     for(int i = 0; i<legalMoves.size() ; i++){
-    //         System.out.println(legalMoves.get(i));
-    //     }
-
-
-        
-        
-        
-
         //Castling Test
         ChessBoard cbTest = new ChessBoard(true);
         Square[][] testBoard = cbTest.getBoard();
@@ -103,18 +80,6 @@ public class MotionTest {
         for(int i = 0; i<legalMoves.size() ; i++){
             System.out.println(legalMoves.get(i));
         }
-        
-
-        // PRINT BOARD
-    //    for(int i = 0; i<cb.getBoard().length ; i++){
-    //    	for(int y = 0; y<cb.getBoard().length ; y++){
-	//         	if(cb.getBoard()[i][y].isTakenSquare()) {
-	//         		 System.out.print(" " + cb.getBoard()[i][y].getPieceOnSq().pieceName + " ");
-	//         	}
-	//         	else { System.out.print(" empty ");}
-	//         }
-    //    	System.out.println("");
-    //    }
     }
 }
     

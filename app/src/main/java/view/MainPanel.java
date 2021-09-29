@@ -22,11 +22,9 @@ public class MainPanel implements ActionListener  {
     MainPanel(Game game) {
         this.game = game;
         initialize();
-
     }
 
     public void initialize() {
-        //Game game = new Game();
         mainPanel.setLayout(new GridLayout(8, 8));
         mainPanel.setPreferredSize(new Dimension(screenSize.height, screenSize.height));
         mainPanel.setBounds(screenSize.height/2, 0, screenSize.height, screenSize.height);
@@ -88,9 +86,7 @@ public class MainPanel implements ActionListener  {
                             }
                         }
                     });
-            
-
-                cb.getBoard()[i][j].setButtonOnSquare(button);
+                cb.getBoard()[i][j].setButtonOnSqaure(button);
                 mainPanel.add(button, i, j);
             }
         }
@@ -116,6 +112,12 @@ public class MainPanel implements ActionListener  {
         ImageIcon wPawn = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wpawn.png"));
         ImageIcon wQueen = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png"));
         ImageIcon wRook = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png"));
+        ImageIcon rBishop = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rbishop.png"));
+        ImageIcon rKing = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rking.png"));
+        ImageIcon rKnight = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rknight.png"));
+        ImageIcon rPawn = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rpawn.png"));
+        ImageIcon rRook = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rrook.png"));
+        ImageIcon rQueen = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png"));
 
         for(Piece piece: cb.getLivePieces()){
             if(piece.isWhite()){
@@ -134,9 +136,16 @@ public class MainPanel implements ActionListener  {
                 if(piece.getPieceName().equals("Rook"))     piece.setImgIcon(bRook);
                 if(piece.getPieceName().equals("Knight"))   piece.setImgIcon(bKnight);
             }
+
+            //Set highlighted pieces
+            if(piece.getPieceName().equals("King"))     piece.setHighlightedImgIcon(rKing);
+            if(piece.getPieceName().equals("Queen"))    piece.setHighlightedImgIcon(rQueen);
+            if(piece.getPieceName().equals("Bishop"))   piece.setHighlightedImgIcon(rBishop);
+            if(piece.getPieceName().equals("Pawn"))     piece.setHighlightedImgIcon(rPawn);
+            if(piece.getPieceName().equals("Rook"))     piece.setHighlightedImgIcon(rRook);
+            if(piece.getPieceName().equals("Knight"))   piece.setHighlightedImgIcon(rKnight);
+
         }
-       
-    
      game.updateBoard();
     }
 

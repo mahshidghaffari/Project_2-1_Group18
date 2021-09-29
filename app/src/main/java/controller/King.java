@@ -7,13 +7,11 @@ public class King extends Piece {
 
     private boolean notYetMoved = true;
 
-
     public King(boolean white) {
         super.setWhite(white);
         super.pieceName = "King";
         super.setValue(0);
     }
-
 
     public ArrayList <Square> getLegalMoves(ChessBoard cb) {
         ArrayList <Square> legalMoves = new ArrayList <>();
@@ -47,11 +45,10 @@ public class King extends Piece {
 
     @Override
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalmoves){
-        
-        Square[] moveDescription = {this.getCurrentPosition(), target};
-        cb.setLastPlyPlayed(moveDescription);
-        
         if(notYetMoved){ notYetMoved=false;}
+          //  lastMove[0]= getCurrentPosition();
+          //  lastMove[1]= target;
+    
             getCurrentPosition().removePiece(this);
             if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
                 Piece captured = target.getPieceOnSq();
