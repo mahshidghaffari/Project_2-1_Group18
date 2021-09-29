@@ -15,7 +15,7 @@ public class SetupMenu {
     private int GameTime= 10;//default
 
     public SetupMenu(){
-        create();
+
     }
 
     private void PrintGame(){
@@ -24,7 +24,7 @@ public class SetupMenu {
         System.out.println("GAME TIME: "+GameTime);
     }
 
-    private void create() {
+    public void create() {
 
         frame = new JFrame();
         frame.getContentPane().setBackground(Color.DARK_GRAY);
@@ -261,9 +261,9 @@ public class SetupMenu {
     }
 
     public void startGamebaord() {
-        Game game = new Game();
-        JFrame f = new JFrame("Dice Chess");
 
+        JFrame f = new JFrame("Dice Chess");
+        Game game = new Game(f);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
         f.setLayout(new BorderLayout());

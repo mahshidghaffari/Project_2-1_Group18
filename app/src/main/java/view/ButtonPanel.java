@@ -1,5 +1,8 @@
 package view;
 
+import controller.ChessBoard;
+import controller.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,15 +11,17 @@ import java.awt.event.ActionListener;
 public class ButtonPanel implements ActionListener {
 
     JButton helpButton = new JButton("HELP");
-    JButton saveButton = new JButton("SAVE");
+    JButton saveButton = new JButton("RESET");
     JButton promotionButton = new JButton("PROMOTE");
     JButton castlingButton = new JButton("CASTLING");
     JPanel buttonPanel = new JPanel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    Game game;
 
-    ButtonPanel() {initialize();}
+    ButtonPanel(Game g) {initialize(g);}
 
-    public void initialize() {
+    public void initialize(Game g) {
+        this.game=g;
         buttonPanel.setLayout(new GridLayout(4, 1));
         buttonPanel.setBackground(Color.LIGHT_GRAY);
         buttonPanel.setLayout(null);
@@ -51,8 +56,10 @@ public class ButtonPanel implements ActionListener {
             frame1.setVisible(true);
 
         } if (e.getSource() == saveButton) {
-            SaveFrame frame2 = new SaveFrame();
-            frame2.setVisible(true);
+            System.out.println(game.whosPlaying());
+            game.getFrame().dispose();
+            SetupMenu sm= new SetupMenu();
+            sm.startGamebaord();
 
         } else if (e.getSource() == castlingButton){
 

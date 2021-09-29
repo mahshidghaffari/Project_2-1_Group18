@@ -15,12 +15,17 @@ public class Game{
     private WhitePlayer wPlayer;
     private BlackPlayer bPlayer;
     private Piece heldPiece = null;
+    private JFrame f;
 
-    public Game(){
+    public Game(JFrame f){
+        this.f=f;
         cb  = new ChessBoard();
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
+    }
+    public JFrame getFrame(){
+        return f;
     }
 
     public ChessBoard getChessBoard(){
