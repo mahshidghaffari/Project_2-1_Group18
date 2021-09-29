@@ -79,7 +79,7 @@ public class Game{
                 else if (clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
                     heldPiece = clickedPiece;
                     heldPiece.setHighlighted(true);
-                    highlightPiece(clickedPiece, clickedSquare);
+                    highlightPiece(heldPiece, clickedSquare);
                     System.out.println("legal first click");
                     return true;
                 }
@@ -107,9 +107,9 @@ public class Game{
             if(!clickedOnce){ //and this click is the choice of which piece to move
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
                 else if (!clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
-                    highlightPiece(clickedPiece, clickedSquare);
                     heldPiece = clickedPiece;
                     heldPiece.setHighlighted(true);
+                    highlightPiece(heldPiece, clickedSquare);
                     System.out.println("legal first click");
                     return true;
                 }
@@ -152,10 +152,9 @@ public class Game{
     }
 
     public void highlightPiece(Piece piece, Square square) {
-        if (piece.getHighlighted()) {
-            square.getButtonOnSquare().setIcon(piece.getHighlightedImgIcon());
-        } else {
-            square.getButtonOnSquare().setIcon(piece.getImgIcon());
-        }
+        square.removeImage();
+
+        updateBoard();
+        square.placeImage(piece);
     }
 }

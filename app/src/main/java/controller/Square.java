@@ -28,13 +28,13 @@ public class Square {
         piece = toPut;
         isOccupied = true;
         piece.setCurrentPosition(this);  
-        if(button != null)     button.setIcon(piece.getImgIcon());
+        if(button != null)     button.setPieceIcon(piece.getImgIcon());
     }
 
     public void removePiece(Piece toRemove){
         piece = null;
         isOccupied = false;
-        button.setIcon(null);
+        button.setPieceIcon(null);
     }
 
     public int getXPos(){
@@ -61,8 +61,15 @@ public class Square {
     public void setButtonOnSqaure(SquareButton button){
         this.button = button;
     }
-    public void removeImage() { this.button.setIcon(null);}
-    public void placeImage(Piece piece) {this.button.setIcon(piece.getImgIcon());}
+    public void removeImage() { this.button.setPieceIcon(null);}
+    public void placeImage(Piece piece) {
+        if (piece.getHighlighted()) {
+            this.button.setPieceIcon(piece.getHighlightedImgIcon());
+
+        } else {
+            this.button.setPieceIcon(piece.getImgIcon());
+        }
+    }
     public String toString(){
         String msg ="";
         if(piece!=null){

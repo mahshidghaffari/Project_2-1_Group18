@@ -10,7 +10,10 @@ public class SquareButton extends JButton {
 
     SquareButton() { }
 
-    public void setIcon(ImageIcon image) { this.pieceIcon = image; this.setIcon(image);}
+    public void setPieceIcon(ImageIcon image) {
+        this.pieceIcon = image;
+        this.setIcon(image);
+    }
 
     public ImageIcon getPieceIcon() { return pieceIcon; }
 

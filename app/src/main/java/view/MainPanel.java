@@ -121,31 +121,62 @@ public class MainPanel implements ActionListener  {
 
         for(Piece piece: cb.getLivePieces()){
             if(piece.isWhite()){
-                if(piece.getPieceName().equals("King"))     piece.setImgIcon(wKing);
-                if(piece.getPieceName().equals("Queen"))    piece.setImgIcon(wQueen);
-                if(piece.getPieceName().equals("Bishop"))   piece.setImgIcon(wBishop);
-                if(piece.getPieceName().equals("Pawn"))     piece.setImgIcon(wPawn);
-                if(piece.getPieceName().equals("Rook"))     piece.setImgIcon(wRook);
-                if(piece.getPieceName().equals("Knight"))   piece.setImgIcon(wKnight);
+                if(piece.getPieceName().equals("King")) {
+                    piece.setImgIcon(wKing);
+                    piece.setHighlightedImgIcon(rKing);
+                }
+                if(piece.getPieceName().equals("Queen")) {
+                    piece.setImgIcon(wQueen);
+                    piece.setHighlightedImgIcon(rQueen);
+                }
+
+                if(piece.getPieceName().equals("Bishop"))  {
+                    piece.setImgIcon(wBishop);
+                    piece.setHighlightedImgIcon(rBishop);
+                }
+                if(piece.getPieceName().equals("Pawn"))    {
+                    piece.setImgIcon(wPawn);
+                    piece.setHighlightedImgIcon(rPawn);
+                }
+
+                if(piece.getPieceName().equals("Rook")) {
+                    piece.setImgIcon(wRook);
+                    piece.setHighlightedImgIcon(rRook);
+                }
+
+                if(piece.getPieceName().equals("Knight"))  {
+                    piece.setImgIcon(wKnight);
+                    piece.setHighlightedImgIcon(rKnight);
+                }
             }
             else{
-                if(piece.getPieceName().equals("King"))     piece.setImgIcon(bKing);
-                if(piece.getPieceName().equals("Queen"))    piece.setImgIcon(bQueen);
-                if(piece.getPieceName().equals("Bishop"))   piece.setImgIcon(bBishop);
-                if(piece.getPieceName().equals("Pawn"))     piece.setImgIcon(bPawn);
-                if(piece.getPieceName().equals("Rook"))     piece.setImgIcon(bRook);
-                if(piece.getPieceName().equals("Knight"))   piece.setImgIcon(bKnight);
+                if(piece.getPieceName().equals("King")) {
+                    piece.setImgIcon(bKing);
+                    piece.setHighlightedImgIcon(rKing);
+                }
+                if(piece.getPieceName().equals("Queen")) {
+                    piece.setImgIcon(bQueen);
+                    piece.setHighlightedImgIcon(rQueen);
+                }
+                if(piece.getPieceName().equals("Bishop")) {
+                    piece.setImgIcon(bBishop);
+                    piece.setHighlightedImgIcon(rBishop);
+                }
+                if(piece.getPieceName().equals("Pawn")) {
+                    piece.setImgIcon(bPawn);
+                    piece.setHighlightedImgIcon(rPawn);
+                }
+                if(piece.getPieceName().equals("Rook"))  {
+                    piece.setImgIcon(bRook);
+                    piece.setHighlightedImgIcon(rRook);
+                }
+                if(piece.getPieceName().equals("Knight")) {
+                    piece.setImgIcon(bKnight);
+                    piece.setHighlightedImgIcon(rKnight);
+                }
             }
-
-            //Set highlighted pieces
-            if(piece.getPieceName().equals("King"))     piece.setHighlightedImgIcon(rKing);
-            if(piece.getPieceName().equals("Queen"))    piece.setHighlightedImgIcon(rQueen);
-            if(piece.getPieceName().equals("Bishop"))   piece.setHighlightedImgIcon(rBishop);
-            if(piece.getPieceName().equals("Pawn"))     piece.setHighlightedImgIcon(rPawn);
-            if(piece.getPieceName().equals("Rook"))     piece.setHighlightedImgIcon(rRook);
-            if(piece.getPieceName().equals("Knight"))   piece.setHighlightedImgIcon(rKnight);
-
         }
+
      game.updateBoard();
     }
 
