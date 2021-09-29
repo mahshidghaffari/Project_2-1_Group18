@@ -31,6 +31,7 @@ public class DicePanel implements ActionListener {
         dicePanel.setLayout(new GridLayout(1, 2));
         dicePanel.setBackground(Color.LIGHT_GRAY);
         diceButton.setIcon(new ImageIcon(image));
+        diceButton.setBackground(Color.LIGHT_GRAY);
         diceButton.setBorderPainted(false);
         diceButton.addActionListener(this);
 
@@ -123,40 +124,3 @@ public class DicePanel implements ActionListener {
         }
     }
 }
-
-
-
-
-    // public void actionPerformed(ActionEvent e) {
-
-    //     if(e.getSource() == diceButton) {
-    //         int diceNumber = rand.nextInt(6);
-
-    //         switch (diceNumber){
-
-    //             case 0:
-    //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png")));
-    //                 break;
-
-    //             case 1:
-    //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wking.png")));
-    //                 break;
-
-    //             case 2:
-    //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png")));
-    //                 break;
-
-    //             case 3:
-    //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wpawn.png")));
-    //                 break;
-
-    //             case 4:
-    //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png")));
-    //                 break;
-
-    //             case 5:
-    //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png")));
-    //                 break;
-    //         }
-    //     }
-    // }

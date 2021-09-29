@@ -9,41 +9,33 @@ import java.awt.event.ActionListener;
 public class ButtonPanel implements ActionListener {
 
     JButton helpButton = new JButton("HELP");
-    JButton saveButton = new JButton("SAVE");
-    JButton promotionButton = new JButton("PROMOTE");
-    JButton resetButton = new JButton("RESET");
+    JButton saveButton = new JButton("RESET");
+    JLabel label = new JLabel("INSERT TEXT HEREINSERT TEXT HEREINSERT TEXT HEREINSERT TEXT HERE");
     JPanel buttonPanel = new JPanel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     Game game;
 
-    public ButtonPanel(Game game) { 
-        this.game = game;
-        initialize();
-    }
+    public ButtonPanel(Game g) { initialize(g); }
 
-    public void initialize() {
+    public void initialize(Game g) {
+        this.game=g;
         buttonPanel.setLayout(new GridLayout(4, 1));
         buttonPanel.setBackground(Color.LIGHT_GRAY);
         buttonPanel.setLayout(null);
 
         helpButton.setBounds((screenSize.height/2)/3, 0, (screenSize.height/2)/3, 50);
         saveButton.setBounds((screenSize.height/2)/3, (screenSize.height/4)/4, (screenSize.height/2)/3, 50);
-        resetButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)* 2), (screenSize.height/2)/3, 50);
-        promotionButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)*3),  (screenSize.height/2)/3, 50);
+            
+        label.setBounds((screenSize.height/2)/20,  (((screenSize.height/4)/4)* 2), (screenSize.height/2)/1, 50);
 
         helpButton.addActionListener(this);
         saveButton.addActionListener(this);
-        resetButton.addActionListener(this);
-        promotionButton.addActionListener(this);
-
-        promotionButton.setVisible(true);
 
         buttonPanel.add(helpButton);
         buttonPanel.add(saveButton);
-        buttonPanel.add(resetButton);
-        buttonPanel.add(promotionButton);
+        buttonPanel.add(label);
 
-        game.setButtonPanel(this);
+
     }
 
     @Override
@@ -57,13 +49,19 @@ public class ButtonPanel implements ActionListener {
             frame1.setVisible(true);
 
         } if (e.getSource() == saveButton) {
-            SaveFrame frame2 = new SaveFrame();
-            frame2.setVisible(true);
+            System.out.println(game.whosPlaying());
+            game.getFrame().dispose();
+            SetupMenu sm= new SetupMenu();
+            sm.startGamebaord();
 
-        } 
+        }
     }
 
 
 
     public JPanel getButtonPanel() { return buttonPanel; }
+
+    public void setText(String text){
+        this.label.setText(text);
+    }
 }

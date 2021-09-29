@@ -30,9 +30,7 @@ public class Stopwatch implements ActionListener {
             minutes_string = String.format("%02d", minutes);
             hours_string = String.format("%02d", hours);
             timeLabel.setText(hours_string + ":" + minutes_string + ":" + seconds_string);
-
         }
-
     });
 
 

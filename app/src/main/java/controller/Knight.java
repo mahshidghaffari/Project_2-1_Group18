@@ -3,12 +3,12 @@ import java.util.ArrayList;
 
 public class Knight extends Piece { 
 
-    public Knight(boolean white){
+    public Knight(boolean white) {
         super.setWhite(white);
         super.pieceName = "Knight";
         super.setValue(3);
-
     }
+
     public ArrayList<Square> getLegalMoves(ChessBoard cb){
         Square[][] board = cb.getBoard();
         ArrayList<Square> legalMoves = new ArrayList<Square>();

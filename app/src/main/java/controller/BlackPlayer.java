@@ -10,8 +10,6 @@ public class BlackPlayer extends Player{
         livePieces = cb.getLivePieces();
         setIsMyTurn(false);
     }
-    
-    
     public ArrayList<Piece> getMovablePieces(String chosenPiece){
         ArrayList<Piece> movablePieces = new ArrayList<Piece>();
         for(Piece p: livePieces){
@@ -30,7 +28,4 @@ public class BlackPlayer extends Player{
         }
         return false;
     }
-
-   
 }
-    

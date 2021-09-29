@@ -9,8 +9,6 @@ public abstract class Player {
     private ArrayList<Piece> livePieces;
     private boolean isMyTurn;
     private String color="Black";
-    //private boolean turn;
-    //private Piece piece2Move;
     Random rnd;
 
     public Player(ChessBoard cb){

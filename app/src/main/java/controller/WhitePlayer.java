@@ -12,7 +12,6 @@ public class WhitePlayer extends Player{
         setIsMyTurn(true);
     }
 
-
     public ArrayList<Piece> getMovablePieces(String chosenPiece){
         ArrayList<Piece> movablePieces = new ArrayList<Piece>();
         //check if this piece is even a live or not
@@ -32,7 +31,4 @@ public class WhitePlayer extends Player{
         }
         return false;
     }
-    
-
 }
-    

@@ -1,14 +1,12 @@
 package controller;
 
-import javax.swing.ImageIcon;
-
 import view.SquareButton;
 
-public class Square{
+public class Square {
 
     private int x; //columns
     private int y; //rows
-    private Piece piece = null;
+    private Piece piece=null;
     private boolean isOccupied;
     SquareButton button = null; 
 
@@ -28,13 +26,13 @@ public class Square{
         piece = toPut;
         isOccupied = true;
         piece.setCurrentPosition(this);  
-        if(button != null)     button.setPieceIcon(piece.getImgIcon());   
+        if(button != null)     button.setPieceIcon(piece.getImgIcon());
     }
 
     public void removePiece(Piece toRemove){
         piece = null;
         isOccupied = false;
-        if(button != null)      button.setPieceIcon(new ImageIcon());
+        button.setPieceIcon(null);
     }
 
     public int getXPos(){
@@ -61,10 +59,16 @@ public class Square{
     public void setButtonOnSquare(SquareButton button){
         this.button = button;
     }
-    public void placeImage(Piece piece){
-        this.button.setPieceIcon(piece.getImgIcon());
+    public void removeImage() { this.button.setPieceIcon(null);}
+    public void placeImage(Piece piece) {
+        if (piece.getHighlighted()) {
+            this.button.setPieceIcon(piece.getHighlightedImgIcon());
+
+        } else {
+            this.button.setPieceIcon(piece.getImgIcon());
+        }
     }
-    
+
     public String toString(){
         String msg ="";
         if(piece!=null){

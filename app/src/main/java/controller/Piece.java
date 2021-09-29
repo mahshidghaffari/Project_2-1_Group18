@@ -17,6 +17,8 @@ public abstract class Piece {
     String pieceName;
     private ImageIcon imgIcon = new ImageIcon(); 
     private boolean notYetMoved = true; 
+    private ImageIcon highlightedImgIcon = new ImageIcon();
+    private boolean highlighted= false;
 
     public Piece(){}
 
@@ -56,6 +58,12 @@ public abstract class Piece {
     public void setImgIcon(ImageIcon imgIcon){
         this.imgIcon = imgIcon;
     }
+    public void setHighlightedImgIcon(ImageIcon highlightedImgIcon) {this.highlightedImgIcon = highlightedImgIcon; }
+    public ImageIcon getHighlightedImgIcon() { return highlightedImgIcon;}
+    public void removeIcon() {this.imgIcon = null; }
+    public void setHighlighted(boolean b) {this.highlighted = b;}
+    public boolean getHighlighted() {return highlighted; }
+    
     public boolean getCheckingKing(){
         return checkingKing;
     }

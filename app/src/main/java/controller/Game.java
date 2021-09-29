@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 
 public class Game{
@@ -18,14 +19,17 @@ public class Game{
     private Player playing = null;
     private WhitePlayer wPlayer;
     private BlackPlayer bPlayer;
-    private Piece heldPiece;
+    private Piece heldPiece = null;
     private ButtonPanel buttonPanel;
-    private boolean showCastleButton= false;
     private JButton castleButton;
     private boolean diceClicked=false;
+    private JFrame f;
+
+
     
     
-    public Game(){
+    public Game(JFrame f){
+        this.f = f;
         cb  = new ChessBoard();
         // King Wking = new King(true); 
         // Rook Wrook = new Rook(true);
@@ -51,8 +55,12 @@ public class Game{
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
-
+        buttonPanel= new ButtonPanel(this);
     }
+    public JFrame getFrame(){
+        return f;
+    }
+
     public ChessBoard getChessBoard(){
         return cb;
     }
@@ -75,9 +83,6 @@ public class Game{
         castleButton.setVisible(false);
         updateBoard();
     } 
-    public boolean getShowCastleButton(){
-        return showCastleButton;
-    }
     public void setButtonPanel(ButtonPanel buttonPanel){
         this.buttonPanel = buttonPanel;
     }
@@ -88,16 +93,17 @@ public class Game{
     //public Castle getCastling(){ return castling;}
     public WhitePlayer getWhitePlayer(){return wPlayer;}
     public BlackPlayer getBlackPlayer(){return bPlayer;}
-    
-    
+
+
     public void play(){
-        
+
         if(wPlayer.getIsMyTurn()){        //if its w player's turn
             playing = wPlayer;
             newTurn= false;
             String chosen = dice.getRoleDice(); //roll the dice
             if(!wPlayer.canMove(chosen)){         //if player has no pieces to move we switch turns
                 System.out.println("Sorry white , you have no possible moves. Turn goes to black");
+
                 newTurn();
             }
         }   
@@ -122,7 +128,7 @@ public class Game{
 
 
     public boolean isLegalChoice(boolean clickedOnce, SquareButton clickedButton){
-        Square clickedSquare = cb.getSquare(clickedButton); //get clicked square 
+        Square clickedSquare = cb.getSquare(clickedButton); //get clicked square
         Piece clickedPiece = clickedSquare.getPieceOnSq();
         
         if(wPlayer.getIsMyTurn()){ //if its the white turn
@@ -130,13 +136,18 @@ public class Game{
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
                 else if (clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
-                    heldPiece = clickedPiece;   
+                    heldPiece = clickedPiece;
+                    heldPiece.setHighlighted(true);
+                    highlightPiece(heldPiece, clickedSquare);
                     System.out.println("legal first click");
+                    buttonPanel.setText("legal first click");
+
                     return true;
-               }
+                }
             }
             else{ //if this is the second click
                 if(heldPiece!=null && cb.getSquare(clickedButton).equals(heldPiece.getCurrentPosition())){   //if the player wants to move another piece
+                    heldPiece.setHighlighted(false);
                     heldPiece=null;
                     clickedOnce = false;
                     System.out.println("released");
@@ -165,6 +176,8 @@ public class Game{
                     else{  //if its just a non castling move
                         heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there    
                         System.out.println("legal second click");
+                        heldPiece.setHighlighted(false);
+                        heldPiece = null;
                         newTurn();
                         return true;
                     }                    
@@ -177,13 +190,16 @@ public class Game{
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
                 else if (!clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
-                    heldPiece = clickedPiece; 
+                    heldPiece = clickedPiece;
+                    heldPiece.setHighlighted(true);
+                    highlightPiece(heldPiece, clickedSquare);
                     System.out.println("legal first click");
                     return true;
-               }
+                }
             }
             else{ //if this is the second click
                 if(heldPiece!=null && cb.getSquare(clickedButton).equals(heldPiece.getCurrentPosition())){   //if the player wants to move another piece
+                    heldPiece.setHighlighted(false);
                     heldPiece=null;
                     clickedOnce = false;
                     System.out.println("released");
@@ -210,19 +226,28 @@ public class Game{
 
                     else{  //if its just a non castling move
                         heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there
+                        heldPiece.setHighlighted(false);
+                        heldPiece = null;    
                         newTurn();
                         System.out.println("legal second click");
                         return true;                    
                     }
+
+                    // heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there
+                    // heldPiece.setHighlighted(false);
+                    // heldPiece = null;
+                    // newTurn();
+                    // System.out.println("legal second click");
+                    // return true;
+
                 }
             }    
         }
         return false;
     }
 
-
     public void updateBoard(){
-        Square[][] board = cb.getBoard(); 
+        Square[][] board = cb.getBoard();
         for(int i=0; i<8; i++){
             for(int j=0;j<8;j++){
                 if(board[i][j].isTakenSquare()){
@@ -235,82 +260,11 @@ public class Game{
             }
         }
     }
-    
+
+    public void highlightPiece(Piece piece, Square square) {
+       square.removeImage();
+
+        updateBoard();
+        square.placeImage(piece);
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// package controller;
-
-// import view.*;
-// import java.util.Random;
-
-
-// public class Game{
-
-//     public static void main(String[] args) {
-//         new Game();
-//     }
-    
-//     public Game(){
-//         ChessBoard cb  = new ChessBoard();
-//         BlackPlayer bPlayer = new BlackPlayer(cb);
-//         WhitePlayer wPlayer = new WhitePlayer(cb);
-//         Random rnd = new Random();
-//         int i=0;
-//         wPlayer.setIsMyTurn(true);
-//         while(i<20){
-//             i++;
-//             System.out.println(i);
-//             String rollW = wPlayer.rollDice();
-//             String rollB = bPlayer.rollDice();
-//             if(wPlayer.getIsMyTurn() && wPlayer.canMove(rollW)){
-//                     wPlayer.setIsMyTurn(true);
-//                     int rndIndexPiece = rnd.nextInt(wPlayer.getMovablePieces(rollW).size()); //randomize which piece to move
-//                     Piece p = wPlayer.getMovablePieces(rollW).get(rndIndexPiece);
-//                     int rndIndexMove = rnd.nextInt(p.getLegalMoves(cb).size()); //randomize which move to choose from randomly chosen piece
-//                     Square move = p.getLegalMoves(cb).get(rndIndexMove);
-//                     p.move(move, cb, p.getLegalMoves(cb));
-//                     wPlayer.flipTurns(bPlayer);
-//                     cb.printBoard();
-//                     System.out.println();
-        
-//             }
-//             else if(bPlayer.getIsMyTurn() && bPlayer.canMove(rollB)){
-//                     bPlayer.setIsMyTurn(true);
-//                     int rndIndexPiece = rnd.nextInt(bPlayer.getMovablePieces(rollB).size());
-//                     Piece p = bPlayer.getMovablePieces(rollB).get(rndIndexPiece);
-//                     int rndIndexMove = rnd.nextInt(p.getLegalMoves(cb).size());
-//                     Square move = p.getLegalMoves(cb).get(rndIndexMove);
-//                     p.move(move, cb, p.getLegalMoves(cb));
-//                     bPlayer.flipTurns(wPlayer);
-//                     cb.printBoard();
-//                     System.out.println();
-        
-//                 }            
-//             }
-//         }
-//     }
-
