@@ -80,7 +80,6 @@ public class Game{
     }
     public void setButtonPanel(ButtonPanel buttonPanel){
         this.buttonPanel = buttonPanel;
-        castleButton = buttonPanel.getCastleButton();
     }
     public void setDiceClicked(boolean b) {
         diceClicked = b;
