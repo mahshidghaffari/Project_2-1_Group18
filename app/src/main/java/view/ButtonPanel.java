@@ -1,5 +1,7 @@
 package view;
 
+import controller.ChessBoard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,32 +12,34 @@ public class ButtonPanel implements ActionListener {
     JButton helpButton = new JButton("HELP");
     JButton saveButton = new JButton("SAVE");
     JButton promotionButton = new JButton("PROMOTE");
-    JButton castlingButton = new JButton("CASTLING");
+    JButton resetButton = new JButton("RESET");
     JPanel buttonPanel = new JPanel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    ChessBoard cb;
 
-    ButtonPanel() {initialize();}
+    public ButtonPanel(ChessBoard chessBoard) {initialize(chessBoard);}
 
-    public void initialize() {
+    public void initialize(ChessBoard chessBoard) {
+        cb=chessBoard;
         buttonPanel.setLayout(new GridLayout(4, 1));
         buttonPanel.setBackground(Color.LIGHT_GRAY);
         buttonPanel.setLayout(null);
 
         helpButton.setBounds((screenSize.height/2)/3, 0, (screenSize.height/2)/3, 50);
         saveButton.setBounds((screenSize.height/2)/3, (screenSize.height/4)/4, (screenSize.height/2)/3, 50);
-        castlingButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)* 2), (screenSize.height/2)/3, 50);
+        resetButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)* 2), (screenSize.height/2)/3, 50);
         promotionButton.setBounds((screenSize.height/2)/3,  (((screenSize.height/4)/4)*3),  (screenSize.height/2)/3, 50);
 
         helpButton.addActionListener(this);
         saveButton.addActionListener(this);
-        castlingButton.addActionListener(this);
+        resetButton.addActionListener(this);
         promotionButton.addActionListener(this);
 
         promotionButton.setVisible(true);
 
         buttonPanel.add(helpButton);
         buttonPanel.add(saveButton);
-        buttonPanel.add(castlingButton);
+        buttonPanel.add(resetButton);
         buttonPanel.add(promotionButton);
     }
 
@@ -53,8 +57,10 @@ public class ButtonPanel implements ActionListener {
             SaveFrame frame2 = new SaveFrame();
             frame2.setVisible(true);
 
-        } else if (e.getSource() == castlingButton){
-
+        } else if (e.getSource() == resetButton){
+            System.out.println("Reset Clicked");
+            cb.setNewChessBoard();
+            cb.printBoard();
         }
     }
 

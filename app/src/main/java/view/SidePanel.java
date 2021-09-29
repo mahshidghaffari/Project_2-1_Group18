@@ -32,7 +32,7 @@ public class SidePanel {
         // turnLabel.setPreferredSize(new Dimension(20, 20));
         //turnLabel.setBounds(10, 5, sidePanel.getHeight()/10, sidePanel.getWidth()/2);
        // sidePanel.add(turnLabel);
-        sidePanel.add(new ButtonPanel().getButtonPanel(), 0, 0);
+        sidePanel.add(new ButtonPanel(game.getChessBoard()).getButtonPanel(), 0, 0);
         sidePanel.add(new Stopwatch().getStopWatch(), 1,0);
         sidePanel.add(new DicePanel(game).getDicePanel(), 2, 0);
     }
