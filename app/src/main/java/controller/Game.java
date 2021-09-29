@@ -68,6 +68,7 @@ public class Game{
     public void newTurn(){
         wPlayer.flipTurns(bPlayer);
         newTurn=true;
+        diceClicked=false;
         castleButton.setVisible(false);
         updateBoard();
     } 
@@ -115,7 +116,7 @@ public class Game{
         Piece clickedPiece = clickedSquare.getPieceOnSq();
         
         if(wPlayer.getIsMyTurn()){ //if its the white turn
-            if(!diceClicked){return false;}
+            if(!diceClicked){ return false;}
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
                 else if (clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
@@ -161,7 +162,7 @@ public class Game{
         }
 
         else if(bPlayer.getIsMyTurn()){ //if its the black turn
-            if(!diceClicked){return false;}
+            if(!diceClicked){ return false;}
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
                 else if (!clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
