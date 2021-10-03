@@ -21,7 +21,6 @@ public class Game{
     private BlackPlayer bPlayer;
     private Piece heldPiece = null;
     private ButtonPanel buttonPanel;
-    private JButton castleButton;
     private boolean diceClicked=false;
     private JFrame f;
 
@@ -80,7 +79,6 @@ public class Game{
         wPlayer.flipTurns(bPlayer);
         newTurn=true;
         diceClicked=false;
-        castleButton.setVisible(false);
         updateBoard();
     } 
     public void setButtonPanel(ButtonPanel buttonPanel){
@@ -157,18 +155,19 @@ public class Game{
                    
                     int distance = Math.abs(clickedSquare.getXPos()-heldPiece.getCurrentPosition().getXPos());    //calculating the distance from the piece to desired moving location                
                     if(heldPiece.getPieceName().equals("King") && distance>1){                  //if the size of this movement is larger than 1 for the king it means this is castling
-                        heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));
+                        doCastling(clickedSquare);
 
-                        if(clickedSquare.getXPos()>4){             //if it is  a close castling
-                            Piece rook = cb.getBoard()[7][7].getPieceOnSq();
-                            rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));
-                        }
+                        // heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));
 
-                        else {                                      //if it is a far castling
-                            Piece rook = cb.getBoard()[7][0].getPieceOnSq();
-                            rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
-                        }
+                        // if(clickedSquare.getXPos()>4){             //if it is  a close castling
+                        //     Piece rook = cb.getBoard()[7][7].getPieceOnSq();
+                        //     rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));
+                        // }
 
+                        // else {                                      //if it is a far castling
+                        //     Piece rook = cb.getBoard()[7][0].getPieceOnSq();
+                        //     rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
+                        // }
                         newTurn();
                         return true;
                     }
@@ -267,4 +266,17 @@ public class Game{
         updateBoard();
         square.placeImage(piece);
     }
+
+    public void doCastling(Square clickedSquare ){
+        heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));
+        if(clickedSquare.getXPos()>4){             //if it is  a close castling
+            Piece rook = cb.getBoard()[7][7].getPieceOnSq();
+            rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));
+        }
+        else {                                      //if it is a far castling
+            Piece rook = cb.getBoard()[7][0].getPieceOnSq();
+            rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
+        }
+    }
+    
 }

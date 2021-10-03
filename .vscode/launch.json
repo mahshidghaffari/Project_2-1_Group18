@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch MoveTest",
+            "request": "launch",
+            "mainClass": "test.MoveTest",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "Launch PawnTest",
             "request": "launch",
             "mainClass": "test.PawnTest",

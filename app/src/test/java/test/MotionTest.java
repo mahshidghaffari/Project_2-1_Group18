@@ -1,5 +1,10 @@
-package controller;
+package test;
 import java.util.ArrayList;
+
+import controller.ChessBoard;
+import controller.King;
+import controller.Rook;
+import controller.Square;
 
 public class MotionTest {
 

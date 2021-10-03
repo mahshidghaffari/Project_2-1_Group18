@@ -1,5 +1,14 @@
-package controller;
+package test;
 import java.util.ArrayList;
+
+import controller.Bishop;
+import controller.ChessBoard;
+import controller.King;
+import controller.Knight;
+import controller.Pawn;
+import controller.Queen;
+import controller.Rook;
+import controller.Square;
 
 
 
@@ -43,7 +52,7 @@ public class MoveTest{
         for(int i = 0; i<cb.getBoard().length ; i++){
             for(int y = 0; y<cb.getBoard().length ; y++){
                 if(cb.getBoard()[i][y].isTakenSquare()) {
-                    System.out.print("  " + cb.getBoard()[i][y].getPieceOnSq().pieceName + "  ");
+                    System.out.print("  " + cb.getBoard()[i][y].getPieceOnSq().getPieceName()+ "  ");
                 }
                 else { System.out.print("  empty  ");}
             }
