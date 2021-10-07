@@ -60,6 +60,7 @@ public class Square {
         this.button = button;
     }
     public void removeImage() { this.button.setPieceIcon(null);}
+    
     public void placeImage(Piece piece) {
         if (piece.getHighlighted()) {
             this.button.setPieceIcon(piece.getHighlightedImgIcon());

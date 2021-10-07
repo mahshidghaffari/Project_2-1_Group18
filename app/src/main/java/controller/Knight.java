@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public class Knight extends Piece { 
 
+    
+
     public Knight(boolean white) {
         super.setWhite(white);
         super.pieceName = "Knight";

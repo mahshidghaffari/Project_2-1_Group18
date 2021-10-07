@@ -55,6 +55,7 @@ public class DicePanel implements ActionListener {
             game.updateBoard();
             if(!game.isNewTurn()) return; 
             else{
+                //game.newTurn();
                 game.setDiceClicked(true);
                 game.getDice().randomize();
                 String name =  game.getDice().getRoleDice(); 
