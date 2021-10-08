@@ -35,38 +35,7 @@ public class Game{
     
     public Game(JFrame f){
         this.f = f;
-        cb = new ChessBoard();
-        //cb  = new ChessBoard(false);
-        //cb.getLivePieces().remove(cb.getBoard()[7][6].getPieceOnSq());
-        
-        
-        //Knight queen   = new Knight(true);
-         //cb.getLivePieces().add(queen);
-         //cb.getBoard()[4][3].placePiece(queen);
-        // // King Wking = new King(true); 
-        //  Rook Wrook = new Rook(false);
-        //  cb.getLivePieces().add(Wrook);
-        //  cb.getBoard()[1][6].placePiece(Wrook);
-
-         // Rook Wrook1 = new Rook(true);
-        // cb.getBoard()[7][4].placePiece(Wking);
-        // cb.getBoard()[7][0].placePiece(Wrook);
-        // cb.getBoard()[7][7].placePiece(Wrook1);
-        // cb.getLivePieces().add(Wking);
-        // cb.getLivePieces().add(Wrook);
-        // cb.getLivePieces().add(Wrook1);
-        //  cb.getBoard()[7][5].removePiece(cb.getOccupingPiece(7, 5));
-        //  cb.getBoard()[7][6].removePiece(cb.getOccupingPiece(7, 6));
-        //  cb.getBoard()[7][1].removePiece(cb.getOccupingPiece(7, 1));
-        //  cb.getBoard()[7][2].removePiece(cb.getOccupingPiece(7, 2));
-        //  cb.getBoard()[7][3].removePiece(cb.getOccupingPiece(7, 3));
-        //  cb.getBoard()[6][2].removePiece(cb.getOccupingPiece(6, 2));
-        //  cb.getBoard()[6][2].placePiece(cb.getBoard()[0][3].getPieceOnSq());
-         //  cb.getBoard()[0][1].removePiece(cb.getOccupingPiece(0, 1));
-        //  cb.getBoard()[0][2].removePiece(cb.getOccupingPiece(0, 2));
-        //  cb.getBoard()[0][5].removePiece(cb.getOccupingPiece(0, 5));
-        //  cb.getBoard()[0][6].removePiece(cb.getOccupingPiece(0, 6));
-        //  cb.getBoard()[0][3].removePiece(cb.getOccupingPiece(0, 3));
+        cb = new ChessBoard(true);
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
@@ -175,26 +144,12 @@ public class Game{
                         doCastling(clickedSquare);
                         newTurn();
                         return true;
-                
-                        // heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));
-
-                        // if(clickedSquare.getXPos()>4){             //if it is  a close castling
-                        //     Piece rook = cb.getBoard()[7][7].getPieceOnSq();
-                        //     rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));
-                        // }
-
-                        // else {                                      //if it is a far castling
-                        //     Piece rook = cb.getBoard()[7][0].getPieceOnSq();
-                        //     rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
-                        // }
-                        
                     }
                     if(heldPiece.getPieceName().equals("Pawn") && clickedSquare.getYPos()==0){
                         heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));
                         Piece newPiece = clickedSquare.getPieceOnSq();
                         promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);
                         newTurn();
-                        // doPromotion(newPiece);
                         return true;
                     }
 
@@ -233,18 +188,17 @@ public class Game{
                 else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to
                     
                     int distance = Math.abs(clickedSquare.getXPos()-heldPiece.getCurrentPosition().getXPos());    //calculating the distance from the piece to desired moving location                
+                    
                     if(heldPiece.getPieceName().equals("King") && distance>1){                  //if the size of this movement is larger than 1 for the king it means this is castling
-                        heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));           //move the king to desired location
-
-                        if(clickedSquare.getXPos()>4){             //if it is  a close castling
-                            Piece rook = cb.getBoard()[0][7].getPieceOnSq();
-                            rook.move(cb.getBoard()[0][5], cb, rook.getLegalMoves(cb));  //move the rook to correct location next to king
-                        }
-
-                        else {                                      //if it is a far castling
-                            Piece rook = cb.getBoard()[0][0].getPieceOnSq();
-                            rook.move(cb.getBoard()[0][3],cb,rook.getLegalMoves(cb));   //move the rook to correct location next to king
-                        }
+                        doCastling(clickedSquare);
+                        newTurn();
+                        return true;
+                    }
+                    
+                    if(heldPiece.getPieceName().equals("Pawn") && clickedSquare.getYPos()==7){
+                        heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));
+                        Piece newPiece = clickedSquare.getPieceOnSq();
+                        promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);
                         newTurn();
                         return true;
                     }
@@ -257,19 +211,12 @@ public class Game{
                         System.out.println("legal second click");
                         return true;                    
                     }
-
-                    // heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there
-                    // heldPiece.setHighlighted(false);
-                    // heldPiece = null;
-                    // newTurn();
-                    // System.out.println("legal second click");
-                    // return true;
-
                 }
             }    
         }
         return false;
     }
+
 
     public void updateBoard(){
         Square[][] board = cb.getBoard();
@@ -305,27 +252,6 @@ public class Game{
         }
     }
 
-    public void doPromotion(Piece piece){
-        String name = piece.getPieceName();
-        switch(name){
-            case("Rook"):
-                if(piece.isWhite())   piece.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png"))); 
-                else                  piece.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/brook.png"))); 
-                break;
-            case("Knight"):
-                if(piece.isWhite())   piece.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png")));
-                else                  piece.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bknight.png"))); 
-                break;
-            case("Bishop"):
-                if(piece.isWhite())   piece.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png"))); 
-                else                  piece.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bbishop.png"))); 
-                break;   
-            case("Queen"):
-                if(piece.isWhite())   piece.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png"))); 
-                else                  piece.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bqueen.png"))); 
-                break;        
-        }
-    }
 
     public void promote(boolean isWhite, Piece pawn, Square target, ChessBoard cb){
         Dice promoteDice = new Dice();
@@ -333,7 +259,8 @@ public class Game{
         Random rnd = new Random();
         int roll = rnd.nextInt(5)+1;
         target.removePiece(pawn);
-        roll=5;
+        
+
 
         if(roll==1){
             Knight newKnight = new Knight(isWhite);
@@ -360,7 +287,7 @@ public class Game{
         else if(roll==4){
             Queen newQueen = new Queen(isWhite);
             if(isWhite)    newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png")));
-            else           newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
+            else           newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bqueen.png")));
             cb.getLivePieces().add(newQueen);
             target.placePiece(newQueen);
         }

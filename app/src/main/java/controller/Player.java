@@ -5,7 +5,6 @@ import java.util.Random;
 public abstract class Player {
 
      ChessBoard cb;
-    private King playerKing;
     private ArrayList<Piece> livePieces;
     private boolean isMyTurn;
     private String color="Black";
