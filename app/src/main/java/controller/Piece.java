@@ -22,6 +22,10 @@ public abstract class Piece {
 
     public Piece(){}
 
+    /**
+     * Assigns square to the position proparty of the class
+     * @param position square
+     */
     public Piece(Square position){
         currentPos = position;
     }
@@ -73,6 +77,11 @@ public abstract class Piece {
     public void setNotYetMoved(boolean b){
         notYetMoved=b;
     }
+
+    /**
+     * Check if King is being checked and change checkingKing proparty status
+     * @param legalMoves ArrayList of squares
+     */
     public void checkingKing(ArrayList<Square> legalMoves){
             for(Square sq : legalMoves){
                 if(sq.isTakenSquare() && sq.getPieceOnSq().pieceName.equals("King")){
@@ -83,7 +92,12 @@ public abstract class Piece {
                 checkingKing=false;
             }
         }
-      //checks whether the two pieces have the same color 
+
+    /**
+     * Compares if two pieces are from the same team
+     * @param otherP piece to compare
+     * @return true if the otherP is the same color as this piece
+     */
     public boolean sameTeam(Piece otherP){
         if(this.isWhite() == otherP.isWhite()){
             return true;
@@ -96,6 +110,12 @@ public abstract class Piece {
         return "Black"; 
     }
 
+    /**
+     * Moves the Piece to the target square if the target square it in the legalMoves
+     * @param target square you want to move to
+     * @param cb chessboard
+     * @param legalMoves ArrayList of squares
+     */
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
         Square[] moveDescription = {currentPos, target};
         cb.setLastPlyPlayed(moveDescription);
