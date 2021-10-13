@@ -3,7 +3,7 @@ import java.util.Random;
 
 
 public class  Dice {
-    private String [] diceName = {"Pawn","Rook","Knight","Bishop","Queen","King"};
+    private String [] diceName = {"Pawn","Knight","Bishop","Rook","Queen","King"};
     private Random rand = new Random();
     private int diceNumber;
     

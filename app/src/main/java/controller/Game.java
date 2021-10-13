@@ -35,7 +35,7 @@ public class Game{
     
     public Game(JFrame f){
         this.f = f;
-        cb = new ChessBoard(true);
+        cb = new ChessBoard();
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
