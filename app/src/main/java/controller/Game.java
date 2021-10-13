@@ -249,7 +249,7 @@ public class Game{
     /**
      * This method highlights a legal clicked piece
      * @param piece is the piece in question needing highlighting
-     * @param square is the Square 
+     * @param square is the Square in question to highlight
      */
     public void highlightPiece(Piece piece, Square square) {
        square.removeImage();
@@ -258,19 +258,37 @@ public class Game{
         square.placeImage(piece);
     }
 
-    public void doCastling(Square clickedSquare ){
-        heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));
-        if(clickedSquare.getXPos()>4){             //if it is  a close castling
-            Piece rook = cb.getBoard()[7][7].getPieceOnSq();
-            rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));
+    /**
+     * This takes care of all castling situations
+     * 
+     * @param clickedSquare the sqaure the the player wants to move to
+     */
+    public void doCastling(Square clickedSquare){
+        if(heldPiece.isWhite()){
+            heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));
+            if(clickedSquare.getXPos()>4){             //if it is  a close castling
+                Piece rook = cb.getBoard()[7][7].getPieceOnSq();
+                rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));
+            }
+            else {                                      //if it is a far castling
+                Piece rook = cb.getBoard()[7][0].getPieceOnSq();
+                rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
+            }
         }
-        else {                                      //if it is a far castling
-            Piece rook = cb.getBoard()[7][0].getPieceOnSq();
-            rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
+        else if(!heldPiece.isWhite()){
+            heldPiece.move(clickedSquare,cb,heldPiece.getLegalMoves(cb));
+            if(clickedSquare.getXPos()>4){             //if it is  a close castling
+                Piece rook = cb.getBoard()[0][7].getPieceOnSq();
+                rook.move(cb.getBoard()[0][5], cb, rook.getLegalMoves(cb));
+            }
+            else {                                      //if it is a far castling
+                Piece rook = cb.getBoard()[0][0].getPieceOnSq();
+                rook.move(cb.getBoard()[0][3],cb,rook.getLegalMoves(cb));
+            }
         }
     }
 
-
+    
     public void promote(boolean isWhite, Piece pawn, Square target, ChessBoard cb){
         Dice promoteDice = new Dice();
         promoteDice.randomize();

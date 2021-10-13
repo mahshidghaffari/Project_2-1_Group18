@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 
 public class Rook extends Piece {
 
-    //private boolean notYetMoved=true;
     
     public Rook(boolean white) {
         super.setWhite(white);
