@@ -15,7 +15,7 @@ public class Pawn extends Piece{
     /*
     method legalMovesCalc
     @param cb is the current state of the chessboard
-    @return ArrayList<Square> an array of squares describing the legal squares this piece can go to
+    @return ArrayList<Square> an array of squares describing the legal squares this piece can move to
      */
     public ArrayList<Square> getLegalMoves(ChessBoard cb){
         ArrayList<Square> legalMoves = new ArrayList<>();
@@ -134,7 +134,7 @@ public class Pawn extends Piece{
         @param cb : the current chessboard
         @param legalMoves : list of legal moves for the current piece
         @return void
-        this override does the same as the original "move" method, but also handles promotion
+        this override does the same as the original "move" method, but handles En Passant in addition
     */
     @Override
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
@@ -170,10 +170,4 @@ public class Pawn extends Piece{
         target.placePiece(this);
         checkingKing(legalMoves);
     }
-    /*
-        method promote : removes the pawn and places the Piece given by the dice roll promotion
-        @param target : the target square where the promotion is going to happen (it's Y value should be 0
-         for white and 7 for black)
-        @return void
-    */
 }
