@@ -39,6 +39,31 @@ public class Game{
     public Game(JFrame f){
         this.f = f;
         cb = new ChessBoard();
+        // cb = new ChessBoard(true);
+        // Pawn pawn = new Pawn(false);
+        // cb.getLivePieces().add(pawn);
+        // cb.getBoard()[6][3].placePiece(pawn);
+
+        // Queen q = new Queen(true);
+        // cb.getLivePieces().add(q);
+        // cb.getBoard()[5][6].placePiece(q);
+
+        // Bishop b = new Bishop(false);
+        // cb.getLivePieces().add(b);
+        // cb.getBoard()[4][2].placePiece(q);
+
+        // King kw = new King(true);
+        // cb.getLivePieces().add(kw);
+        // cb.getBoard()[3][6].placePiece(kw);
+        
+        // King kb = new King(false);
+        // cb.getLivePieces().add(kb);
+        // cb.getBoard()[2][5].placePiece(kb);
+
+        // Bishop bw = new Bishop(true);
+        // cb.getLivePieces().add(bw);
+        // cb.getBoard()[2][6].placePiece(bw);
+        
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
@@ -206,7 +231,6 @@ public class Game{
                         newTurn();
                         return true;
                     }
-                    
                     if(heldPiece.getPieceName().equals("Pawn") && clickedSquare.getYPos()==7){
                         heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));
                         Piece newPiece = clickedSquare.getPieceOnSq();
@@ -259,9 +283,9 @@ public class Game{
     }
 
     /**
-     * This takes care of all castling situations
+     * This takes care of all castling situations both far and close castling/
      * 
-     * @param clickedSquare the sqaure the the player wants to move to
+     * @param clickedSquare the sqaure the player wants to move to
      */
     public void doCastling(Square clickedSquare){
         if(heldPiece.isWhite()){
@@ -288,15 +312,24 @@ public class Game{
         }
     }
 
-    
+    /**
+     * This method takes care of all promotions which occur when a pawn reaches the last row.
+     * 
+     * @param isWhite boolean to know if the piece is black or white
+     * @param pawn the pawn reaching the last row to which a promotion is needed
+     * @param target the last sqaure that the pawn is moving towards
+     * @param cb the chessboard
+     * When the pawn reaches the last row then a dice is rolled. If the dice rolled a 5, then the Piece to promote to
+     * between Knight,Bishop,Rook and Queen.
+     * If the dice rolls 1 the pawn will become a knight,if 2 then bishop if 3 then rook and if 4 then queen 
+     */    
     public void promote(boolean isWhite, Piece pawn, Square target, ChessBoard cb){
         Dice promoteDice = new Dice();
         promoteDice.randomize();
         Random rnd = new Random();
         int roll = rnd.nextInt(5)+1;
         target.removePiece(pawn);
-        
-
+    
 
         if(roll==1){
             Knight newKnight = new Knight(isWhite);

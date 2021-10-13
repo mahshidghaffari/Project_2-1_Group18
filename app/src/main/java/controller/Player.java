@@ -61,9 +61,9 @@ public abstract class Player {
 //        return p;
 //    }
     
-    /*
+    /** 
      * this method changing players  rounds
-     * @param current player object of this class 
+     * @param P player object of this class 
      */
 
     public void flipTurns(Player P){
