@@ -225,20 +225,23 @@ public class PawnTest {
         assertEquals(1,wPLM.size());
     }
 
-    //Test promotion for white
+    //Test promotion for white (method getPromoted was removed for code clarity purposes)
+    /*
     @Test public void testPromotionWhite(){
         board[1][0].placePiece(whitePawn1);
         ArrayList<Square> arr = whitePawn1.getLegalMoves(cb);
         whitePawn1.move(board[0][0], cb, arr);
         assertTrue(board[0][0].getPieceOnSq().getPromoted());
-    }
+    } */
     //Test promotion for black
-    @Test public void testPromotionBlack(){
+   /*
+    @Test public void testPromotionBlack(){ (method getPromoted was removed for code clarity purposes)
         board[6][0].placePiece(blackPawn1);
         ArrayList<Square> arr = blackPawn1.getLegalMoves(cb);
         blackPawn1.move(board[7][0], cb, arr);
         assertTrue(board[7][0].getPieceOnSq().getPromoted());
     }
+    */
     //Test En Passant to the left for white
     @Test public void testEPLeftWhite(){
         board[3][6].placePiece(whitePawn1);
