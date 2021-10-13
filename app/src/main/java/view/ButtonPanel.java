@@ -10,7 +10,7 @@ public class ButtonPanel implements ActionListener {
 
     JButton helpButton = new JButton("HELP");
     JButton resetButton = new JButton("RESET");
-    JLabel label = new JLabel("INSERT TEXT HEREINSERT TEXT HEREINSERT TEXT HEREINSERT TEXT HERE");
+    JLabel label = new JLabel();
     JPanel buttonPanel = new JPanel();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     Game game;
@@ -34,8 +34,6 @@ public class ButtonPanel implements ActionListener {
         buttonPanel.add(helpButton);
         buttonPanel.add(resetButton);
         buttonPanel.add(label);
-
-
     }
 
     @Override
@@ -46,7 +44,7 @@ public class ButtonPanel implements ActionListener {
 
         if (e.getSource() == helpButton) {
             HelpFrame frame1 = new HelpFrame();
-            frame1.setVisible(true);
+            frame1.getHelpFrame().setVisible(true);
 
         } if (e.getSource() == resetButton) {
             System.out.println(game.whosPlaying());
@@ -56,7 +54,6 @@ public class ButtonPanel implements ActionListener {
 
         }
     }
-
 
 
     public JPanel getButtonPanel() { return buttonPanel; }

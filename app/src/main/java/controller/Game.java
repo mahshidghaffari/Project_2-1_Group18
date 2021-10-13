@@ -39,31 +39,7 @@ public class Game{
     public Game(JFrame f){
         this.f = f;
         cb = new ChessBoard();
-        // cb = new ChessBoard(true);
-        // Pawn pawn = new Pawn(false);
-        // cb.getLivePieces().add(pawn);
-        // cb.getBoard()[6][3].placePiece(pawn);
 
-        // Queen q = new Queen(true);
-        // cb.getLivePieces().add(q);
-        // cb.getBoard()[5][6].placePiece(q);
-
-        // Bishop b = new Bishop(false);
-        // cb.getLivePieces().add(b);
-        // cb.getBoard()[4][2].placePiece(q);
-
-        // King kw = new King(true);
-        // cb.getLivePieces().add(kw);
-        // cb.getBoard()[3][6].placePiece(kw);
-        
-        // King kb = new King(false);
-        // cb.getLivePieces().add(kb);
-        // cb.getBoard()[2][5].placePiece(kb);
-
-        // Bishop bw = new Bishop(true);
-        // cb.getLivePieces().add(bw);
-        // cb.getBoard()[2][6].placePiece(bw);
-        
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
@@ -329,7 +305,6 @@ public class Game{
         Random rnd = new Random();
         int roll = rnd.nextInt(5)+1;
         target.removePiece(pawn);
-    
 
         if(roll==1){
             Knight newKnight = new Knight(isWhite);
