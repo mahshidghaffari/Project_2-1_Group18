@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Class used to start the visualization
  */
-public class Launch {
+public class Run {
 
     public static void main(String[] args) {
         //SetupMenu menu = new SetupMenu();

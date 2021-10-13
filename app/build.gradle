@@ -25,14 +25,20 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.0-jre'
+
+	implementation 'javax.persistence:persistence-api:1.0'
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'Project_2._Group18.App'
+    mainClass = 'App'
 }
 
 tasks.named('test') {
     // Use junit platform for unit tests.
     useJUnitPlatform()
+}
+
+run {
+    standardInput = System.in
 }
