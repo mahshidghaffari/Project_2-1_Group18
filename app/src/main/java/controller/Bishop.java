@@ -10,7 +10,12 @@ public class Bishop extends Piece {
         super.setValue(3);
 
     }
-    
+
+	/**
+	 *
+	 * @param chessBoard The chessboard
+	 * @return Array containing the squares where the Bishop can move to.
+	 */
     public ArrayList<Square> getLegalMoves(ChessBoard chessBoard){
         
     	ArrayList<Square> legalMoves = new ArrayList<Square>();
