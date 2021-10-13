@@ -11,7 +11,9 @@ public class ChessBoard{
     private Square[] lastPlyPlayed = new Square[2];
 
 
-
+    /**
+     * Constructor ChessBoard() : constructs a chessboard and fills it with the standard piece set
+     */
     public ChessBoard(){
         board =  new Square[8][8];        
         for(int row=0; row<8; row++){
@@ -95,7 +97,12 @@ public class ChessBoard{
     public ArrayList<Piece> getDeadPieces(){
         return deadPieces;
     }
-       
+    /**
+     * Method getOccupingPiece : 
+     * @param y : y coordinate of square
+     * @param x : x coordinate of square
+     * @return : piece that occupies Square[y][x] of chessboard
+     */
     public Piece getOccupingPiece(int y, int x){
         
         if (x < 0 || x > 7 || y < 0 || y > 7) {
@@ -108,6 +115,7 @@ public class ChessBoard{
         return getSquare(y, x).getPieceOnSq();
     }
 
+
     public Square getSquare(SquareButton sqb){
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
@@ -119,7 +127,12 @@ public class ChessBoard{
         return null;
     }
 
-
+    /**
+     * Method getSquare : 
+     * @param y : y coordinate of square
+     * @param x : x coordinate of square
+     * @return : the square located at board[y][x]
+     */
     public Square getSquare(int y, int x)
     {
         if (x < 0 || x > 7 || y < 0 || y > 7) {
@@ -145,24 +158,41 @@ public class ChessBoard{
             System.out.println(" ");
         }
     }
-
+    /**
+     * Method makeBoardCopy : copies the current board
+     * @return 2d array of square (=board) copying current board
+     */
     public Square[][] makeBoardCopy(){
         Square [][] board_copy = new Square[8][8];
         board_copy = board;
         return board_copy; 
     }
+    /**
+     * method setLastPlyPlayed : used for En Passant
+     * @param lastMove array of length 2 of squares, describing the last move played :
+     * first element is original position square and second element is destination square
+     */
     public void setLastPlyPlayed(Square[] lastMove){
         lastPlyPlayed[0] = lastMove[0];
         lastPlyPlayed[1] = lastMove[1];
     }
+    /**
+     * method getLastPlyPlayed : used for En Passant
+     * @return Square array of size 2 describing the last move played
+     */
     public Square[] getLastPlyPlayed(){
         return this.lastPlyPlayed;
     }
-
+    /**
+     * Method setNewChessBoard : delete all pieces and create new set of  std pieces
+     */
     public void setNewChessBoard(){
         this.deletePieces();
         this.setUpBoard();
     }
+    /**
+     * Method deletePieces : deletes all pieces of the board
+     */
     public void deletePieces(){
         for(int i = 0; i<=7; i++){
             for(int j = 0; j<= 7; j++){
