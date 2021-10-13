@@ -47,7 +47,7 @@ public class Square {
     public void removePiece(Piece toRemove){
         piece = null;
         isOccupied = false;
-        button.setPieceIcon(null);
+        if(button != null)  button.setPieceIcon(null);
     }
 
     public int getXPos(){
