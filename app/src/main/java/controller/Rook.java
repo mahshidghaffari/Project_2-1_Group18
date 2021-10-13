@@ -29,7 +29,7 @@ public class Rook extends Piece {
 
     /**
      * Checks for the legal moves of the Rook(up, down, right, left)
-     * @param chessBoard
+     * @param cb
      * @return ArrayList of squares
      */
     public ArrayList<Square> getLegalMoves(ChessBoard cb) {

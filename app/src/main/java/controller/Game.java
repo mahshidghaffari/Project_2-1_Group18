@@ -310,6 +310,8 @@ public class Game{
             Knight newKnight = new Knight(isWhite);
             if(isWhite)    newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png")));
             else           newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bknight.png")));
+
+            newKnight.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rknight.png")));
             cb.getLivePieces().add(newKnight);
             target.placePiece(newKnight);
         }
@@ -317,6 +319,8 @@ public class Game{
             Bishop newBishop = new Bishop(isWhite);
             if(isWhite)    newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png")));
             else           newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bbishop.png")));
+
+            newBishop.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rbishop.png")));
             cb.getLivePieces().add(newBishop);
             target.placePiece(newBishop);
         }
@@ -324,6 +328,8 @@ public class Game{
             Rook newRook = new Rook(isWhite);
             if(isWhite)    newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png")));
             else           newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/brook.png")));
+
+            newRook.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rrook.png")));
             cb.getLivePieces().add(newRook);
             target.placePiece(newRook);
         
@@ -332,12 +338,13 @@ public class Game{
             Queen newQueen = new Queen(isWhite);
             if(isWhite)    newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png")));
             else           newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bqueen.png")));
+
+            newQueen.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
             cb.getLivePieces().add(newQueen);
             target.placePiece(newQueen);
         }
         else if(roll==5){
             JFrame frame = new JFrame("Promotion");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             JPanel pPanel = new JPanel();
             JButton bishopButton = new JButton("Bishop");
@@ -350,6 +357,8 @@ public class Game{
                     Bishop newBishop = new Bishop(isWhite);
                     if(isWhite)    newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png")));
                     else           newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bbishop.png")));
+
+                    newBishop.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rbishop.png")));
                     cb.getLivePieces().add(newBishop);
                     target.placePiece(newBishop);
                     frame.dispose();
@@ -361,6 +370,8 @@ public class Game{
                     Knight newKnight = new Knight(isWhite);
                     if(isWhite)    newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png")));
                     else           newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bknight.png")));
+
+                    newKnight.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rknight.png")));
                     cb.getLivePieces().add(newKnight);
                     target.placePiece(newKnight);
                 }  
@@ -371,6 +382,8 @@ public class Game{
                     Rook newRook = new Rook(isWhite);
                     if(isWhite)    newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png")));
                     else           newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/brook.png")));
+
+                    newRook.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rrook.png")));
                     cb.getLivePieces().add(newRook);
                     target.placePiece(newRook); 
                     frame.dispose();
@@ -381,6 +394,8 @@ public class Game{
                     Queen newQueen = new Queen(isWhite);
                     if(isWhite)    newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png")));
                     else           newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
+
+                    newQueen.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
                     cb.getLivePieces().add(newQueen);
                     target.placePiece(newQueen);
                     frame.dispose();
