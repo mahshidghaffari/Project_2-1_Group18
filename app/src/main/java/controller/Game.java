@@ -31,7 +31,10 @@ public class Game{
     private JFrame f;
 
 
-    
+    /**
+     * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
+     * @param f is the ChessBoard GUI Frame 
+     */
     
     public Game(JFrame f){
         this.f = f;
@@ -77,7 +80,9 @@ public class Game{
     public WhitePlayer getWhitePlayer(){return wPlayer;}
     public BlackPlayer getBlackPlayer(){return bPlayer;}
 
-
+    /**
+     * When Ever the Green Dice button is clicked by the user this method checks whether it is even a turn for the user
+     */
     public void play(){
 
         if(wPlayer.getIsMyTurn()){        //if its w player's turn
@@ -109,6 +114,13 @@ public class Game{
         }
     }
 
+    /**
+     * This Method checks which button clicks are legal by the user and their correspondence to the actual 
+     * In game play. 
+     * @param clickedOnce a boolean that checks whether this click by the user is the first one or second
+     * @param clickedButton is the button that was clicked by the user
+     * @return true if the user is allowed to make these choices
+     */
 
     public boolean isLegalChoice(boolean clickedOnce, SquareButton clickedButton){
         Square clickedSquare = cb.getSquare(clickedButton); //get clicked square
@@ -217,7 +229,9 @@ public class Game{
         return false;
     }
 
-
+    /**
+     * This repaints the board after any movement or capture
+     */
     public void updateBoard(){
         Square[][] board = cb.getBoard();
         for(int i=0; i<8; i++){
@@ -232,7 +246,11 @@ public class Game{
             }
         }
     }
-
+    /**
+     * This method highlights a legal clicked piece
+     * @param piece is the piece in question needing highlighting
+     * @param square is the Square 
+     */
     public void highlightPiece(Piece piece, Square square) {
        square.removeImage();
 
