@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Rook extends Piece {
-
+    
     /**
      * @param white true if the Rook is white, false if black
      */
