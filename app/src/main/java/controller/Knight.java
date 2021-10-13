@@ -11,6 +11,11 @@ public class Knight extends Piece {
         super.setValue(3);
     }
 
+    /**
+     *
+     * @param cb The chessboard
+     * @return Array containing the squares where the Knight can move to.
+     */
     public ArrayList<Square> getLegalMoves(ChessBoard cb){
         Square[][] board = cb.getBoard();
         ArrayList<Square> legalMoves = new ArrayList<Square>();
@@ -31,6 +36,12 @@ public class Knight extends Piece {
         return legalMoves;
     }
 
+    /**
+     *
+     * @param end Square we want to check if the Knight can move to.
+     * @param legalMoves Array containing the squares where the Knight can move to.
+     * Add Square end to legalMoves if end is a valid square the Knight can move to
+     */
     public void isLegalMove(Square end, ArrayList<Square> legalMoves){
         if(end.getPieceOnSq()!=null && this.sameTeam(end.getPieceOnSq())){
             return;
