@@ -5,14 +5,20 @@ import javax.swing.JOptionPane;
 
 public class Rook extends Piece {
 
-    //private boolean notYetMoved=true;
-    
+    /**
+     * @param white true if the Rook is white, false if black
+     */
     public Rook(boolean white) {
         super.setWhite(white);
         super.pieceName = "Rook";
         super.setValue(5);
     }
 
+    /**
+     *
+     * @param s square that you want to move to
+     * @return true if the square is not taken from another piece of the same team, false otherwise
+     */
     private boolean movePermission(Square s) {
         if (!s.isTakenSquare() || !this.sameTeam(s.getPieceOnSq())) {
             return true;
@@ -21,7 +27,11 @@ public class Rook extends Piece {
         }
     }
 
-
+    /**
+     * Checks for the legal moves of the Rook(up, down, right, left)
+     * @param chessBoard
+     * @return ArrayList of squares
+     */
     public ArrayList<Square> getLegalMoves(ChessBoard cb) {
         ArrayList<Square> legalMoves = new ArrayList<>();
         int x = this.getCurrentPosition().getXPos();
@@ -89,7 +99,13 @@ public class Rook extends Piece {
 
         return legalMoves;
     }
-    
+
+    /**
+     * Moves the Rook to the target square if the target square it in the legalMoves
+     * @param target square you want to move to
+     * @param cb chessboard
+     * @param legalMoves ArrayList of squares
+     */
     @Override
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
         Square[] moveDescription = {this.getCurrentPosition(), target};

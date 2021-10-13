@@ -3,12 +3,21 @@ import java.util.*;
 
 public class Queen extends Piece{
 
+	/**
+	 * @param white true if the Queen is white, false if black
+	 */
     public Queen(boolean white){
         super.setWhite(white);
         super.pieceName = "Queen";
 		super.setValue(9);
     }
-    
+
+	/**
+	 * Checks for the legal moves of the Queen(up, down, right, left, diagonal)
+	 * @param chessBoard
+	 * @return ArrayList of squares
+	 */
+
     public ArrayList<Square> getLegalMoves(ChessBoard chessBoard){
 		
 		

@@ -6,16 +6,20 @@ import javax.swing.JOptionPane;
 
 public class King extends Piece {
 
+    /**
+     * @param white true if the King is white, false if black
+     */
     public King(boolean white) {
         super.setWhite(white);
         super.pieceName = "King";
         super.setValue(0);
     }
 
-    //public boolean getIfNotMoved(){ return super.notYetMoved;}
-
-
-
+    /**
+     * Checks for the legal moves of the King
+     * @param chessBoard
+     * @return ArrayList of squares
+     */
     public ArrayList <Square> getLegalMoves(ChessBoard cb) {
         ArrayList <Square> legalMoves = new ArrayList <>();
         int x = this.getCurrentPosition().getXPos();
@@ -46,6 +50,12 @@ public class King extends Piece {
         return legalMoves;
     }
 
+    /**
+     * Moves the King to the target square if the target square it in the legalMoves
+     * @param target square you want to move to
+     * @param cb chessboard
+     * @param legalMoves ArrayList of squares
+     */
     @Override
     public void move(Square target, ChessBoard cb, ArrayList<Square> legalmoves){
         
@@ -72,12 +82,14 @@ public class King extends Piece {
         }
     
     /** 
-     * This method @return true if a king side castle is possible
+     * This method adds the squares to legal moves if close castling is possible
      * Rules for castling:
      * 1. If the King or Rook in question have moved then No castling is possible
      * 2. Spaces between king and rook must be empty
      * 3. The King cannot be in check
-     * 4. The Squares the king passes over must not be under attck including the landing square 
+     * 4. The Squares the king passes over must not be under attack including the landing square
+     * @param legalMoves Arraylist of squares
+     * @param cb chessboard
      */
 
     public void closeCastle(ArrayList < Square > legalMoves, ChessBoard cb) {
@@ -131,14 +143,15 @@ public class King extends Piece {
     
 
     /** 
-     * This method @return true if a queen side castle is possible
+     * This method adds the squares to legal moves if far castling is possible
      * Rules for castling:
      * 1. If the King or Rook in question have moved then No castling is possible
      * 2. Spaces between king and rook must be empty
      * 3. The King cannot be in check
-     * 4. The Squares the king passes over must not be under attck including the landing square 
+     * 4. The Squares the king passes over must not be under attck including the landing square
+     * @param legalMoves Arraylist of squares
+     * @param cb chessboard
      */
-
 
     public void farCastle(ArrayList <Square> legalMoves, ChessBoard cb) {
         Square[][] board = cb.getBoard();
