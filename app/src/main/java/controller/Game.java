@@ -196,6 +196,7 @@ public class Game{
                     heldPiece=null;
                     clickedOnce = false;
                     System.out.println("released");
+                    updateBoard();
                     return true;
                 }
                 else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to

@@ -26,7 +26,18 @@ public class HelpFrame {
                 + " the player can move it even if the die does not show 1. " + "\n"
                 + " However, he can only promote it to the piece chosen by the die roll."  + "\n"
                 + " For example, if 3 is rolled, the pawn can be promoted to a bishop only. " + "\n"
-                + " If 1 is rolled, the pawn can be promoted to any piece.";
+                + " If 1 is rolled, the pawn can be promoted to any piece."
+                + " \n"
+                + " To Play: \n"
+                + "P1, Press the Green Dice Button to generate a a dice roll. The piece shown on the Screeen will indicate \n"
+                + "which of your Pieces you will be moving this turn.\n"
+                + "If this this piece is movable, click the piece and then click the destination square. \n "
+                + "If you need a hand remembering where each piece can move to, just hover with your mouse over the desired piece on your turn. \n"
+                + "If the piece is not movable or not in the game, the turn goes to the next player and the next role will be the opposite color then the last \n "
+                + "Change your mind?\n"
+                + "If the dice rolled a Knight and youv'e clicked on one of your knights but then decided to move the other one, simply click again on the \n "
+                + " On the held knight to release it and then click the desired piece \n "
+                + "ENJOY!!! ";
 
     JTextArea rules = new JTextArea(text);
 
