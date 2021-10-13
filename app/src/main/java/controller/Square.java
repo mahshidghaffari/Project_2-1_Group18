@@ -14,6 +14,13 @@ public class Square {
        this.x = x;
         this.y = y;
     }
+
+    /**
+     *
+     * @param y y Coordinate of this Square
+     * @param x x Coordinate of this Square
+     * @param p Piece to put on this Square
+     */
     public Square(int y, int x, Piece p){
         this.x = x;
         this.y = y;
@@ -22,6 +29,10 @@ public class Square {
         isOccupied = true;
     }
 
+    /**
+     *
+     * @param toPut Piece to put on this Square
+     */
     public void placePiece(Piece toPut){
         piece = toPut;
         isOccupied = true;
@@ -29,6 +40,10 @@ public class Square {
         if(button != null)     button.setPieceIcon(piece.getImgIcon());
     }
 
+    /**
+     *
+     * @param toRemove Piece to remove from the square
+     */
     public void removePiece(Piece toRemove){
         piece = null;
         isOccupied = false;
