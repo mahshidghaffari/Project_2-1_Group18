@@ -47,6 +47,9 @@ class KingTest {
 		List<Square> AllExpectedLegalmoves = Arrays.asList(board[3][2], board[3][3], board[3][4], board[4][2],
 				board[5][2], board[5][3], board[5][4], board[4][4]);
 		ExpectedLegalMoves.addAll(AllExpectedLegalmoves);
+		cb.printBoard();       
+		System.out.println(ActualLegalMoves);
+		System.out.println(ExpectedLegalMoves);  
 
 		assertTrue(
 				ActualLegalMoves.size() == ExpectedLegalMoves.size() && ExpectedLegalMoves.containsAll(ActualLegalMoves)
@@ -89,6 +92,11 @@ class KingTest {
 		cb.getSquare(6, 1).placePiece(whitePawn);
 		cb.getSquare(7, 1).placePiece(whiteRook);
 		whiteKing.setNotYetMoved(false);	
+		
+		
+		cb.printBoard();       
+		System.out.println(whiteKing.getLegalMoves(cb));
+		
 
 		assertTrue(whiteKing.getLegalMoves(cb).isEmpty());
 
@@ -131,6 +139,11 @@ class KingTest {
 		// adding all the possible movements
 		List<Square> AllExpectedLegalmoves = Arrays.asList(board[3][0], board[3][1], board[5][1]);
 		ExpectedLegalMoves.addAll(AllExpectedLegalmoves);
+		
+		cb.printBoard();       
+		System.out.println(ActualLegalMoves);
+		System.out.println(ExpectedLegalMoves);  
+
 
 		assertTrue(
 				ActualLegalMoves.size() == ExpectedLegalMoves.size() && ExpectedLegalMoves.containsAll(ActualLegalMoves)
