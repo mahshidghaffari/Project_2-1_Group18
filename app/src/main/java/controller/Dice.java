@@ -9,8 +9,7 @@ import java.util.Random;
 */
 
 public class  Dice {
-    //private String [] diceName = {"Pawn","Knight","Bishop","Rook","Queen","King"};
-    private String [] diceName = {"Queen","Pawn","Bishop","Rook","Queen","King"};
+    private String [] diceName = {"Pawn","Knight","Bishop","Rook","Queen","King"};
     private Random rand = new Random();
     private int diceNumber;
     
@@ -32,6 +31,6 @@ public class  Dice {
     }
 
     public void randomize(){
-        diceNumber=  rand.nextInt(2);
+        diceNumber=  rand.nextInt(6);
     }
 }
