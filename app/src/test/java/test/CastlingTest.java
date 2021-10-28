@@ -17,7 +17,7 @@ import controller.*;
 //	System.out.println(ActualLegalMoves);   printing the the legal move that is happening at the moment
 //	System.out.println(ExpectedLegalMoves);  printing the expected and right legal movement
 
-class CastlingTest {
+class CastlingTest {	
 	ChessBoard cb = new ChessBoard(true);
 	King whiteKing = new King(true);
 	King blackKing = new King(false);
@@ -33,7 +33,6 @@ class CastlingTest {
 	// is not obstacle
 	@Test
 	void whiteKingCloseCastling() {
-
 		// setting a suitable position for close castling
 		cb.getSquare(7, 4).placePiece(whiteKing);
 		cb.getSquare(7, 7).placePiece(whiteRookRight);

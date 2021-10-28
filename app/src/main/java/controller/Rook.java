@@ -11,7 +11,8 @@ public class Rook extends Piece {
     public Rook(boolean white) {
         super.setWhite(white);
         super.pieceName = "Rook";
-        super.setValue(5);
+        if(isWhite()) super.setValue(50);
+		else super.setValue(-50);
     }
 
     /**

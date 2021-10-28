@@ -9,8 +9,8 @@ public class Queen extends Piece{
     public Queen(boolean white){
         super.setWhite(white);
         super.pieceName = "Queen";
-		super.setValue(9);
-    }
+		if(isWhite()) super.setValue(90);
+		else super.setValue(-90);    }
 
 	/**
 	 * Checks for the legal moves of the Queen(up, down, right, left, diagonal)

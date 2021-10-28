@@ -1,7 +1,13 @@
 package controller;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.*;
+
+import view.ImageLoader;
+import java.awt.event.ActionListener;
+import java.awt.event.*;
+
 
 public class Pawn extends Piece{
 
@@ -9,7 +15,8 @@ public class Pawn extends Piece{
     public Pawn(boolean white){
         super.setWhite(white);
         super.pieceName = "Pawn";
-        super.setValue(1.0);
+        if(isWhite()) super.setValue(10);
+		else super.setValue(-10);    
     }
 
     /*
@@ -170,4 +177,129 @@ public class Pawn extends Piece{
         target.placePiece(this);
         checkingKing(legalMoves);
     }
+
+
+    /**
+     * This method takes care of all promotions which occur when a pawn reaches the last row.
+     * 
+     * @param isWhite boolean to know if the piece is black or white
+     * @param pawn the pawn reaching the last row to which a promotion is needed
+     * @param target the last sqaure that the pawn is moving towards
+     * @param cb the chessboard
+     * When the pawn reaches the last row then a dice is rolled. If the dice rolled a 5, then the Piece to promote to
+     * between Knight,Bishop,Rook and Queen.
+     * If the dice rolls 1 the pawn will become a knight,if 2 then bishop if 3 then rook and if 4 then queen 
+     */    
+    public void promote(boolean isWhite, Piece pawn, Square target, ChessBoard cb){
+        Dice promoteDice = new Dice();
+        promoteDice.randomize();
+        Random rnd = new Random();
+        int roll = rnd.nextInt(5)+1;
+        target.removePiece(pawn);
+
+        if(roll==1){
+            Knight newKnight = new Knight(isWhite);
+            if(isWhite)    newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png")));
+            else           newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bknight.png")));
+
+            newKnight.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rknight.png")));
+            cb.getLivePieces().add(newKnight);
+            target.placePiece(newKnight);
+        }
+        else if(roll==2){
+            Bishop newBishop = new Bishop(isWhite);
+            if(isWhite)    newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png")));
+            else           newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bbishop.png")));
+
+            newBishop.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rbishop.png")));
+            cb.getLivePieces().add(newBishop);
+            target.placePiece(newBishop);
+        }
+        else if(roll==3){
+            Rook newRook = new Rook(isWhite);
+            if(isWhite)    newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png")));
+            else           newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/brook.png")));
+
+            newRook.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rrook.png")));
+            cb.getLivePieces().add(newRook);
+            target.placePiece(newRook);
+        
+        }
+        else if(roll==4){
+            Queen newQueen = new Queen(isWhite);
+            if(isWhite)    newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png")));
+            else           newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bqueen.png")));
+
+            newQueen.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
+            cb.getLivePieces().add(newQueen);
+            target.placePiece(newQueen);
+        }
+        else if(roll==5){
+            JFrame frame = new JFrame("Promotion");
+            frame.setLocationRelativeTo(null);
+            JPanel pPanel = new JPanel();
+            JButton bishopButton = new JButton("Bishop");
+            JButton knightButton = new JButton("Knight");
+            JButton rookButton = new JButton("Rook");
+            JButton queenButton = new JButton("Queen");
+
+            bishopButton.addActionListener(new ActionListener(){  
+                public void actionPerformed(ActionEvent e){  
+                    Bishop newBishop = new Bishop(isWhite);
+                    if(isWhite)    newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png")));
+                    else           newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bbishop.png")));
+
+                    newBishop.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rbishop.png")));
+                    cb.getLivePieces().add(newBishop);
+                    target.placePiece(newBishop);
+                    frame.dispose();
+                    cb.printBoard();
+                }  
+            });  
+            knightButton.addActionListener(new ActionListener(){  
+                public void actionPerformed(ActionEvent e){  
+                    Knight newKnight = new Knight(isWhite);
+                    if(isWhite)    newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png")));
+                    else           newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bknight.png")));
+
+                    newKnight.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rknight.png")));
+                    cb.getLivePieces().add(newKnight);
+                    target.placePiece(newKnight);
+                }  
+            });
+            
+            rookButton.addActionListener(new ActionListener(){  
+                public void actionPerformed(ActionEvent e){  
+                    Rook newRook = new Rook(isWhite);
+                    if(isWhite)    newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png")));
+                    else           newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/brook.png")));
+
+                    newRook.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rrook.png")));
+                    cb.getLivePieces().add(newRook);
+                    target.placePiece(newRook); 
+                    frame.dispose();
+                }  
+            });
+            queenButton.addActionListener(new ActionListener(){  
+                public void actionPerformed(ActionEvent e){ 
+                    Queen newQueen = new Queen(isWhite);
+                    if(isWhite)    newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png")));
+                    else           newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
+
+                    newQueen.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
+                    cb.getLivePieces().add(newQueen);
+                    target.placePiece(newQueen);
+                    frame.dispose();
+                }  
+            });
+            pPanel.add(bishopButton);
+            pPanel.add(knightButton);
+            pPanel.add(rookButton);
+            pPanel.add(queenButton);
+            frame.add(pPanel);
+            frame.pack();
+            frame.setVisible(true);
+        }
+    }
+
 }

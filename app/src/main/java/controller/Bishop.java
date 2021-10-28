@@ -7,8 +7,8 @@ public class Bishop extends Piece {
     public Bishop(boolean white){
         super.setWhite(white);
         super.pieceName = "Bishop";
-        super.setValue(3);
-
+        if(isWhite()) super.setValue(30);
+		else super.setValue(-30);
     }
 
 	/**

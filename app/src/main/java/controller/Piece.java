@@ -22,6 +22,22 @@ public abstract class Piece {
 
     public Piece(){}
 
+    //copying constructor
+    public void copyPiece(Piece toCopy){
+        isAlive = toCopy.isAlive();
+        isWhite = toCopy.isWhite();
+        currentPos = toCopy.getCurrentPosition();
+        value = toCopy.getValue();
+        promoted = toCopy.getPromoted();
+        checkingKing = toCopy.getCheckingKing();
+        pieceName = toCopy.pieceName;
+        imgIcon = toCopy.getImgIcon();
+        notYetMoved = toCopy.getIfNotYetMoved();
+        highlightedImgIcon = toCopy.getHighlightedImgIcon();
+        highlighted = toCopy.getHighlighted();
+    }
+
+
     /**
      * Assigns square to the position proparty of the class
      * @param position square
@@ -29,6 +45,7 @@ public abstract class Piece {
     public Piece(Square position){
         currentPos = position;
     }
+    
     public String getPieceName(){
         return pieceName;
     }
@@ -139,8 +156,6 @@ public abstract class Piece {
         }
         checkingKing(legalMoves);
     }
-
-
     public boolean getPromoted(){
         return this.promoted;
     }

@@ -38,6 +38,51 @@ public class ChessBoard{
         deadPieces= new ArrayList<Piece>();
     }
 
+    public void copyCB(ChessBoard original){
+        //ChessBoard newCB = new ChessBoard(false);
+        ArrayList<Piece> newLiveP = getLivePieces();
+        Square[][] ogBoard = original.getBoard();
+        Square[][] newBoard = getBoard();
+        for(int row=0; row<8; row++){
+            for(int col=0; col<8; col++){
+                if(ogBoard[row][col].isTakenSquare()){
+                    Piece taken = ogBoard[row][col].getPieceOnSq();
+                    if(taken.pieceName.equals("Pawn")){
+                        Pawn pC= new Pawn(taken.isWhite());
+                        pC.copyPiece(taken);
+                        newLiveP.add(pC);
+                        newBoard[row][col].placePiece(pC);
+                    }else if (taken.pieceName.equals("Rook")){
+                        Rook rC = new Rook(taken.isWhite());
+                        rC.copyPiece(taken);
+                        newLiveP.add(rC);
+                        newBoard[row][col].placePiece(rC);
+                    }else if (taken.pieceName.equals("Bishop")){
+                        Bishop bC = new Bishop(taken.isWhite());
+                        bC.copyPiece(taken);
+                        newLiveP.add(bC);
+                        newBoard[row][col].placePiece(bC);
+                    }else if (taken.pieceName.equals("Knight")){
+                        Knight kC = new Knight(taken.isWhite());
+                        kC.copyPiece(taken);
+                        newLiveP.add(kC);
+                        newBoard[row][col].placePiece(kC);
+                    }else if (taken.pieceName.equals("Queen")){
+                        Queen qC = new Queen(taken.isWhite());
+                        qC.copyPiece(taken);
+                        newLiveP.add(qC);
+                        newBoard[row][col].placePiece(qC);
+                    }else if (taken.pieceName.equals("King")){
+                        King kC = new King(taken.isWhite());
+                        kC.copyPiece(taken);
+                        newLiveP.add(kC);
+                        newBoard[row][col].placePiece(kC);
+                    }
+                }
+            }
+        }
+    }
+
     public Square[][] getBoard(){
         return board;
     }
@@ -201,4 +246,13 @@ public class ChessBoard{
             }
         }
     }
+
+    public double getBoardValue(){
+        double sum = 0;
+        for(Piece p : livePieces){
+            sum += p.getValue();
+        }
+        return sum;
+    }
+
 }

@@ -8,7 +8,8 @@ public class Knight extends Piece {
     public Knight(boolean white) {
         super.setWhite(white);
         super.pieceName = "Knight";
-        super.setValue(3);
+        if(isWhite()) super.setValue(30);
+		else super.setValue(-30);
     }
 
     /**

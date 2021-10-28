@@ -12,7 +12,8 @@ public class King extends Piece {
     public King(boolean white) {
         super.setWhite(white);
         super.pieceName = "King";
-        super.setValue(0);
+        if(isWhite()) super.setValue(900);
+		else super.setValue(-900);
     }
 
     /**
@@ -63,22 +64,22 @@ public class King extends Piece {
         cb.setLastPlyPlayed(moveDescription);
         
         if(super.getIfNotYetMoved()){ setNotYetMoved(false);}
-            getCurrentPosition().removePiece(this);
-            if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
-                Piece captured = target.getPieceOnSq();
-                System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
-                cb.getLivePieces().remove(captured);    // mark this as a fallen piece
-                cb.getDeadPieces().add(captured);
-                if(captured.pieceName.equals("King")){
-                    System.out.println("The "+ captured.getColorName() + " King has fallen");
-                    System.out.println(this.getColorName() + " Wins!!!");
-                    JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
-                    cb.setNewChessBoard();                   
-                }
+        getCurrentPosition().removePiece(this);
+        if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
+            Piece captured = target.getPieceOnSq();
+            System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
+            cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+            cb.getDeadPieces().add(captured);
+            if(captured.pieceName.equals("King")){
+                System.out.println("The "+ captured.getColorName() + " King has fallen");
+                System.out.println(this.getColorName() + " Wins!!!");
+                JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
+                cb.setNewChessBoard();                   
             }
-            target.placePiece(this);
-            if(getIfNotYetMoved()){ setNotYetMoved(false); }    
-            checkingKing(getLegalMoves(cb));
+        }
+        target.placePiece(this);
+        if(getIfNotYetMoved()){ setNotYetMoved(false); }    
+        checkingKing(getLegalMoves(cb));
         }
     
     /** 
@@ -98,6 +99,7 @@ public class King extends Piece {
             return; // RULE 1 if the king moved there is no possibilty for castling
         } 
         if (isWhite()) {                 //for a white king
+            if(getCurrentPosition().getYPos()!=7 || getCurrentPosition().getXPos()!= 4) return;
             if(board[7][7].isTakenSquare() && board[7][7].getPieceOnSq().getPieceName().equals("Rook") && !board[7][7].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
                 return;
             }
@@ -119,6 +121,7 @@ public class King extends Piece {
             legalMoves.add(cb.getSquare(7, 6));
             
         } else if (!isWhite()) { //if its the Black King
+            if(getCurrentPosition().getYPos()!=0 || getCurrentPosition().getXPos()!= 4) return;
             if(board[0][7].isTakenSquare() && board[0][7].getPieceOnSq().getPieceName().equals("Rook") && !board[0][7].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
                 return;
             }
@@ -161,6 +164,7 @@ public class King extends Piece {
 
         //for a white king
         if (isWhite()) {
+            if(getCurrentPosition().getYPos()!=7 || getCurrentPosition().getXPos()!= 4) return;
             if(board[7][0].isTakenSquare() && board[7][0].getPieceOnSq().getPieceName().equals("Rook") && !board[7][0].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
                 return;
             }
@@ -182,6 +186,7 @@ public class King extends Piece {
             legalMoves.add(cb.getSquare(7, 2));
 
         } else { //if its the Black King
+            if(getCurrentPosition().getYPos()!=0 || getCurrentPosition().getXPos()!= 4) return;
             if(board[0][0].isTakenSquare() && board[0][0].getPieceOnSq().getPieceName().equals("Rook") && !board[0][0].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
                 return;
             }
@@ -202,6 +207,38 @@ public class King extends Piece {
             legalMoves.add(cb.getSquare(0, 2));
         }
 
+    }
+
+
+
+    /**
+     * This takes care of all castling situations both far and close castling/
+     * 
+     * @param clickedSquare the sqaure the player wants to move to
+     */
+    public void doCastling(Square clickedSquare , ChessBoard cb, Piece heldKing){
+        if(heldKing.isWhite()){
+            heldKing.move(clickedSquare,cb,heldKing.getLegalMoves(cb));
+            if(clickedSquare.getXPos()>4){             //if it is  a close castling
+                Piece rook = cb.getBoard()[7][7].getPieceOnSq();
+                rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));
+            }
+            else {                                      //if it is a far castling
+                Piece rook = cb.getBoard()[7][0].getPieceOnSq();
+                rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));
+            }
+        }
+        else if(!heldKing.isWhite()){
+            heldKing.move(clickedSquare,cb,heldKing.getLegalMoves(cb));
+            if(clickedSquare.getXPos()>4){             //if it is  a close castling
+                Piece rook = cb.getBoard()[0][7].getPieceOnSq();
+                rook.move(cb.getBoard()[0][5], cb, rook.getLegalMoves(cb));
+            }
+            else {                                      //if it is a far castling
+                Piece rook = cb.getBoard()[0][0].getPieceOnSq();
+                rook.move(cb.getBoard()[0][3],cb,rook.getLegalMoves(cb));
+            }
+        }
     }
 
 }

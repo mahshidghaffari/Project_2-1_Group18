@@ -3,13 +3,19 @@ import java.util.ArrayList;
 
 public class WhitePlayer extends Player{
 
+
     private ArrayList<Piece> livePieces;
-    
+    private double score=0;
+
     public WhitePlayer(ChessBoard cb) {
         super(cb);
         super.setColor("White");
         livePieces = cb.getLivePieces();
         setIsMyTurn(true);
+        for(Piece piece: livePieces){
+            if(piece.isWhite())
+            score+= piece.getValue();
+        }
     }
 
     public ArrayList<Piece> getMovablePieces(String chosenPiece){
@@ -30,5 +36,15 @@ public class WhitePlayer extends Player{
             return true;
         }
         return false;
+    }
+
+    public double getWhiteScore(){ return score;}
+
+    public void updateScore(){
+        score = 0;
+        for(Piece piece: livePieces){
+            if(piece.isWhite())
+            score+= piece.getValue();
+        }
     }
 }
