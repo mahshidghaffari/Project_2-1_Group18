@@ -12,7 +12,7 @@ public class SetupMenu {
     private int WIDTH =750;
     private int HEIGHT=480;
     private String GameMode= "PvP";//default
-    private int GameTime= 10;//default
+    private String GameColour= "Black";//default
 
     public SetupMenu(){
         create();
@@ -21,7 +21,7 @@ public class SetupMenu {
     private void PrintGame(){
         System.out.println();
         System.out.println("GAME MODE: "+GameMode);
-        System.out.println("GAME TIME: "+GameTime);
+        System.out.println("GAME COLOUR: "+GameColour);
     }
 
     public void create() {
@@ -111,11 +111,11 @@ public class SetupMenu {
         LabelBottomTitle.setFont(new Font("SansSerif", Font.BOLD, 23));
 
 
-        JLabel LabelTime = new JLabel("TIME");
-        LabelTime.setForeground(Color.BLACK);
-        LabelTime.setBounds(75, 3, 200, 50);
-        LabelTime.setFont(new Font("Sitka Text", Font.BOLD|Font.ITALIC, 30));
-        PanelMidLeftUp.add(LabelTime);
+        JLabel LabelTeam = new JLabel("TEAM");
+        LabelTeam.setForeground(Color.BLACK);
+        LabelTeam.setBounds(75, 3, 200, 50);
+        LabelTeam.setFont(new Font("Sitka Text", Font.BOLD|Font.ITALIC, 30));
+        PanelMidLeftUp.add(LabelTeam);
 
         JLabel LabelMode = new JLabel("MODE");
         LabelMode.setForeground(Color.BLACK);
@@ -183,61 +183,41 @@ public class SetupMenu {
 
         //BUTTONS: LEFT-------------------------------------------------------------------------------------------------
         //INITIALIZATION
-        JButton Button10= new JButton("10min-10min");
-        JButton Button5= new JButton("5min-5min");
-        JButton Button20= new JButton("20min-20min");
+        JButton ButtonBlack= new JButton("Black");
+        JButton ButtonWhite= new JButton("White");
 
 
-        //TEN_TEN
-        Button10.addActionListener(new ActionListener() {
+        //BLACK
+        ButtonBlack.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Button10.setBackground(Color.LIGHT_GRAY);
-                Button5.setBackground(Color.WHITE);
-                Button20.setBackground(Color.WHITE);
-                GameTime=10;
+                ButtonBlack.setBackground(Color.LIGHT_GRAY);
+                ButtonWhite.setBackground(Color.WHITE);
+                GameColour="Black";
                 PrintGame();
             }
         });
-        Button10.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 12));
-        Button10.setForeground(Color.BLACK);
-        Button10.setFocusable(false);
-        Button10.setBackground(Color.WHITE);
-        Button10.setBounds(25, 20, 200, 50);
-        PanelMidLeftCenter.add(Button10);
+        ButtonBlack.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 12));
+        ButtonBlack.setForeground(Color.BLACK);
+        ButtonBlack.setFocusable(false);
+        ButtonBlack.setBackground(Color.WHITE);
+        ButtonBlack.setBounds(25, 50, 200, 50);
+        PanelMidLeftCenter.add(ButtonBlack);
 
-        //FIVE_FIVE
-        Button5.addActionListener(new ActionListener() {
+        //WHITE
+        ButtonWhite.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Button10.setBackground(Color.WHITE);
-                Button5.setBackground(Color.LIGHT_GRAY);
-                Button20.setBackground(Color.WHITE);
-                GameTime=5;
+                ButtonBlack.setBackground(Color.WHITE);
+                ButtonWhite.setBackground(Color.LIGHT_GRAY);
+                GameColour="White";
                 PrintGame();
             }
         });
-        Button5.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 12));
-        Button5.setForeground(Color.BLACK);
-        Button5.setFocusable(false);
-        Button5.setBackground(Color.WHITE);
-        Button5.setBounds(25, 100, 200, 50);
-        PanelMidLeftCenter.add(Button5);
-
-        //TWENTY_TWENTY
-        Button20.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Button10.setBackground(Color.WHITE);
-                Button5.setBackground(Color.WHITE);
-                Button20.setBackground(Color.LIGHT_GRAY);
-                GameTime=20;
-                PrintGame();
-            }
-        });
-        Button20.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 12));
-        Button20.setForeground(Color.BLACK);
-        Button20.setFocusable(false);
-        Button20.setBackground(Color.WHITE);
-        Button20.setBounds(25, 180, 200, 50);
-        PanelMidLeftCenter.add(Button20);
+        ButtonWhite.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 12));
+        ButtonWhite.setForeground(Color.BLACK);
+        ButtonWhite.setFocusable(false);
+        ButtonWhite.setBackground(Color.WHITE);
+        ButtonWhite.setBounds(25, 150, 200, 50);
+        PanelMidLeftCenter.add(ButtonWhite);
 
         //BUTTON PLAY
         JButton ButtonPlay= new JButton("PLAY");
