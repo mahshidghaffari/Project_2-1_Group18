@@ -15,11 +15,13 @@ public class Game{
     private Dice dice;
     private Player playing = null;
     private WhitePlayer wPlayer;
+    private BaseLineAgent baseLinePlayer;
     private BlackPlayer bPlayer;
     private Piece heldPiece = null;
     private ButtonPanel buttonPanel;
     private boolean diceClicked=false;
     private JFrame f;
+    private boolean baseLineActive = true;
 
 
     /**
@@ -33,55 +35,19 @@ public class Game{
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
+        baseLinePlayer = new BaseLineAgent(this, cb);
         buttonPanel= new ButtonPanel(this);
     }
     public JFrame getFrame(){
         return f;
     }
-
-    public boolean AIplay(String piceName) {
-    	System.out.println("AI is playing ");
-//    	diceClicked=true;
-//        this.setDiceClicked(true);
-//        this.getDice().randomize();
-//        String piceName =  piceName;
-        Random rand = new Random();
-//        Random rand1 = new Random();
-        updateBoard();
-
-    	System.out.println(piceName);
-    	
-    	// go for select the piece with randomization action
-    	 ArrayList<Piece> movablePieces = bPlayer.getMovablePieces(piceName);
-    	
-     	if(movablePieces.size() == 0) {
-     		System.out.println("there is no movable piece");
-     		newTurn();
-     	}else {
-     		ArrayList<Square> legalMoves = new ArrayList<Square>();
-     		ArrayList<Piece> pieceToMove = new ArrayList<Piece>();
-     		
-     		for (Piece piece : movablePieces) {
-     			ArrayList<Square> legalMovesForPiece = piece.getLegalMoves(cb);
-     			//legalMoves.addAll(piece.getLegalMoves(cb));
-     			//System.out.println(piece.getLegalMoves(cb));
-     			for(Square legalMove : legalMovesForPiece) {
-     				legalMoves.add(legalMove);
-     				pieceToMove.add(piece);
-     			}
-     		}     
-     		int randomMove = rand.nextInt(legalMoves.size());
-     		pieceToMove.get(randomMove).move(legalMoves.get(randomMove), cb, legalMoves);
-     		newTurn();
-     		return true; 
-     	}
-     	return true;
-    }
+    
     public ChessBoard getChessBoard(){
         return cb;
     }
     public void setNewChessBoard(){
         this.cb = new ChessBoard();
+        
     }
     public boolean isNewTurn(){
         return newTurn;
@@ -124,23 +90,43 @@ public class Game{
             }
         }   
         else if(bPlayer.getIsMyTurn()){
-            playing = bPlayer;
-            newTurn= false;
-            String chosen = dice.getRoleDice();
-            //loop through all live pieces to see if dice chosen piece piece is there
-            for(Piece p: cb.getLivePieces()){  
-                if(p.isWhite()){ continue; }   
+        	
+        	// Normal player (NO AGENT)
+        	if (!baseLineActive) {
+        		playing = bPlayer;
+        		newTurn= false;
+            	String chosen = dice.getRoleDice();
+            	//loop through all live pieces to see if dice chosen piece piece is there
+            	for(Piece p: cb.getLivePieces()){  
+            		if(p.isWhite()){ continue; }   
                 
-                if(p.getPieceName().equals(chosen) ){ //if the chosen piece is not dead 
+            		if(p.getPieceName().equals(chosen) ){ //if the chosen piece is not dead 
                         break;
-                }
-            }
-            if(!bPlayer.canMove(chosen)){    
-                System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
-                newTurn();
-            }else {
-            	AIplay(chosen);
-            }
+            		}
+            	}
+            	
+            	if(!bPlayer.canMove(chosen)){    
+            		System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
+            		newTurn();
+            	}
+        	
+        	// BASELINE AGENT
+        	} else if (baseLineActive) {
+//        		playing = baseLineAgent;
+//        		newTurn= false;
+            	String chosen = dice.getRoleDice();
+//            	 
+//            		System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
+            	baseLinePlayer.baseLineplay(chosen);
+//            		newTurn();
+        		
+//        		this.baseLinePlayer()
+        	
+        	// EXPECTIMAX AGENT
+        	} else if (false) {
+        		
+        	}
+            	
         }
     }
 
