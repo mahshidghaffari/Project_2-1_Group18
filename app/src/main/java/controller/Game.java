@@ -21,7 +21,7 @@ public class Game{
     private ButtonPanel buttonPanel;
     private boolean diceClicked=false;
     private JFrame f;
-    private boolean baseLineActive = true;
+    private boolean baseLineActive = false;
 
 
     /**
@@ -112,15 +112,8 @@ public class Game{
         	
         	// BASELINE AGENT
         	} else if (baseLineActive) {
-//        		playing = baseLineAgent;
-//        		newTurn= false;
             	String chosen = dice.getRoleDice();
-//            	 
-//            		System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
             	baseLinePlayer.baseLineplay(chosen);
-//            		newTurn();
-        		
-//        		this.baseLinePlayer()
         	
         	// EXPECTIMAX AGENT
         	} else if (false) {

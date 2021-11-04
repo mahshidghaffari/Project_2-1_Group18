@@ -14,13 +14,8 @@ public class BaseLineAgent extends BlackPlayer {
 	
     public boolean baseLineplay(String chosenPiece) {
     	System.out.println("AI is playing ");
-//    	diceClicked=true;
-//        this.setDiceClicked(true);
-//        this.getDice().randomize();
-//        String piceName =  piceName;
+
         Random rand = new Random();
-//        Random rand1 = new Random();
-        
 
     	System.out.println(chosenPiece);
     	
@@ -42,12 +37,15 @@ public class BaseLineAgent extends BlackPlayer {
      				if(legalMove.isTakenSquare()){
      					System.out.println(legalMove.getPieceOnSq().pieceName);
      					captureMoves.add(legalMove);
-     					pieceToCapture.add(piece);
+						pieceToCapture.add(piece);
      				}
      				legalMoves.add(legalMove);
      				pieceToMove.add(piece);
      			}
-     		}  
+     		}
+
+			System.out.println("Move:" + pieceToMove.toString());
+			System.out.println("Capture:" + pieceToCapture.toString());
      		
     		if(captureMoves.size()!=0) {
     			int randomMoveCapture = rand.nextInt(captureMoves.size());
@@ -59,7 +57,7 @@ public class BaseLineAgent extends BlackPlayer {
     				}
     			}
     			System.out.println(maxPoint);
-    			pieceToMove.get(randomMoveCapture).move(captureMoves.get(randomMoveCapture), cb, legalMoves);
+    			pieceToCapture.get(randomMoveCapture).move(captureMoves.get(randomMoveCapture), cb, captureMoves);
     			
     		}else {
 
