@@ -2,6 +2,8 @@ package controller;
 
 import view.*;
 
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -28,18 +30,6 @@ public class Game{
     public Game(JFrame f){
         this.f = f;
         cb = new ChessBoard();
-//        Knight pawn1 = new Knight(false);
-//        Pawn pawn2 = new Pawn(false);
-//        Pawn pawn3 = new Pawn(true);
-//        cb.getLivePieces().add(pawn3);
-//        cb.getLivePieces().add(pawn1);
-//        cb.getLivePieces().add(pawn2);
-//        cb.getBoard()[4][3].placePiece(pawn3);
-//        cb.getBoard()[3][2].placePiece(pawn1);
-//        cb.getBoard()[3][4].placePiece(pawn2);
-        //Game_States gs = new Game_States(cb, queen);
-        //gs.runCenerios();
-        //gs.printScenarios();  
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
@@ -49,6 +39,44 @@ public class Game{
         return f;
     }
 
+    public boolean AIplay(String piceName) {
+    	System.out.println("AI is playing ");
+//    	diceClicked=true;
+//        this.setDiceClicked(true);
+//        this.getDice().randomize();
+//        String piceName =  piceName;
+        Random rand = new Random();
+//        Random rand1 = new Random();
+        updateBoard();
+
+    	System.out.println(piceName);
+    	
+    	// go for select the piece with randomization action
+    	 ArrayList<Piece> movablePieces = bPlayer.getMovablePieces(piceName);
+    	
+     	if(movablePieces.size() == 0) {
+     		System.out.println("there is no movable piece");
+     		newTurn();
+     	}else {
+     		ArrayList<Square> legalMoves = new ArrayList<Square>();
+     		ArrayList<Piece> pieceToMove = new ArrayList<Piece>();
+     		
+     		for (Piece piece : movablePieces) {
+     			ArrayList<Square> legalMovesForPiece = piece.getLegalMoves(cb);
+     			//legalMoves.addAll(piece.getLegalMoves(cb));
+     			//System.out.println(piece.getLegalMoves(cb));
+     			for(Square legalMove : legalMovesForPiece) {
+     				legalMoves.add(legalMove);
+     				pieceToMove.add(piece);
+     			}
+     		}     
+     		int randomMove = rand.nextInt(legalMoves.size());
+     		pieceToMove.get(randomMove).move(legalMoves.get(randomMove), cb, legalMoves);
+     		newTurn();
+     		return true; 
+     	}
+     	return true;
+    }
     public ChessBoard getChessBoard(){
         return cb;
     }
@@ -110,6 +138,8 @@ public class Game{
             if(!bPlayer.canMove(chosen)){    
                 System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
                 newTurn();
+            }else {
+            	AIplay(chosen);
             }
         }
     }
