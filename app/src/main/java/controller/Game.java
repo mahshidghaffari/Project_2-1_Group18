@@ -27,16 +27,16 @@ public class Game{
     
     public Game(JFrame f){
         this.f = f;
-        cb = new ChessBoard(true);
-        Knight pawn1 = new Knight(false);
-        Pawn pawn2 = new Pawn(false);
-        Pawn pawn3 = new Pawn(true);
-        cb.getLivePieces().add(pawn3);
-        cb.getLivePieces().add(pawn1);
-        cb.getLivePieces().add(pawn2);
-        cb.getBoard()[4][3].placePiece(pawn3);
-        cb.getBoard()[3][2].placePiece(pawn1);
-        cb.getBoard()[3][4].placePiece(pawn2);
+        cb = new ChessBoard();
+//        Knight pawn1 = new Knight(false);
+//        Pawn pawn2 = new Pawn(false);
+//        Pawn pawn3 = new Pawn(true);
+//        cb.getLivePieces().add(pawn3);
+//        cb.getLivePieces().add(pawn1);
+//        cb.getLivePieces().add(pawn2);
+//        cb.getBoard()[4][3].placePiece(pawn3);
+//        cb.getBoard()[3][2].placePiece(pawn1);
+//        cb.getBoard()[3][4].placePiece(pawn2);
         //Game_States gs = new Game_States(cb, queen);
         //gs.runCenerios();
         //gs.printScenarios();  
