@@ -45,6 +45,7 @@ public class DicePanel implements ActionListener {
     @Override
     /**
      * Dice
+     * At the moment it only works for the white pieces
      */
 
     public void actionPerformed(ActionEvent e) {

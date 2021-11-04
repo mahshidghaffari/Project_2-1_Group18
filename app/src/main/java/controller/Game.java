@@ -18,7 +18,6 @@ public class Game{
     private ButtonPanel buttonPanel;
     private boolean diceClicked=false;
     private JFrame f;
-    private String movingPiece;
 
 
     /**
@@ -27,18 +26,17 @@ public class Game{
      */
     
     public Game(JFrame f){
-
         this.f = f;
-        cb = new ChessBoard();
-        // Knight pawn1 = new Knight(false);
-        // Pawn pawn2 = new Pawn(false);
-        // Pawn pawn3 = new Pawn(true);
-        // cb.getLivePieces().add(pawn3);
-        // cb.getLivePieces().add(pawn1);
-        // cb.getLivePieces().add(pawn2);
-        // cb.getBoard()[4][3].placePiece(pawn3);
-        // cb.getBoard()[3][2].placePiece(pawn1);
-        // cb.getBoard()[3][4].placePiece(pawn2);
+        cb = new ChessBoard(true);
+        Knight pawn1 = new Knight(false);
+        Pawn pawn2 = new Pawn(false);
+        Pawn pawn3 = new Pawn(true);
+        cb.getLivePieces().add(pawn3);
+        cb.getLivePieces().add(pawn1);
+        cb.getLivePieces().add(pawn2);
+        cb.getBoard()[4][3].placePiece(pawn3);
+        cb.getBoard()[3][2].placePiece(pawn1);
+        cb.getBoard()[3][4].placePiece(pawn2);
         //Game_States gs = new Game_States(cb, queen);
         //gs.runCenerios();
         //gs.printScenarios();  
@@ -56,12 +54,6 @@ public class Game{
     }
     public void setNewChessBoard(){
         this.cb = new ChessBoard();
-    }
-    public String getMovingPiece(){
-        return this.movingPiece;
-    }
-    public void setMovingPiece(String str){
-        this.movingPiece = str;
     }
     public boolean isNewTurn(){
         return newTurn;
@@ -92,12 +84,11 @@ public class Game{
      * When Ever the Green Dice button is clicked by the user this method checks whether it is even a turn for the user
      */
     public void play(){
-        String chosen = "";
+
         if(wPlayer.getIsMyTurn()){        //if its w player's turn
             playing = wPlayer;
             newTurn= false;
-            chosen = dice.getRoleDice(); //roll the dice
-            
+            String chosen = dice.getRoleDice(); //roll the dice
             if(!wPlayer.canMove(chosen)){         //if player has no pieces to move we switch turns
                 System.out.println("Sorry white , you have no possible moves. Turn goes to black");
 
@@ -107,7 +98,7 @@ public class Game{
         else if(bPlayer.getIsMyTurn()){
             playing = bPlayer;
             newTurn= false;
-            chosen = dice.getRoleDice();
+            String chosen = dice.getRoleDice();
             //loop through all live pieces to see if dice chosen piece piece is there
             for(Piece p: cb.getLivePieces()){  
                 if(p.isWhite()){ continue; }   
@@ -121,9 +112,6 @@ public class Game{
                 newTurn();
             }
         }
-        this.movingPiece = chosen;
-        Tree t = new Tree(this);
-        t.toString();
     }
 
     /**
