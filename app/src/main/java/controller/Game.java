@@ -139,7 +139,6 @@ public class Game{
                 System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
                 newTurn();
             }else {
-            	System.out.println("Can AI go here?");
             	AIplay(chosen);
             	
             }
