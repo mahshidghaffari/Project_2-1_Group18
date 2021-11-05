@@ -1,4 +1,4 @@
-package test;
+
 
 import com.sun.security.jgss.GSSUtil;
 import org.junit.jupiter.api.Test;

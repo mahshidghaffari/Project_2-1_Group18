@@ -3,7 +3,7 @@
  *
  * This generated file contains a sample Java application project to get you started.
  * For more details take a look at the 'Building Java & JVM projects' chapter in the Gradle
- * User Manual available at https://docs.gradle.org/7.0.2/userguide/building_java_projects.html
+ * User Manual available at https://docs.gradle.org/7.2/userguide/building_java_projects.html
  */
 
 plugins {
@@ -17,22 +17,23 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter API for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
-
-    // Use JUnit Jupiter Engine for testing.
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
 
     // This dependency is used by the application.
-    implementation 'com.google.guava:guava:30.0-jre'
+    implementation 'com.google.guava:guava:30.1.1-jre'
+    
+    // https://mvnrepository.com/artifact/com.deepnetts/deepnetts-core
+	implementation group: 'com.deepnetts', name: 'deepnetts-core', version: '1.13.1'
+    
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'Project_2._Group18.App'
+    mainClass = 'DiceChess.App'
 }
 
 tasks.named('test') {
-    // Use junit platform for unit tests.
+    // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
