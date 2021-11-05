@@ -30,7 +30,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'DiceChess.App'
+    mainClass = 'App'
 }
 
 tasks.named('test') {
