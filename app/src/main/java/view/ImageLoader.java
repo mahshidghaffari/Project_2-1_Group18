@@ -12,6 +12,7 @@ public class ImageLoader {
      * @return BufferedImage
      */
     public static BufferedImage loadImage(String path) {
+    	System.out.println(path);
         try {
             return ImageIO.read(new File(path));
 
