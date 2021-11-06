@@ -21,7 +21,7 @@ public class Game{
     private ButtonPanel buttonPanel;
     private boolean diceClicked=false;
     private JFrame f;
-    private boolean baseLineActive = false;
+    private boolean baseLineActive = true;
 
 
     /**
