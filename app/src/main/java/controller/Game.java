@@ -16,12 +16,16 @@ public class Game{
     private Player playing = null;
     private WhitePlayer wPlayer;
     private BaseLineAgent baseLinePlayer;
+    private ExpectiMaxAgent expectiMaxPlayer;
     private BlackPlayer bPlayer;
     private Piece heldPiece = null;
     private ButtonPanel buttonPanel;
     private boolean diceClicked=false;
     private JFrame f;
-    private boolean baseLineActive = true;
+    private boolean noMoves = false;
+    private boolean noAgent = false;
+    private boolean baseLineActive = false;     // Make true to play with BaseLine Agent
+    private boolean expectiMaxActive = false;
 
 
     /**
@@ -36,6 +40,7 @@ public class Game{
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
         baseLinePlayer = new BaseLineAgent(this, cb);
+        expectiMaxPlayer = new ExpectiMaxAgent(this, cb);
         buttonPanel= new ButtonPanel(this);
     }
     public JFrame getFrame(){
@@ -78,21 +83,24 @@ public class Game{
      * When Ever the Green Dice button is clicked by the user this method checks whether it is even a turn for the user
      */
     public void play(){
+        noMoves = false;
 
         if(wPlayer.getIsMyTurn()){        //if its w player's turn
             playing = wPlayer;
             newTurn= false;
             String chosen = dice.getRoleDice(); //roll the dice
             if(!wPlayer.canMove(chosen)){         //if player has no pieces to move we switch turns
-                System.out.println("Sorry white , you have no possible moves. Turn goes to black");
-
+                //System.out.println("Sorry white , you have no possible moves. Turn goes to black");
+                noMoves = true;
                 newTurn();
+            } else {
+                noMoves = false;
             }
         }   
         else if(bPlayer.getIsMyTurn()){
         	
         	// Normal player (NO AGENT)
-        	if (!baseLineActive) {
+        	if (noAgent) {
         		playing = bPlayer;
         		newTurn= false;
             	String chosen = dice.getRoleDice();
@@ -100,26 +108,29 @@ public class Game{
             	for(Piece p: cb.getLivePieces()){  
             		if(p.isWhite()){ continue; }   
                 
-            		if(p.getPieceName().equals(chosen) ){ //if the chosen piece is not dead 
+            		if(p.getPieceName().equals(chosen) ){ //if the chosen piece is not dead
                         break;
             		}
             	}
             	
             	if(!bPlayer.canMove(chosen)){    
-            		System.out.println("Sorry black , you have no possible moves. Turn goes to white");     
+            		//System.out.println("Sorry black , you have no possible moves. Turn goes to white");
+            		noMoves = true;
             		newTurn();
-            	}
+            	} else {
+                    noMoves = false;
+                }
         	
         	// BASELINE AGENT
         	} else if (baseLineActive) {
             	String chosen = dice.getRoleDice();
-            	baseLinePlayer.baseLineplay(chosen);
+            	baseLinePlayer.baseLinePlay(chosen);
         	
         	// EXPECTIMAX AGENT
-        	} else if (false) {
-        		
-        	}
-            	
+        	} else if (expectiMaxActive) {
+                String chosen = dice.getRoleDice();
+                expectiMaxPlayer.expectiMaxPlay(chosen);
+            }
         }
     }
 
@@ -258,15 +269,18 @@ public class Game{
             }
         }
     }
+
     /**
      * This method highlights a legal clicked piece
      * @param piece is the piece in question needing highlighting
      * @param square is the Square in question to highlight
      */
     public void highlightPiece(Piece piece, Square square) {
-       square.removeImage();
+        square.removeImage();
 
         updateBoard();
         square.placeImage(piece);
     }
+
+    public boolean isNoMoves() { return noMoves; }
 }

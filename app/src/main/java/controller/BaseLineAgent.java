@@ -12,7 +12,7 @@ public class BaseLineAgent extends BlackPlayer {
 		this.game = game;
 	}
 	
-    public boolean baseLineplay(String chosenPiece) {
+    public boolean baseLinePlay(String chosenPiece) {
     	System.out.println("AI is playing ");
 
         Random rand = new Random();

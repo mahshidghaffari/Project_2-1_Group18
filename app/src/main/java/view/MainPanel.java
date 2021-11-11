@@ -106,41 +106,20 @@ public class MainPanel implements ActionListener  {
      * White at the bottom and Black on top
      */
     public void initialPositions() {
-//    	FilePath.getFilePath("GreenButton.png")
-//        ImageIcon bBishop = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bbishop.png"));
-//        ImageIcon bKing = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bking.png"));
-//        ImageIcon bKnight = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bknight.png"));
-//        ImageIcon bPawn = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bpawn.png"));
-//        ImageIcon bRook = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/brook.png"));
-//        ImageIcon bQueen = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bqueen.png"));
-    	
-//        ImageIcon wBishop = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wbishop.png"));
-//        ImageIcon wKing = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wking.png"));
-//        ImageIcon wKnight = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png"));
-//        ImageIcon wPawn = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wpawn.png"));
-//        ImageIcon wQueen = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png"));
-//        ImageIcon wRook = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wrook.png"));
-    	
-//        ImageIcon rBishop = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rbishop.png"));
-//        ImageIcon rKing = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rking.png"));
-//        ImageIcon rKnight = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rknight.png"));
-//        ImageIcon rPawn = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rpawn.png"));
-//        ImageIcon rRook = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rrook.png"));
-//        ImageIcon rQueen = new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png"));
         ImageIcon bBishop = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bbishop.png")));
         ImageIcon bKing = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bking.png")));
         ImageIcon bKnight = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bknight.png")));
         ImageIcon bPawn = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bpawn.png")));
         ImageIcon bRook = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("brook.png")));
         ImageIcon bQueen = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bqueen.png")));
-        
+
         ImageIcon wBishop = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wbishop.png")));
         ImageIcon wKing = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wking.png")));
         ImageIcon wKnight = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wknight.png")));
         ImageIcon wPawn = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wpawn.png")));
         ImageIcon wQueen = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wqueen.png")));
         ImageIcon wRook = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wrook.png")));
-        
+
         ImageIcon rBishop = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("rbishop.png")));
         ImageIcon rKing = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("rking.png")));
         ImageIcon rKnight = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("rknight.png")));
