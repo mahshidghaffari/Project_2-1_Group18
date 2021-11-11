@@ -33,13 +33,14 @@ public class Game{
      * @param f is the ChessBoard GUI Frame 
      */
     
-    public Game(JFrame f){
+    public Game(JFrame f,boolean noAgent){
         this.f = f;
         cb = new ChessBoard();
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
         buttonPanel= new ButtonPanel(this);
+        this.noAgent=noAgent;
     }
     public JFrame getFrame(){
         return f;
