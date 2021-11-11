@@ -115,10 +115,11 @@ public class Pawn extends Piece{
                 
                             if(rSq.getPieceOnSq().pieceName == "Pawn" && rSq.getPieceOnSq().isWhite()){
                                 Square[] lastMove = cb.getLastPlyPlayed();
-                                if(lastMove[0].getYPos() == 6 && lastMove[1].getYPos() == 4){        
-                                    legalMoves.add(board[y+1][x+1]);
+                                if(lastMove[0] != null) {
+                                    if (lastMove[0].getYPos() == 6 && lastMove[1].getYPos() == 4) {
+                                        legalMoves.add(board[y + 1][x + 1]);
+                                    }
                                 }
-                                
                             }
                         }
                     }
