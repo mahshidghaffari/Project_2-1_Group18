@@ -243,8 +243,9 @@ public class SetupMenu {
 
     public void startGamebaord(String mode) {
         if(mode.equals("PvP")){
+            System.out.println("Mode: "+"PvP");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f);
+            Game game = new Game(f,true);
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
@@ -260,10 +261,42 @@ public class SetupMenu {
             f.setVisible(true);
         }
         else if(mode.equals("PvAI")){
-            //TODO
+            System.out.println("Mode: "+"PvAI");
+            JFrame f = new JFrame("Dice Chess");
+            Game game = new Game(f,false);
+
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
+            f.setLayout(new BorderLayout());
+            f.setBackground(Color.GREEN);
+
+            f.add(new SidePanel(game).getPane(), BorderLayout.WEST);
+            f.add(new MainPanel(game).getMainPanel(), BorderLayout.CENTER);
+
+            f.setResizable(false);
+            f.setLocationRelativeTo(null);
+            f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            f.setVisible(true);
         }
         else if(mode.equals("AIvAI")){
-            //TODO
+            // TODO in phase3
+            //in that case, assume PvP
+            System.out.println("Mode: "+"PvP");
+            JFrame f = new JFrame("Dice Chess");
+            Game game = new Game(f,true);
+
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
+            f.setLayout(new BorderLayout());
+            f.setBackground(Color.GREEN);
+
+            f.add(new SidePanel(game).getPane(), BorderLayout.WEST);
+            f.add(new MainPanel(game).getMainPanel(), BorderLayout.CENTER);
+
+            f.setResizable(false);
+            f.setLocationRelativeTo(null);
+            f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            f.setVisible(true);
         }
 
     }
