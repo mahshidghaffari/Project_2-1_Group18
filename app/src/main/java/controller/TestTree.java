@@ -12,6 +12,9 @@ public class TestTree {
         Tree t = new Tree(4, cb, "Pawn", true);
         t.generateTree();
         t.calculateTree(t.getRoot().getChildren());
+        Piece best = t.getBestPiece();
+        Square bestMove = t.getBestSquare();
+
         Node b = t.getBestBoard();
         b.getBoard().printBoard();
         System.out.println(b.getValue());

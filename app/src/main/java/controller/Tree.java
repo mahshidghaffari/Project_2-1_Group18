@@ -27,7 +27,48 @@ public class Tree {
 
     // Get best board
     public Node getBestBoard(){
+
         return root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get();
+    }
+
+    public Square getBestSquare(){
+        ChessBoard best = root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get().getBoard();
+        Square bestSquare = null;
+
+        List<Piece> pieceObjectsBestBoard = best
+                .getLivePieces().stream()
+                .filter(p -> p.getPieceName().equals(root.getPiece()))
+                .filter(p -> p.isWhite() == !isWhite)
+                .collect(Collectors.toList());
+
+        for (Piece piece : pieceObjectsBestBoard)
+        {
+            Square squareOriginalBoard = root.getBoard().getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
+            if(!squareOriginalBoard.isTakenSquare()){
+                bestSquare = squareOriginalBoard;
+            }
+        }
+        return bestSquare;
+    }
+
+    public Piece getBestPiece(){
+        ChessBoard best = root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get().getBoard();
+        Piece bestPiece = null;
+
+        List<Piece> pieceObjectsOriginalBoard = root.getBoard()
+                .getLivePieces().stream()
+                .filter(p -> p.getPieceName().equals(root.getPiece()))
+                .filter(p -> p.isWhite() == !isWhite)
+                .collect(Collectors.toList());
+
+        for (Piece piece : pieceObjectsOriginalBoard)
+        {
+            Square squareBestBoard = best.getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
+            if(!squareBestBoard.isTakenSquare()){
+                bestPiece = piece;
+            }
+        }
+        return bestPiece;
     }
 
     // Generate tree methods
