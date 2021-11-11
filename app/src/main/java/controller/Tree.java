@@ -108,8 +108,8 @@ public class Tree {
                 depth = depth - 1;
                 calculateTree(n.getChildren());
                 if (n.isProbability()) {
-                    calculateProbability(n);
-                    //getMaxValue(n);
+                    //calculateProbability(n);
+                    getMaxValue(n);
                 }
                 else {
                     getMaxValue(n);
@@ -134,8 +134,7 @@ public class Tree {
         for (Node child : n.getChildren()) {
             value = value + ((double)child.getValue())/6;
         }
-        System.out.println(value);
-        n.setValue((int)value);
+        n.setValue(value);
     }
 
     public void getMaxValue(Node n){
@@ -169,6 +168,10 @@ public class Tree {
         ChessBoard copyBoard = this.copyBoard(originalCB);
         Piece movingPieceCopy = copyBoard.getBoard()[movingPiece.getCurrentPosition().getYPos()][movingPiece.getCurrentPosition().getXPos()].getPieceOnSq();
         ArrayList<Square> legalMoves = movingPieceCopy.getLegalMoves(copyBoard);
+
+        System.out.println("CHESSBOARD: ");
+        originalCB.printBoard();
+        System.out.println();
 
         for(Square legalSquare : legalMoves ){
             copyBoard = this.copyBoard(originalCB);

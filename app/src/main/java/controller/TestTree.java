@@ -18,7 +18,7 @@ public class TestTree {
 
         Node b = t.getBestBoard();
         b.getBoard().printBoard();
-        System.out.println(b.getValue());
+//    System.out.println(b.getValue());
 //
 //
 //        for (Node n : t.getRoot().getChildren()) {
