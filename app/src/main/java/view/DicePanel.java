@@ -115,8 +115,7 @@ public class DicePanel implements ActionListener {
 
                     case "Knight":
                         if(game.getWhitePlayer().getIsMyTurn()){
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wknight.png")));
-                            //resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wknight.png"))));
+                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wknight.png"))));
                             break;
                         }
                     else{

@@ -25,7 +25,7 @@ public class Game{
     private boolean noMoves = false;
     private boolean noAgent = false;
     private boolean baseLineActive = false;     // Make true to play with BaseLine Agent
-    private boolean expectiMaxActive = false;
+    private boolean expectiMaxActive = true;
 
 
     /**
@@ -39,8 +39,6 @@ public class Game{
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
-        baseLinePlayer = new BaseLineAgent(this, cb);
-        expectiMaxPlayer = new ExpectiMaxAgent(this, cb);
         buttonPanel= new ButtonPanel(this);
     }
     public JFrame getFrame(){
@@ -83,9 +81,10 @@ public class Game{
      * When Ever the Green Dice button is clicked by the user this method checks whether it is even a turn for the user
      */
     public void play(){
-        noMoves = false;
+        //noMoves = false;
 
         if(wPlayer.getIsMyTurn()){        //if its w player's turn
+
             playing = wPlayer;
             newTurn= false;
             String chosen = dice.getRoleDice(); //roll the dice
@@ -96,9 +95,10 @@ public class Game{
             } else {
                 noMoves = false;
             }
-        }   
+        }
+
         else if(bPlayer.getIsMyTurn()){
-        	
+
         	// Normal player (NO AGENT)
         	if (noAgent) {
         		playing = bPlayer;
@@ -123,13 +123,16 @@ public class Game{
         	
         	// BASELINE AGENT
         	} else if (baseLineActive) {
+                baseLinePlayer = new BaseLineAgent(this, cb);
             	String chosen = dice.getRoleDice();
             	baseLinePlayer.baseLinePlay(chosen);
         	
         	// EXPECTIMAX AGENT
         	} else if (expectiMaxActive) {
                 String chosen = dice.getRoleDice();
-                expectiMaxPlayer.expectiMaxPlay(chosen);
+                int depth = 4;
+                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
+                expectiMaxPlayer.expectiMaxPlay();
             }
         }
     }
