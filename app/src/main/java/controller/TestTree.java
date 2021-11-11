@@ -9,7 +9,7 @@ public class TestTree {
 
     public static void main(String[] args) {
         ChessBoard cb = new ChessBoard();
-        Tree t = new Tree(3, cb, "Knight", true);
+        Tree t = new Tree(4, cb, "Pawn", true);
         t.generateTree();
         t.calculateTree(t.getRoot().getChildren());
         Node b = t.getBestBoard();

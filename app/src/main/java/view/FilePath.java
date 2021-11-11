@@ -5,9 +5,9 @@ import java.util.Locale;
 
 public class FilePath
 {
-    private static final String internalPathUnix = "/src/main/java/view/resources/";
-    private static final String internalPathWin = "/src/main/java/view/resources/";
-    private static final String internalPathMac = "/src/main/java/view/resources/";
+    private static final String internalPathUnix = "/app/src/main/java/view/resources/";
+    private static final String internalPathWin = "/app/src/main/java/view/resources/";
+    private static final String internalPathMac = "/app/src/main/java/view/resources/";
 
     /**
      * Creates a file path to saved games with the correct file name appended
