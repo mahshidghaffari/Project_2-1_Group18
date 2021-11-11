@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,11 +10,14 @@ public class Tree {
     private Node root;
     private int depth;
     private Boolean isWhite;
-    private String[] pieceNames = { "Rook", "Bishop", "Queen", "King", "Knight", "Pawn" };
+    private String[] pieceNames ;
+    private List test; //generate
 
     public Node getRoot() {
         return root;
     }
+
+    public Boolean getIsWhite(){ return this.isWhite;}
 
     public void setRoot(Node root) {
         this.root = root;
@@ -23,6 +27,21 @@ public class Tree {
         this.root = new Node(false, pieceName, cb);
         this.depth = depth;
         this.isWhite = isWhite;
+
+        this.pieceNames = new String[]{ "Rook", "Bishop", "Queen", "King", "Knight", "Pawn" };
+        this.test = new ArrayList();
+        this.generateTurns();
+    }
+
+    private void generateTurns(){
+        boolean toadd = isWhite;
+        for (int i = 0; i < depth; i++) {
+            this.test.add(toadd);
+            this.test.add(toadd);
+            toadd = !toadd;
+        }
+        Collections.reverse(test);
+        System.out.println(test);
     }
 
     // Get best board
@@ -38,7 +57,7 @@ public class Tree {
         List<Piece> pieceObjectsBestBoard = best
                 .getLivePieces().stream()
                 .filter(p -> p.getPieceName().equals(root.getPiece()))
-                .filter(p -> p.isWhite() == !isWhite)
+                .filter(p -> p.isWhite() == isWhite)
                 .collect(Collectors.toList());
 
         for (Piece piece : pieceObjectsBestBoard)
@@ -58,7 +77,7 @@ public class Tree {
         List<Piece> pieceObjectsOriginalBoard = root.getBoard()
                 .getLivePieces().stream()
                 .filter(p -> p.getPieceName().equals(root.getPiece()))
-                .filter(p -> p.isWhite() == !isWhite)
+                .filter(p -> p.isWhite() == isWhite)
                 .collect(Collectors.toList());
 
         for (Piece piece : pieceObjectsOriginalBoard)
@@ -74,7 +93,7 @@ public class Tree {
     // Generate tree methods
     public void generateTree(){
         createLegalMovesNodes(root, this.isWhite);
-        this.isWhite = !this.isWhite;
+        //this.isWhite = !this.isWhite;
         depth = (depth - 1)*2;
         generate(root.getChildren(), true);
     }
@@ -85,8 +104,10 @@ public class Tree {
                 if (pieceNode) {
                     createPiecesNodes(n);
                 } else {
-                    createLegalMovesNodes(n, this.isWhite);
-                    this.isWhite = !this.isWhite;
+                    //System.out.println(depth);
+                   // createLegalMovesNodes(n, this.isWhite); //check if number is even or not
+                    createLegalMovesNodes(n, (boolean)test.get(depth));
+                    //this.isWhite = !this.isWhite;
                 }
                 depth = depth - 1;
                 generate(n.getChildren(), !pieceNode);
@@ -128,10 +149,17 @@ public class Tree {
                 calculateTree(n.getChildren());
                 if (n.isProbability()) {
                     calculateProbability(n);
-                } else {
-                    if(isWhite){ getMaxValue(n); }
-                    else{ getMinValue(n); }
-                    this.isWhite = !this.isWhite;
+                }
+                else {
+                    if((boolean)test.get(depth) == this.isWhite){
+                        getMaxValue(n);
+                    }
+                    else{
+                        getMinValue(n);
+                    }
+//                    if(isWhite){ getMaxValue(n); }
+//                    else{ getMinValue(n); }
+//                    this.isWhite = !this.isWhite; // Check if depth is even or odd
                 }
                 depth = depth + 1;
 
@@ -155,6 +183,7 @@ public class Tree {
             }
             //System.out.println(child.getValue());
         }
+        //System.out.println(value);
         n.setValue(value);
     }
 
@@ -168,20 +197,27 @@ public class Tree {
         if(n.getChildren().size() == 0){
             value = 0;
         }
+        //System.out.println(value);
         n.setValue(value);
     }
 
     public ArrayList<ChessBoard> runScenarios(ChessBoard originalCB, Piece movingPiece){
         ArrayList<ChessBoard> allCenerios = new ArrayList<ChessBoard>();
-        ArrayList<Square> legalMoves = movingPiece.getLegalMoves(originalCB);
-        Square originalPosition = originalCB.getBoard()[movingPiece.getCurrentPosition().getYPos()][movingPiece.getCurrentPosition().getXPos()];
-        ArrayList<Square> fakeLegalMoves = new ArrayList<Square>();
-        fakeLegalMoves.add(originalPosition);
+        ChessBoard copyBoard = this.copyBoard(originalCB);
+        Piece movingPieceCopy = copyBoard.getBoard()[movingPiece.getCurrentPosition().getYPos()][movingPiece.getCurrentPosition().getXPos()].getPieceOnSq();
+        ArrayList<Square> legalMoves = movingPieceCopy.getLegalMoves(copyBoard);
+
         for(Square legalSquare : legalMoves ){
-            movingPiece.move(legalSquare, originalCB , legalMoves);
-            ChessBoard copy = copyBoard(originalCB);
+            copyBoard = this.copyBoard(originalCB);
+            movingPieceCopy = copyBoard.getBoard()[movingPiece.getCurrentPosition().getYPos()][movingPiece.getCurrentPosition().getXPos()].getPieceOnSq();
+
+            Square toMove = copyBoard.getBoard()[legalSquare.getYPos()][legalSquare.getXPos()];
+            ArrayList<Square> fakeLegalMoves = new ArrayList<Square>();
+            fakeLegalMoves.add(toMove);
+
+            movingPieceCopy.move(toMove, copyBoard , fakeLegalMoves);
+            ChessBoard copy = copyBoard(copyBoard);
             allCenerios.add(copy);
-            movingPiece.move(originalPosition, originalCB , fakeLegalMoves);
         }
         return allCenerios;
     }

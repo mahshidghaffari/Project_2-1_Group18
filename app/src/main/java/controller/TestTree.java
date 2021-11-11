@@ -9,9 +9,10 @@ public class TestTree {
 
     public static void main(String[] args) {
         ChessBoard cb = new ChessBoard();
-        Tree t = new Tree(4, cb, "Pawn", true);
+        Tree t = new Tree(4, cb, "Knight", false);
         t.generateTree();
         t.calculateTree(t.getRoot().getChildren());
+        //System.out.println(t.get);
         Piece best = t.getBestPiece();
         Square bestMove = t.getBestSquare();
 
@@ -20,10 +21,10 @@ public class TestTree {
         System.out.println(b.getValue());
 //
 //
-//        for (Node2 n : t.root.getChildren()) {
-//            System.out.println(n.getValue());
-//            n.getBoard().printBoard();
-//        }
+        for (Node n : t.getRoot().getChildren()) {
+            System.out.println(n.getValue());
+            n.getBoard().printBoard();
+        }
 
         //System.out.println(t.root.getChildren().size());
 //        for (Node2 n : t.root.getChildren()) {
