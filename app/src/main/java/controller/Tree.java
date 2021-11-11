@@ -169,9 +169,9 @@ public class Tree {
         Piece movingPieceCopy = copyBoard.getBoard()[movingPiece.getCurrentPosition().getYPos()][movingPiece.getCurrentPosition().getXPos()].getPieceOnSq();
         ArrayList<Square> legalMoves = movingPieceCopy.getLegalMoves(copyBoard);
 
-        System.out.println("CHESSBOARD: ");
-        originalCB.printBoard();
-        System.out.println();
+//        System.out.println("CHESSBOARD: ");
+//        originalCB.printBoard();
+//        System.out.println();
 
         for(Square legalSquare : legalMoves ){
             copyBoard = this.copyBoard(originalCB);

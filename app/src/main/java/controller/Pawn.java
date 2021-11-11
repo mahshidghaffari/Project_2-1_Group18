@@ -61,11 +61,12 @@ public class Pawn extends Piece{
 
                             if(rSq.getPieceOnSq().pieceName == "Pawn" && !rSq.getPieceOnSq().isWhite()){
                                 Square[] lastMove = cb.getLastPlyPlayed();
-                                if(lastMove[0].getYPos() == 1 && lastMove[1].getYPos() == 3){        
-                                    legalMoves.add(board[y-1][x+1]);
-                                    System.out.println("to the right was added!!");
+                                if(lastMove[0] != null) {
+                                    if (lastMove[0].getYPos() == 1 && lastMove[1].getYPos() == 3) {
+                                        legalMoves.add(board[y - 1][x + 1]);
+                                        System.out.println("to the right was added!!");
+                                    }
                                 }
-                                
                             }
                         }
                     }
@@ -74,8 +75,10 @@ public class Pawn extends Piece{
                         if(lSq.isTakenSquare()){ //If the piece is a pawn and it is black
                             if(lSq.getPieceOnSq().pieceName == "Pawn" && !lSq.getPieceOnSq().isWhite()){
                                 Square[] lastMove = cb.getLastPlyPlayed();
-                                if(lastMove[0].getYPos() == 1 && lastMove[1].getYPos() == 3){
-                                    legalMoves.add(board[y-1][x-1]);
+                                if(lastMove[0] != null) {
+                                    if (lastMove[0].getYPos() == 1 && lastMove[1].getYPos() == 3) {
+                                        legalMoves.add(board[y - 1][x - 1]);
+                                    }
                                 }
                                 
                             }
@@ -124,9 +127,11 @@ public class Pawn extends Piece{
                         if(lSq.isTakenSquare()){ //If the piece is a pawn and it is white
                             if(lSq.getPieceOnSq().pieceName == "Pawn" && lSq.getPieceOnSq().isWhite()){
                                 Square[] lastMove = cb.getLastPlyPlayed();
-                                if(lastMove[0].getYPos() == 6 && lastMove[1].getYPos() == 4){
-                                    legalMoves.add(board[y+1][x-1]);
-                                } 
+                                if(lastMove[0] != null) {
+                                    if (lastMove[0].getYPos() == 6 && lastMove[1].getYPos() == 4) {
+                                        legalMoves.add(board[y + 1][x - 1]);
+                                    }
+                                }
                             }
                         } 
                     }

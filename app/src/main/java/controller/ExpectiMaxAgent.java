@@ -38,6 +38,9 @@ public class ExpectiMaxAgent extends BlackPlayer{
 
             best.move(bestMove, cb,  best.getLegalMoves(cb));
 
+            Node b = tree.getBestBoard();
+            b.getBoard().printBoard();
+            System.out.println("/////////////////////////////////" + b.getValue());
             game.updateBoard();
             game.newTurn();
 

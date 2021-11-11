@@ -130,7 +130,7 @@ public class Game{
         	// EXPECTIMAX AGENT
         	} else if (expectiMaxActive) {
                 String chosen = dice.getRoleDice();
-                int depth = 1;
+                int depth = 4;
                 expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
                 expectiMaxPlayer.expectiMaxPlay();
             }
