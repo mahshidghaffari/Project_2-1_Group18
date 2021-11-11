@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 public class Node {
-    private int value;
+    private double value;
     private boolean isProbability;
     private ArrayList<Node> children;
     private ChessBoard board;
@@ -47,11 +47,11 @@ public class Node {
         isProbability = probability;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

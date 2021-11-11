@@ -50,46 +50,6 @@ public class Tree {
         return root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get();
     }
 
-    public Square getBestSquare(){
-        ChessBoard best = root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get().getBoard();
-        Square bestSquare = null;
-
-        List<Piece> pieceObjectsBestBoard = best
-                .getLivePieces().stream()
-                .filter(p -> p.getPieceName().equals(root.getPiece()))
-                .filter(p -> p.isWhite() == isWhite)
-                .collect(Collectors.toList());
-
-        for (Piece piece : pieceObjectsBestBoard)
-        {
-            Square squareOriginalBoard = root.getBoard().getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
-            if(!squareOriginalBoard.isTakenSquare()){
-                bestSquare = squareOriginalBoard;
-            }
-        }
-        return bestSquare;
-    }
-
-    public Piece getBestPiece(){
-        ChessBoard best = root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get().getBoard();
-        Piece bestPiece = null;
-
-        List<Piece> pieceObjectsOriginalBoard = root.getBoard()
-                .getLivePieces().stream()
-                .filter(p -> p.getPieceName().equals(root.getPiece()))
-                .filter(p -> p.isWhite() == isWhite)
-                .collect(Collectors.toList());
-
-        for (Piece piece : pieceObjectsOriginalBoard)
-        {
-            Square squareBestBoard = best.getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
-            if(!squareBestBoard.isTakenSquare()){
-                bestPiece = piece;
-            }
-        }
-        return bestPiece;
-    }
-
     // Generate tree methods
     public void generateTree(){
         createLegalMovesNodes(root, this.isWhite);
@@ -149,14 +109,16 @@ public class Tree {
                 calculateTree(n.getChildren());
                 if (n.isProbability()) {
                     calculateProbability(n);
+                    //getMaxValue(n);
                 }
                 else {
-                    if((boolean)test.get(depth) == this.isWhite){
-                        getMaxValue(n);
-                    }
-                    else{
-                        getMinValue(n);
-                    }
+                    getMaxValue(n);
+//                    if((boolean)test.get(depth) == this.isWhite){
+//                        getMaxValue(n);
+//                    }
+//                    else{
+//                        getMinValue(n);
+//                    }
 //                    if(isWhite){ getMaxValue(n); }
 //                    else{ getMinValue(n); }
 //                    this.isWhite = !this.isWhite; // Check if depth is even or odd
@@ -168,15 +130,16 @@ public class Tree {
     }
 
     public void calculateProbability(Node n){
-        int value = 0;
+        double value = 0;
         for (Node child : n.getChildren()) {
-            value = value + child.getValue()/6;
+            value = value + ((double)child.getValue())/6;
         }
-        n.setValue(value);
+        System.out.println(value);
+        n.setValue((int)value);
     }
 
     public void getMaxValue(Node n){
-        int value = 0;
+        double value = 0;
         for (Node child : n.getChildren()) {
             if(child.getValue() > value){
                 value = child.getValue();
@@ -188,7 +151,7 @@ public class Tree {
     }
 
     public void getMinValue(Node n){
-        int value = 10000;
+        double value = 10000;
         for (Node child : n.getChildren()) {
             if(child.getValue() < value){
                 value = child.getValue();
@@ -250,5 +213,45 @@ public class Tree {
             copy.getBoard()[y][x].placePiece(newP);
         }
         return copy;
+    }
+
+    public Square getBestSquare(){
+        ChessBoard best = root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get().getBoard();
+        Square bestSquare = null;
+
+        List<Piece> pieceObjectsBestBoard = best
+                .getLivePieces().stream()
+                .filter(p -> p.getPieceName().equals(root.getPiece()))
+                .filter(p -> p.isWhite() == isWhite)
+                .collect(Collectors.toList());
+
+        for (Piece piece : pieceObjectsBestBoard)
+        {
+            Square squareOriginalBoard = root.getBoard().getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
+            if(!squareOriginalBoard.isTakenSquare()){
+                bestSquare = squareOriginalBoard;
+            }
+        }
+        return bestSquare;
+    }
+
+    public Piece getBestPiece(){
+        ChessBoard best = root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get().getBoard();
+        Piece bestPiece = null;
+
+        List<Piece> pieceObjectsOriginalBoard = root.getBoard()
+                .getLivePieces().stream()
+                .filter(p -> p.getPieceName().equals(root.getPiece()))
+                .filter(p -> p.isWhite() == isWhite)
+                .collect(Collectors.toList());
+
+        for (Piece piece : pieceObjectsOriginalBoard)
+        {
+            Square squareBestBoard = best.getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
+            if(!squareBestBoard.isTakenSquare()){
+                bestPiece = piece;
+            }
+        }
+        return bestPiece;
     }
 }
