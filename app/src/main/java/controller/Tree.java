@@ -108,8 +108,8 @@ public class Tree {
                 depth = depth - 1;
                 calculateTree(n.getChildren());
                 if (n.isProbability()) {
-                    //calculateProbability(n);
-                    getMaxValue(n);
+                    calculateProbability(n);
+                    //getMaxValue(n);
                 }
                 else {
                     getMaxValue(n);
@@ -231,7 +231,7 @@ public class Tree {
         for (Piece piece : pieceObjectsBestBoard)
         {
             Square squareOriginalBoard = root.getBoard().getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
-            if(!squareOriginalBoard.isTakenSquare()){
+            if(!squareOriginalBoard.isTakenSquare() || squareOriginalBoard.getPieceOnSq().isWhite() != this.isWhite){
                 bestSquare = squareOriginalBoard;
             }
         }
