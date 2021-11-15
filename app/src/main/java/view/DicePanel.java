@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class DicePanel implements ActionListener {
@@ -90,8 +91,17 @@ public class DicePanel implements ActionListener {
 
                 //game.newTurn();
                 game.setDiceClicked(true);
-                game.getDice().randomize();
-                String name =  game.getDice().getRoleDice(); 
+               // game.getDice().randomize();
+                //String name =  game.getDice().getRoleDice();
+                String name;
+                if(game.getWhitePlayer().getIsMyTurn()){
+                    ArrayList<String> movable = game.getWhitePlayer().getMovableNames();
+                    name = game.getDice().getRndPiece(movable);
+                }
+                else{
+                    ArrayList<String> movable = game.getBlackPlayer().getMovableNames();
+                    name = game.getDice().getRndPiece(movable);    
+                }
                 switch (name){
                     case "Pawn":
                         if(game.getWhitePlayer().getIsMyTurn()){

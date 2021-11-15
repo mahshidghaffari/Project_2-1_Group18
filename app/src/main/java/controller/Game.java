@@ -88,7 +88,9 @@ public class Game{
 
             playing = wPlayer;
             newTurn= false;
-            String chosen = dice.getRoleDice(); //roll the dice
+            String chosen = dice.getChosen();
+            //String chosen = dice.getRoleDice(); //roll the dice
+
             if(!wPlayer.canMove(chosen)){         //if player has no pieces to move we switch turns
                 //System.out.println("Sorry white , you have no possible moves. Turn goes to black");
                 noMoves = true;
@@ -104,7 +106,7 @@ public class Game{
         	if (noAgent) {
         		playing = bPlayer;
         		newTurn= false;
-            	String chosen = dice.getRoleDice();
+            	String chosen = dice.getChosen();
             	//loop through all live pieces to see if dice chosen piece piece is there
             	for(Piece p: cb.getLivePieces()){  
             		if(p.isWhite()){ continue; }   
@@ -125,13 +127,13 @@ public class Game{
         	// BASELINE AGENT
         	} else if (baseLineActive) {
                 baseLinePlayer = new BaseLineAgent(this, cb);
-            	String chosen = dice.getRoleDice();
+                String chosen = dice.getChosen();
             	baseLinePlayer.baseLinePlay(chosen);
         	
         	// EXPECTIMAX AGENT
         	} else if (expectiMaxActive) {
-                String chosen = dice.getRoleDice();
-                int depth = 3;
+                String chosen = dice.getChosen();
+                int depth = 2;
                 expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
                 expectiMaxPlayer.expectiMaxPlay();
             }
@@ -154,7 +156,7 @@ public class Game{
             if(!diceClicked){ return false;}
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
-                else if (clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
+                else if (clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getChosen()) ){ //if the player selected the correct piece to move
                     heldPiece = clickedPiece;
                     heldPiece.setHighlighted(true);
                     highlightPiece(heldPiece, clickedSquare);
@@ -206,7 +208,7 @@ public class Game{
             if(!diceClicked){ return false;}
             if(!clickedOnce){ //and this click is the choice of which piece to move 
                 if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing
-                else if (!clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getRoleDice()) ){ //if the player selected the correct piece to move
+                else if (!clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getChosen())){ //if the player selected the correct piece to move
                     heldPiece = clickedPiece;
                     heldPiece.setHighlighted(true);
                     highlightPiece(heldPiece, clickedSquare);

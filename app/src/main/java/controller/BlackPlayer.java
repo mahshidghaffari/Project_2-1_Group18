@@ -35,6 +35,28 @@ public class BlackPlayer extends Player{
         return false;
     }
 
+    public ArrayList<Piece> getAllMovablePieces(){
+        ArrayList<Piece> movablePieces = new ArrayList<Piece>();
+        for(Piece p: livePieces){
+            if(!p.isWhite() && p.getLegalMoves(cb).size()>0){
+                movablePieces.add(p);
+            }
+        }
+        return movablePieces;
+    }
+
+    public ArrayList<String> getMovableNames(){
+        ArrayList<Piece> movablePieces = getAllMovablePieces();
+        ArrayList<String> names = new ArrayList<>();
+        for(Piece p : movablePieces){
+            if(!names.contains(p.pieceName)){
+                names.add(p.pieceName);
+            }
+        }
+        return names;
+    }
+    
+
     public double getBlackScore(){ return score;}
 
     public void updateScore(){
