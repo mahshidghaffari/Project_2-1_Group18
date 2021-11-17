@@ -17,7 +17,7 @@ public class ExpectiMaxAgent extends BlackPlayer{
         this.chosenPiece = chosenPiece;
         this.depth = depth;
         this.isWhite = isWhite;
-        this.tree = new Tree(depth, cb, chosenPiece, isWhite);
+        this.tree = new Tree(depth, game, chosenPiece, isWhite);
     }
 
     public void expectiMaxPlay() {

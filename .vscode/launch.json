@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch MotionTest",
+            "request": "launch",
+            "mainClass": "MotionTest",
+            "projectName": "DiceChess"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "DiceChess"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestTree",
+            "request": "launch",
+            "mainClass": "controller.TestTree",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "Launch MoveTest",
             "request": "launch",
             "mainClass": "test.MoveTest",

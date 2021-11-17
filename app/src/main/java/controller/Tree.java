@@ -23,10 +23,10 @@ public class Tree {
         this.root = root;
     }
 
-    public Tree(int depth, ChessBoard cb, String pieceName, Boolean isWhite) {
-        this.root = new Node(false, pieceName, cb);
+    public Tree(int depth, Game game, String pieceName, Boolean isWhite) {
+        this.root = new Node(false, pieceName, game.getChessBoard());
         this.depth = depth;
-        this.isWhite = isWhite;
+        this.isWhite = game.getWhitePlayer().getIsMyTurn();
 
         this.pieceNames = new String[]{ "Rook", "Bishop", "Queen", "King", "Knight", "Pawn" };
         this.test = new ArrayList();
@@ -47,7 +47,7 @@ public class Tree {
     // Get best board
     public Node getBestBoard(){
 
-        return root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get();
+        return root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get();
     }
 
     // Generate tree methods
@@ -62,7 +62,7 @@ public class Tree {
         if(depth > 0) {
             for (Node n : nodes) {
                 if (pieceNode) {
-                    createPiecesNodes(n);
+                    createPiecesNodes(n, (boolean)test.get(depth));
                 } else {
                     //System.out.println(depth);
                    // createLegalMovesNodes(n, this.isWhite); //check if number is even or not
@@ -76,13 +76,37 @@ public class Tree {
         }
     }
 
-    public void createPiecesNodes(Node n){
-        for (String pieceName : this.pieceNames)
+    public void createPiecesNodes(Node n, boolean isWhite){
+        ArrayList<String> pieceNames = getMovableNames(n.getBoard(), isWhite);
+        for (String pieceName : pieceNames)
         {
             Node temp = new Node(false, pieceName, n.getBoard());
             n.addChild(temp);
         }
     }
+
+
+    public ArrayList<Piece> getAllMovablePieces(ChessBoard cb, boolean isWhite){
+        ArrayList<Piece> movablePieces = new ArrayList<Piece>();
+        for(Piece p: cb.getLivePieces() ){
+            if((p.isWhite() == isWhite) && p.getLegalMoves(cb).size()>0){
+                movablePieces.add(p);
+            }
+        }
+        return movablePieces;
+    }
+
+    public ArrayList<String> getMovableNames(ChessBoard currentboard, boolean isWhite){
+        ArrayList<Piece> movablePieces = getAllMovablePieces(currentboard, isWhite);
+        ArrayList<String> names = new ArrayList<>();
+        for(Piece p : movablePieces){
+            if(!names.contains(p.pieceName)){
+                names.add(p.pieceName);
+            }
+        }
+        return names;
+    }
+
 
     public void createLegalMovesNodes(Node n, Boolean isWhite){
         List<Piece> pieceObjects = n.getBoard()
@@ -112,16 +136,16 @@ public class Tree {
                     //getMaxValue(n);
                 }
                 else {
-                    getMaxValue(n);
-//                    if((boolean)test.get(depth) == this.isWhite){
-//                        getMaxValue(n);
-//                    }
-//                    else{
-//                        getMinValue(n);
-//                    }
-//                    if(isWhite){ getMaxValue(n); }
-//                    else{ getMinValue(n); }
-//                    this.isWhite = !this.isWhite; // Check if depth is even or odd
+                    //getMaxValue(n);
+                   if((boolean)test.get(depth) == true){
+                       getMaxValue(n);
+                   }
+                   else{
+                       getMinValue(n);
+                   }
+                //   if(isWhite){ getMaxValue(n); }
+                //    else{ getMinValue(n); }
+                //    this.isWhite = !this.isWhite; // Check if depth is even or odd
                 }
                 depth = depth + 1;
 
@@ -132,7 +156,7 @@ public class Tree {
     public void calculateProbability(Node n){
         double value = 0;
         for (Node child : n.getChildren()) {
-            value = value + ((double)child.getValue())/6;
+            value = value + ((double)child.getValue())/(n.getChildren().size());
         }
         n.setValue(value);
     }
@@ -219,9 +243,15 @@ public class Tree {
     }
 
     public Square getBestSquare(){
-        ChessBoard best = root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get().getBoard();
+        ChessBoard best = root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get().getBoard();
         Square bestSquare = null;
-
+        System.out.println("best board is : ");
+        best.printBoard();
+        System.out.println("The children of the root: ");
+        for (Node n : root.getChildren()) {
+            System.out.println(n.getValue());
+            n.getBoard().printBoard();
+        }
         List<Piece> pieceObjectsBestBoard = best
                 .getLivePieces().stream()
                 .filter(p -> p.getPieceName().equals(root.getPiece()))
@@ -239,7 +269,7 @@ public class Tree {
     }
 
     public Piece getBestPiece(){
-        ChessBoard best = root.getChildren().stream().max(Comparator.comparing(Node::getValue)).get().getBoard();
+        ChessBoard best = root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get().getBoard();
         Piece bestPiece = null;
 
         List<Piece> pieceObjectsOriginalBoard = root.getBoard()
