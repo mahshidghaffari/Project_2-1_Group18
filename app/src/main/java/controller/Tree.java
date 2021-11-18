@@ -149,8 +149,8 @@ public class Tree {
                 depth = depth - 1;
                 calculateTree(n.getChildren());
                 if (n.isProbability()) {
-                    calculateProbability(n);
-                    //getMaxValue(n);
+                    //calculateProbability(n);
+                    getMaxValue(n);
                 }
                 else {
                     //getMaxValue(n);

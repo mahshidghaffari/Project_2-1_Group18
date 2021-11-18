@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BaseLineAgent extends BlackPlayer {
+public class BaseLineAgent extends WhitePlayer {
 	private Game game; 
 	String chosenPiece;
 	
