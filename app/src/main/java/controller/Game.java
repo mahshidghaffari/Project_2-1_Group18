@@ -2,9 +2,6 @@ package controller;
 
 import view.*;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -26,14 +23,16 @@ public class Game{
     private boolean noAgent = false;
     private boolean baseLineActive = false;     // Make true to play with BaseLine Agent
     private boolean expectiMaxActive = true;
+    private int depth=-1;                       //-1 means no depth (PvP)
 
 
     /**
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
-     * @param f is the ChessBoard GUI Frame 
+     * @param f is the ChessBoard GUI Frame
+     * @param depth
      */
     
-    public Game(JFrame f,boolean noAgent){
+    public Game(JFrame f, boolean noAgent, int depth){
         this.f = f;
         cb = new ChessBoard();
         dice = new Dice();
@@ -41,6 +40,7 @@ public class Game{
         wPlayer = new WhitePlayer(cb);
         buttonPanel= new ButtonPanel(this);
         this.noAgent=noAgent;
+        this.depth=depth;
     }
     public JFrame getFrame(){
         return f;
@@ -133,7 +133,6 @@ public class Game{
         	// EXPECTIMAX AGENT
         	} else if (expectiMaxActive) {
                 String chosen = dice.getChosen();
-                int depth = 3;
                 expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
                 expectiMaxPlayer.expectiMaxPlay();
             }

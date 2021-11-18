@@ -225,8 +225,14 @@ public class SetupMenu {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\nLAUNCHING GAME.....");
                 PrintGame();
-
-                startGamebaord(GameMode);
+                if ((GameMode.equals("PvAI"))||(GameMode.equals("PvAI"))){
+                    int depth = Integer.parseInt(
+                            JOptionPane.showInputDialog("Depth of the game:", "3"));
+                    startGamebaord(GameMode,depth);
+                }
+                else{
+                    startGamebaord(GameMode,-1);
+                }
                 frame.dispose();
             }
         });
@@ -241,11 +247,11 @@ public class SetupMenu {
         frame.setBounds(400, 100, WIDTH, HEIGHT);
     }
 
-    public void startGamebaord(String mode) {
+    public void startGamebaord(String mode,int depth) {
         if(mode.equals("PvP")){
             System.out.println("Mode: "+"PvP");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f,true);
+            Game game = new Game(f,true, depth);
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
@@ -263,7 +269,7 @@ public class SetupMenu {
         else if(mode.equals("PvAI")){
             System.out.println("Mode: "+"PvAI");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f,false);
+            Game game = new Game(f,false,depth);
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
@@ -283,7 +289,7 @@ public class SetupMenu {
             //in that case, assume PvP
             System.out.println("Mode: "+"PvP");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f,true);
+            Game game = new Game(f,true, depth);
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
@@ -298,7 +304,6 @@ public class SetupMenu {
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setVisible(true);
         }
-
     }
 }
 
