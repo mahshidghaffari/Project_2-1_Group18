@@ -50,8 +50,7 @@ public class ButtonPanel implements ActionListener {
             System.out.println(game.whosPlaying());
             game.getFrame().dispose();
             SetupMenu sm= new SetupMenu();
-            sm.startGamebaord("PvP");
-
+            //sm.startGamebaord("PvP",-1);//PvP
         }
     }
 

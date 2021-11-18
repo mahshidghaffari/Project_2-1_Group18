@@ -6,7 +6,6 @@ public class WhitePlayer extends Player{
 
     private ArrayList<Piece> livePieces;
     private double score=0;
-    private ChessBoard cb;
 
     public WhitePlayer(ChessBoard cb) {
         super(cb);

@@ -255,4 +255,15 @@ public class ChessBoard{
         return sum;
     }
 
+    public boolean missingKing(){
+        int sum = 0;
+        for(Piece p: livePieces){
+            if(p.pieceName.equals("King")) { sum++;} 
+        } 
+        if(sum!=2){
+            return true;
+        }
+        return false;
+    }
+
 }

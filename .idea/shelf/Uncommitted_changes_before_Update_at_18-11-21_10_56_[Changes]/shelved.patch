@@ -1,0 +1,101 @@
+Index: .idea/runConfigurations.xml
+===================================================================
+diff --git a/.idea/runConfigurations.xml b/.idea/runConfigurations.xml
+deleted file mode 100644
+--- a/.idea/runConfigurations.xml	(revision 84ae85d40e98c87956b639a7d1f516835f558c4d)
++++ /dev/null	(revision 84ae85d40e98c87956b639a7d1f516835f558c4d)
+@@ -1,10 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunConfigurationProducerService">
+-    <option name="ignoredProducers">
+-      <set>
+-        <option value="com.android.tools.idea.compose.preview.runconfiguration.ComposePreviewRunConfigurationProducer" />
+-      </set>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <bytecodeTargetLevel target=\"14\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+--- a/.idea/compiler.xml	(revision 84ae85d40e98c87956b639a7d1f516835f558c4d)
++++ b/.idea/compiler.xml	(date 1636639874171)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel target="14" />
++    <bytecodeTargetLevel target="11" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: app/src/main/java/controller/Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\nimport java.util.ArrayList;\nimport java.util.Random;\n\n\n/**\n * this is a super class that white and black player  classes extend it\n */\n\n\npublic abstract class Player {\n\n     ChessBoard cb;\n    private ArrayList<Piece> livePieces;\n    private boolean isMyTurn;\n    private String color=\"Black\";\n    Random rnd;\n    /**\n    * constructor\n    * @param chessBoard Object Giving the board States \n    * \n\t*/\n    public Player(ChessBoard cb){\n        this.cb= cb;\n        livePieces = cb.getLivePieces();\n        rnd = new Random();\n    }\n    public void setColor(String color){\n        this.color =color;\n    }\n    public String getColor(){\n        return color;\n    }\n\n    \n    \n    \n//    public String rollDice(){\n//        int roll = rnd.nextInt(6)+1;\n//        String p=\"\";\n//        switch (roll){\n//            case 1:\n//                p =  \"Pawn\";\n//                break;\n//            case 2:\n//                p=  \"Rook\";\n//                break;\n//            case 3:\n//                p= \"Knight\";\n//                break;\n//            case 4:\n//                p= \"Bishop\";\n//                break;\n//            case 5:\n//                p= \"Queen\";\n//                break;\n//            case 6:\n//                p= \"King\";\n//                break;\n//        }\n//        return p;\n//    }\n    \n    /** \n     * this method changing players  rounds\n     * @param P player object of this class \n     */\n\n    public void flipTurns(Player P){\n            this.setIsMyTurn(!this.getIsMyTurn());\n            P.setIsMyTurn(!P.getIsMyTurn());\n        }\n\n    public boolean getIsMyTurn(){ return isMyTurn;}\n    public void setIsMyTurn(boolean a){ isMyTurn=a;}\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Player.java b/app/src/main/java/controller/Player.java
+--- a/app/src/main/java/controller/Player.java	(revision 84ae85d40e98c87956b639a7d1f516835f558c4d)
++++ b/app/src/main/java/controller/Player.java	(date 1636816785305)
+@@ -33,34 +33,8 @@
+     }
+ 
+     
+-    
++
+     
+-//    public String rollDice(){
+-//        int roll = rnd.nextInt(6)+1;
+-//        String p="";
+-//        switch (roll){
+-//            case 1:
+-//                p =  "Pawn";
+-//                break;
+-//            case 2:
+-//                p=  "Rook";
+-//                break;
+-//            case 3:
+-//                p= "Knight";
+-//                break;
+-//            case 4:
+-//                p= "Bishop";
+-//                break;
+-//            case 5:
+-//                p= "Queen";
+-//                break;
+-//            case 6:
+-//                p= "King";
+-//                break;
+-//        }
+-//        return p;
+-//    }
+-    
+     /** 
+      * this method changing players  rounds
+      * @param P player object of this class 
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_16\" default=\"true\" project-jdk-name=\"openjdk-16\" project-jdk-type=\"JavaSDK\" />\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 84ae85d40e98c87956b639a7d1f516835f558c4d)
++++ b/.idea/misc.xml	(date 1636639874235)
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" default="true" project-jdk-name="openjdk-16" project-jdk-type="JavaSDK" />
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="openjdk-16" project-jdk-type="JavaSDK" />
+ </project>
+\ No newline at end of file

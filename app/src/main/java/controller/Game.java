@@ -23,29 +23,38 @@ public class Game{
     private boolean diceClicked=false;
     private JFrame f;
     private boolean noMoves = false;
+    // Booleans to select which agent is going to play against which other agent
+    private boolean wNoAgent = false;
+    private boolean bNoAgent = false;
+    private boolean wBaseLineActive  = false;
+    private boolean bBaseLineActive = false;
+    private boolean wExpectiMaxActive = false;
+    private boolean bEpectiMaxActive = false;
     private boolean noAgent = false;
     private boolean baseLineActive = false;     // Make true to play with BaseLine Agent
     private boolean expectiMaxActive = true;
+    private int depth=-1;                       //-1 means no depth (PvP)
 
 
     /**
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
-     * @param f is the ChessBoard GUI Frame 
+     * @param f is the ChessBoard GUI Frame
      */
-    
-    public Game(JFrame f,boolean noAgent){
+
+    public Game(JFrame f){
         this.f = f;
         cb = new ChessBoard();
+
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
         buttonPanel= new ButtonPanel(this);
         this.noAgent=noAgent;
+        this.depth=depth;
     }
     public JFrame getFrame(){
         return f;
     }
-    
     public ChessBoard getChessBoard(){
         return cb;
     }
@@ -74,9 +83,19 @@ public class Game{
     public void setDiceClicked(boolean b) {
         diceClicked = b;
     }
+
     //public Castle getCastling(){ return castling;}
     public WhitePlayer getWhitePlayer(){return wPlayer;}
     public BlackPlayer getBlackPlayer(){return bPlayer;}
+
+    public void setbNoAgent(boolean b) { this.bNoAgent = b; }
+    public void setwNoAgent(boolean b) { this.wNoAgent = b; }
+    public void setbBaseLineActive(boolean b) { this.bBaseLineActive = b; }
+    public void setwBaseLineActive(boolean b) { this.wBaseLineActive = b; }
+    public void setbEpectiMaxActive(boolean b) { this.bEpectiMaxActive = b; }
+    public void setwExpectiMaxActive(boolean b) { this.wExpectiMaxActive = b; }
+
+    public void setDepth(int d) { this.depth = d; }
 
     /**
      * When Ever the Green Dice button is clicked by the user this method checks whether it is even a turn for the user
@@ -86,52 +105,68 @@ public class Game{
 
         if(wPlayer.getIsMyTurn()){        //if its w player's turn
 
-            playing = wPlayer;
-            newTurn= false;
-            String chosen = dice.getChosen();
-            //String chosen = dice.getRoleDice(); //roll the dice
+            // Normal player (NO AGENT)
+            if (wNoAgent) {
+                playing = wPlayer;
+                newTurn = false;
+                String chosen = dice.getChosen();
+                //String chosen = dice.getRoleDice(); //roll the dice
 
-            if(!wPlayer.canMove(chosen)){         //if player has no pieces to move we switch turns
-                //System.out.println("Sorry white , you have no possible moves. Turn goes to black");
-                noMoves = true;
-                newTurn();
-            } else {
-                noMoves = false;
+                if (!wPlayer.canMove(chosen)) {         //if player has no pieces to move we switch turns
+                    //System.out.println("Sorry white , you have no possible moves. Turn goes to black");
+                    noMoves = true;
+                    newTurn();
+                } else {
+                    noMoves = false;
+                }
+
+            // BASELINE AGENT
+            } else if (wBaseLineActive) {
+                baseLinePlayer = new BaseLineAgent(this, cb);
+                String chosen = dice.getChosen();
+                baseLinePlayer.baseLinePlay(chosen);
+
+            // EXPECTIMAX AGENT
+            } else if (wExpectiMaxActive) {
+                String chosen = dice.getChosen();
+                int depth = 3;
+                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
+                expectiMaxPlayer.expectiMaxPlay();
             }
         }
 
         else if(bPlayer.getIsMyTurn()){
 
         	// Normal player (NO AGENT)
-        	if (noAgent) {
+        	if (bNoAgent) {
         		playing = bPlayer;
         		newTurn= false;
             	String chosen = dice.getChosen();
             	//loop through all live pieces to see if dice chosen piece piece is there
-            	for(Piece p: cb.getLivePieces()){  
-            		if(p.isWhite()){ continue; }   
-                
+            	for(Piece p: cb.getLivePieces()){
+            		if(p.isWhite()){ continue; }
+
             		if(p.getPieceName().equals(chosen) ){ //if the chosen piece is not dead
                         break;
             		}
             	}
-            	
-            	if(!bPlayer.canMove(chosen)){    
+
+            	if(!bPlayer.canMove(chosen)){
             		//System.out.println("Sorry black , you have no possible moves. Turn goes to white");
             		noMoves = true;
             		newTurn();
             	} else {
                     noMoves = false;
                 }
-        	
+
         	// BASELINE AGENT
-        	} else if (baseLineActive) {
+        	} else if (bBaseLineActive) {
                 baseLinePlayer = new BaseLineAgent(this, cb);
                 String chosen = dice.getChosen();
             	baseLinePlayer.baseLinePlay(chosen);
-        	
+
         	// EXPECTIMAX AGENT
-        	} else if (expectiMaxActive) {
+        	} else if (bEpectiMaxActive) {
                 String chosen = dice.getChosen();
                 int depth = 3;
                 expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
