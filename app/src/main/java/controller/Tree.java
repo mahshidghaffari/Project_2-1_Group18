@@ -151,7 +151,7 @@ public class Tree {
 
             }
         }
-    }
+       }
 
     public void calculateProbability(Node n){
         double value = 0;
