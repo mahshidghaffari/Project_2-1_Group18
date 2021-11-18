@@ -92,6 +92,8 @@ public class SetupMenu {
         PanelMidRight.add(PanelMidRightCenter,BorderLayout.CENTER);
         PanelMidRightCenter.setLayout(null);
 
+
+
         //LABELS
 
         JLabel LabelTopTitle = new JLabel("WELCOME TO DICE CHESS");
