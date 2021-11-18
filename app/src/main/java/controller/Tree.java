@@ -53,9 +53,26 @@ public class Tree {
     // Generate tree methods
     public void generateTree(){
         createLegalMovesNodes(root, this.isWhite);
-        //this.isWhite = !this.isWhite;
+        // Check if you can capture king
+        if(checkCapture()){
+            return;
+        }
         depth = (depth - 1)*2;
         generate(root.getChildren(), true);
+    }
+
+    public boolean checkCapture(){
+
+        boolean canCaptureKing = false;
+
+        for (Node child : this.root.getChildren())
+        {
+           if(child.getBoard().missingKing()){
+               child.setValue(-10000);
+               canCaptureKing = true;
+           }
+        }
+        return canCaptureKing;
     }
 
     private void generate(ArrayList<Node> nodes, Boolean pieceNode){
