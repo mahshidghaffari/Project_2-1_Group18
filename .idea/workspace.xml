@@ -6,11 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/SetupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/SetupMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -34,6 +39,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="20m0rjCexB3lTO97Jmog51YhDhP" />
   <component name="ProjectViewState">
@@ -63,7 +71,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fb6f6f0a-9da4-4878-90f3-10a1c1da9a73" name="Changes" comment="" />
+      <changelist id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="" />
       <created>1636634655110</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -81,6 +89,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
