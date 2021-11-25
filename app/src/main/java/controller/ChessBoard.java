@@ -258,7 +258,7 @@ public class ChessBoard{
     public boolean missingKing(){
         int sum = 0;
         for(Piece p: livePieces){
-            if(p.pieceName.equals("King")) { sum++;} 
+            if(p.pieceName.equals("King"))  sum++;  
         } 
         if(sum!=2){
             return true;

@@ -59,6 +59,7 @@ public class Tree {
         }
         depth = (depth - 1)*2;
         generate(root.getChildren(), true);
+        calculateTree(root.getChildren());
     }
 
     public boolean checkCapture(){
