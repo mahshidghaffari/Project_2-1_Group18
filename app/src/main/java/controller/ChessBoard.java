@@ -86,6 +86,9 @@ public class ChessBoard{
     public Square[][] getBoard(){
         return board;
     }
+    public void setBoard(Square[][] board){
+        this.board = board;
+    }
 
     public void setUpBoard(){
         for(int i=0; i<8; i++ ){ 
@@ -139,6 +142,9 @@ public class ChessBoard{
     public ArrayList<Piece> getLivePieces(){
         return livePieces;
     } 
+    public void addLivePiece(Piece p){
+        livePieces.add(p);
+    }
     public ArrayList<Piece> getDeadPieces(){
         return deadPieces;
     }
@@ -248,8 +254,12 @@ public class ChessBoard{
     }
 
     public double getBoardValue(){
-        double sum = 0;
-        for(Piece p : livePieces){
+        Evaluation eval = new Evaluation(this);
+        return eval.getScore();
+    }
+    public double getBoardValueOld(){
+        double sum = 0.0;
+        for(Piece p: livePieces){
             sum += p.getValue();
         }
         return sum;
@@ -258,7 +268,7 @@ public class ChessBoard{
     public boolean missingKing(){
         int sum = 0;
         for(Piece p: livePieces){
-            if(p.pieceName.equals("King")) { sum++;} 
+            if(p.pieceName.equals("King"))  sum++;  
         } 
         if(sum!=2){
             return true;

@@ -33,33 +33,7 @@ public abstract class Player {
     }
 
     
-    
-    
-//    public String rollDice(){
-//        int roll = rnd.nextInt(6)+1;
-//        String p="";
-//        switch (roll){
-//            case 1:
-//                p =  "Pawn";
-//                break;
-//            case 2:
-//                p=  "Rook";
-//                break;
-//            case 3:
-//                p= "Knight";
-//                break;
-//            case 4:
-//                p= "Bishop";
-//                break;
-//            case 5:
-//                p= "Queen";
-//                break;
-//            case 6:
-//                p= "King";
-//                break;
-//        }
-//        return p;
-//    }
+
     
     /** 
      * this method changing players  rounds

@@ -64,7 +64,7 @@ public class Pawn extends Piece{
                                 if(lastMove[0] != null) {
                                     if (lastMove[0].getYPos() == 1 && lastMove[1].getYPos() == 3) {
                                         legalMoves.add(board[y - 1][x + 1]);
-                                        System.out.println("to the right was added!!");
+                                        //System.out.println("to the right was added!!");
                                     }
                                 }
                             }
@@ -162,11 +162,11 @@ public class Pawn extends Piece{
         currentPos.removePiece(this);
         if(target.getPieceOnSq()!=null){//if there is an opposing piece on target square a.k.a Capture
             Piece captured = target.getPieceOnSq();
-            System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
+            //System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
             cb.getLivePieces().remove(captured);    // mark this as a fallen piece
             if(captured.pieceName.equals("King")){
-                System.out.println("The "+ captured.getColorName() + " King has fallen");
-                System.out.println(this.getColorName() + " Wins!!!");
+                //System.out.println("The "+ captured.getColorName() + " King has fallen");
+                //System.out.println(this.getColorName() + " Wins!!!");
                 //JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
             }
             

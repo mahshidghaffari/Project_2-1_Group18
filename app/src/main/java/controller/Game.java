@@ -4,6 +4,7 @@ import view.*;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -34,7 +35,7 @@ public class Game{
     private boolean baseLineActive = false;     // Make true to play with BaseLine Agent
     private boolean expectiMaxActive = true;
     private int depth=-1;                       //-1 means no depth (PvP)
-
+    private DicePanel dp;
 
     /**
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
@@ -75,8 +76,19 @@ public class Game{
         newTurn=true;
         diceClicked=false;
         wPlayer.flipTurns(bPlayer);
+        if(bEpectiMaxActive && bPlayer.getIsMyTurn() ){   // for black AI agent
+            whichPiece();  
+            play();
+        }
         updateBoard();
-    } 
+
+    }
+    public DicePanel getDicePanel(){
+        return dp;
+    }
+    public void setDicePanel(DicePanel dp){
+        this.dp = dp;
+    }
     public void setButtonPanel(ButtonPanel buttonPanel){
         this.buttonPanel = buttonPanel;
     }
@@ -300,12 +312,19 @@ public class Game{
         bPlayer.updateScore();
         for(int i=0; i<8; i++){
             for(int j=0;j<8;j++){
+                SquareButton button = board[i][j].getButtonOnSquare();
+                    if(button!=null && button.getButtonColor().equals(Color.DARK_GRAY)) {
+                        button.setBackground(Color.DARK_GRAY);
+                    }
+                    else if(button!=null && button.getButtonColor().equals(Color.WHITE)) {
+                        button.setBackground(Color.WHITE);
+                    }
                 if(board[i][j].isTakenSquare()){
                     Piece occupying = board[i][j].getPieceOnSq();
-                    board[i][j].getButtonOnSquare().setIcon(occupying.getImgIcon());
+                    button.setIcon(occupying.getImgIcon());
                 }
                 else{
-                    board[i][j].getButtonOnSquare().setIcon(new ImageIcon());
+                    button.setIcon(new ImageIcon());
                 }
             }
         }
@@ -321,6 +340,95 @@ public class Game{
 
         updateBoard();
         square.placeImage(piece);
+    }
+
+    public void whichPiece(){
+        String name="";
+        boolean whiteTurn = getWhitePlayer().getIsMyTurn();
+        if (whiteTurn) {
+            ArrayList<String> movable = getWhitePlayer().getMovableNames();
+            name = getDice().getRndPiece(movable);
+
+            if (isNoMoves()) {
+                dp.getTextLabel().setText("NO MOVES AVAILABLE, BLACK'S TURN!");
+            } else {
+                dp.getTextLabel().setText("WHITE PLAYER'S TURN");
+            }
+
+        } else {
+            ArrayList<String> movable = getBlackPlayer().getMovableNames();
+            name = getDice().getRndPiece(movable);    
+            if (isNoMoves()) {
+                dp.getTextLabel().setText("NO MOVES AVAILABLE, WHITE'S TURN!");
+            } else {
+                dp.getTextLabel().setText("BLACK PLAYER'S TURN");
+            }
+        }
+        //game.newTurn();
+        setDiceClicked(true);
+      
+            switch (name){
+                case "Pawn":
+                    if(whiteTurn){
+                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wpawn.png"))));
+                        break;
+                    }
+                    else{
+                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bpawn.png"))));
+                        break;
+                    }
+
+                case "Rook":
+                    if(whiteTurn){
+                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wrook.png"))));
+                        break;
+                    }
+                else{
+                    dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("brook.png"))));
+                    break;
+                }
+
+                case "Knight":
+                    if(whiteTurn){
+                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wknight.png"))));
+                        break;
+                    }
+                else{
+                    dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bknight.png"))));
+                    break;
+                }
+
+                case "Bishop":
+                    if(whiteTurn){
+                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wbishop.png"))));
+                        break;
+                    }
+                    else{
+                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bbishop.png"))));
+                        break;
+                        }
+
+                case "Queen":
+                if(whiteTurn){
+                    dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wqueen.png"))));
+                    break;
+                }
+                else{
+                    dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bqueen.png"))));
+                    break;
+                }
+
+                case "King":
+                    if(whiteTurn){
+                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wking.png"))));
+                        break;
+                    }
+                    else{
+                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bking.png"))));
+                        break;
+                    }
+                }
+    
     }
 
     public boolean isNoMoves() { return noMoves; }

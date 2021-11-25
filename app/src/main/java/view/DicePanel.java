@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,9 +27,12 @@ public class DicePanel implements ActionListener {
 
     DicePanel(Game game) { 
         this.game = game;
+        game.setDicePanel(this);
         dice = new Dice();    
         initialize();
     }
+
+        
 
     public void initialize() {
         dicePanel.setLayout(new GridLayout(1, 2));
@@ -57,7 +61,10 @@ public class DicePanel implements ActionListener {
         finalPanel.add(textPanel);
     }
 
-    public JPanel getDicePanel() { return finalPanel; }
+    public JPanel getDicePanel()   { return finalPanel;   }
+    public JLabel getTextLabel()   { return textLabel;    }
+    public JLabel getResultLabel() { return resultLabel;  }
+    public FilePath getFilePath()  { return FilePath;     }
 
     @Override
     /**
@@ -72,97 +79,98 @@ public class DicePanel implements ActionListener {
             if(!game.isNewTurn()) return; 
             else{
 
-                // Set who's turn is it on the board
-                if (game.getWhitePlayer().getIsMyTurn()) {
-                    if (game.isNoMoves()) {
-                        this.textLabel.setText("NO MOVES AVAILABLE, BLACK'S TURN!");
-                    } else {
-                        this.textLabel.setText("WHITE PLAYER'S TURN");
-                    }
+            //     // Set who's turn is it on the board
+            //     if (game.getWhitePlayer().getIsMyTurn()) {
+            //         if (game.isNoMoves()) {
+            //             this.textLabel.setText("NO MOVES AVAILABLE, BLACK'S TURN!");
+            //         } else {
+            //             this.textLabel.setText("WHITE PLAYER'S TURN");
+            //         }
 
-                } else {
-                    if (game.isNoMoves()) {
-                        this.textLabel.setText("NO MOVES AVAILABLE, WHITE'S TURN!");
-                    } else {
-                        this.textLabel.setText("BLACK PLAYER'S TURN");
-                    }
-                }
-                System.out.println(game.isNoMoves());
+            //     } else {
+            //         if (game.isNoMoves()) {
+            //             this.textLabel.setText("NO MOVES AVAILABLE, WHITE'S TURN!");
+            //         } else {
+            //             this.textLabel.setText("BLACK PLAYER'S TURN");
+            //         }
+            //     }
+            //     System.out.println(game.isNoMoves());
 
-                //game.newTurn();
-                game.setDiceClicked(true);
-               // game.getDice().randomize();
-                //String name =  game.getDice().getRoleDice();
-                String name;
-                if(game.getWhitePlayer().getIsMyTurn()){
-                    ArrayList<String> movable = game.getWhitePlayer().getMovableNames();
-                    name = game.getDice().getRndPiece(movable);
-                }
-                else{
-                    ArrayList<String> movable = game.getBlackPlayer().getMovableNames();
-                    name = game.getDice().getRndPiece(movable);    
-                }
-                switch (name){
-                    case "Pawn":
-                        if(game.getWhitePlayer().getIsMyTurn()){
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wpawn.png"))));
-                            break;
-                        }
-                        else{
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bpawn.png"))));
-                            break;
-                        }
+            //     //game.newTurn();
+            //     game.setDiceClicked(true);
+            //    // game.getDice().randomize();
+            //     //String name =  game.getDice().getRoleDice();
+            //     String name;
+            //     if(game.getWhitePlayer().getIsMyTurn()){
+            //         ArrayList<String> movable = game.getWhitePlayer().getMovableNames();
+            //         name = game.getDice().getRndPiece(movable);
+            //     }
+            //     else{
+            //         ArrayList<String> movable = game.getBlackPlayer().getMovableNames();
+            //         name = game.getDice().getRndPiece(movable);    
+            //     }
+            //     switch (name){
+            //         case "Pawn":
+            //             if(game.getWhitePlayer().getIsMyTurn()){
+            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wpawn.png"))));
+            //                 break;
+            //             }
+            //             else{
+            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bpawn.png"))));
+            //                 break;
+            //             }
 
-                    case "Rook":
-                        if(game.getWhitePlayer().getIsMyTurn()){
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wrook.png"))));
-                            break;
-                        }
-                    else{
-                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("brook.png"))));
-                        break;
-                    }
+            //         case "Rook":
+            //             if(game.getWhitePlayer().getIsMyTurn()){
+            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wrook.png"))));
+            //                 break;
+            //             }
+            //         else{
+            //             resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("brook.png"))));
+            //             break;
+            //         }
 
-                    case "Knight":
-                        if(game.getWhitePlayer().getIsMyTurn()){
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wknight.png"))));
-                            break;
-                        }
-                    else{
-                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bknight.png"))));
-                        break;
-                    }
+            //         case "Knight":
+            //             if(game.getWhitePlayer().getIsMyTurn()){
+            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wknight.png"))));
+            //                 break;
+            //             }
+            //         else{
+            //             resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bknight.png"))));
+            //             break;
+            //         }
 
-                    case "Bishop":
-                        if(game.getWhitePlayer().getIsMyTurn()){
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wbishop.png"))));
-                            break;
-                        }
-                        else{
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bbishop.png"))));
-                            break;
-                            }
+            //         case "Bishop":
+            //             if(game.getWhitePlayer().getIsMyTurn()){
+            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wbishop.png"))));
+            //                 break;
+            //             }
+            //             else{
+            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bbishop.png"))));
+            //                 break;
+            //                 }
 
-                    case "Queen":
-                    if(game.getWhitePlayer().getIsMyTurn()){
-                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wqueen.png"))));
-                        break;
-                    }
-                    else{
-                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bqueen.png"))));
-                        break;
-                    }
+            //         case "Queen":
+            //         if(game.getWhitePlayer().getIsMyTurn()){
+            //             resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wqueen.png"))));
+            //             break;
+            //         }
+            //         else{
+            //             resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bqueen.png"))));
+            //             break;
+            //         }
 
-                    case "King":
-                        if(game.getWhitePlayer().getIsMyTurn()){
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wking.png"))));
-                            break;
-                        }
-                        else{
-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bking.png"))));
-                            break;
-                        }
-                    }
+            //         case "King":
+            //             if(game.getWhitePlayer().getIsMyTurn()){
+            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wking.png"))));
+            //                 break;
+            //             }
+            //             else{
+            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bking.png"))));
+            //                 break;
+            //             }
+            //         }
+                game.whichPiece();
                 game.play();
             }
         }
