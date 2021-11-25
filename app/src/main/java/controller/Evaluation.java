@@ -132,8 +132,8 @@ public class Evaluation {
     public double getKingSafetyEval(){
         double whiteEval = 0.0;
         double blackEval = 0.0;
-        int wX=0, wY=0;
-        int bX=0, bY=0;
+        int wX=-1, wY=-1;
+        int bX=-1, bY=-1;
 
         
         for(Piece p : livePieces){
@@ -148,17 +148,19 @@ public class Evaluation {
                 
             }
         }
+        if(wX >= 0 && wY >=0 && bX >= 0 && bY >= 0){
+            double[][] whiteGrid = this.getKingThreatsGrid(board[wY][wX]);
+            double[][] blackGrid = this.getKingThreatsGrid(board[bY][bX]);
         
-        double[][] whiteGrid = this.getKingThreatsGrid(board[wY][wX]);
-        double[][] blackGrid = this.getKingThreatsGrid(board[bY][bX]);
-        
-        for(int i =0; i<3; i++){
-            for(int j=0; j<3; j++){
-                whiteEval += whiteGrid[i][j] * kingThreatWeight[i][j];
-                blackEval += blackGrid[i][j] * kingThreatWeight[i][j];
+            for(int i =0; i<5; i++){
+                for(int j=0; j<5; j++){
+                    whiteEval += whiteGrid[i][j] * kingThreatWeight[i][j];
+                    blackEval += blackGrid[i][j] * kingThreatWeight[i][j];
+                }
             }
         }
         return blackEval - whiteEval;
+        
     }
     /**
      * Method getKingThreatsGrid : private method used to give a threat grid around the king
