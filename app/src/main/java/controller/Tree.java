@@ -85,7 +85,8 @@ public class Tree {
                     //System.out.println(depth);
                    // createLegalMovesNodes(n, this.isWhite); //check if number is even or not
                     createLegalMovesNodes(n, (boolean)test.get(depth));
-                    //this.isWhite = !this.isWhite;
+                    //
+                    this.isWhite = !this.isWhite;
                 }
                 depth = depth - 1;
                 generate(n.getChildren(), !pieceNode);
@@ -169,7 +170,7 @@ public class Tree {
 
             }
         }
-       }
+    }
 
     public void calculateProbability(Node n){
         double value = 0;

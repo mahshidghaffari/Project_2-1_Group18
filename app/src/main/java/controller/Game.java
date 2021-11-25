@@ -80,8 +80,12 @@ public class Game{
             whichPiece();  
             play();
         }
-        updateBoard();
+        if(wBaseLineActive && wPlayer.getIsMyTurn() ){
+            whichPiece();  
+            play();    
+        }
 
+        updateBoard();
     }
     public DicePanel getDicePanel(){
         return dp;
