@@ -233,7 +233,7 @@ public class SetupMenu {
                     startGamebaord(GameMode,depth);
                 }
                 else{
-                    startGamebaord(GameMode,-1);
+                    startGamebaord(GameMode,3);
                 }
                 frame.dispose();
             }
