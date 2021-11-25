@@ -79,18 +79,19 @@ public class Tree {
     private void generate(ArrayList<Node> nodes, Boolean pieceNode){
         if(depth > 0) {
             for (Node n : nodes) {
-                if (pieceNode) {
-                    createPiecesNodes(n, (boolean)test.get(depth));
-                } else {
-                    //System.out.println(depth);
-                   // createLegalMovesNodes(n, this.isWhite); //check if number is even or not
-                    createLegalMovesNodes(n, (boolean)test.get(depth));
-                    //
-                    this.isWhite = !this.isWhite;
+                if (!n.getBoard().missingKing()) {
+                    if (pieceNode) {
+                        createPiecesNodes(n, (boolean) test.get(depth));
+                    } else {
+                        //System.out.println(depth);
+                        // createLegalMovesNodes(n, this.isWhite); //check if number is even or not
+                        createLegalMovesNodes(n, (boolean) test.get(depth));
+                        //this.isWhite = !this.isWhite;
+                    }
+                    depth = depth - 1;
+                    generate(n.getChildren(), !pieceNode);
+                    depth = depth + 1;
                 }
-                depth = depth - 1;
-                generate(n.getChildren(), !pieceNode);
-                depth = depth + 1;
             }
         }
     }

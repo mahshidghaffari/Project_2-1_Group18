@@ -264,6 +264,16 @@ public class ChessBoard{
         }
         return sum;
     }
+    public void printEval(){
+        Evaluation eval = new Evaluation(this);
+        System.out.println("Center control eval : " + eval.getCenterControlEval());
+        System.out.println("King safety eval : " + eval.getKingSafetyEval());
+        System.out.println("Material eval : " + eval.getMaterialEval());
+        System.out.println("Threats grid for white : ");
+        eval.printThreatGrid(true);
+        System.out.println("Threats grid for black");
+        eval.printThreatGrid(false);
+    }
 
     public boolean missingKing(){
         int sum = 0;
@@ -275,5 +285,4 @@ public class ChessBoard{
         }
         return false;
     }
-
 }

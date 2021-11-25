@@ -42,7 +42,7 @@ public class Game{
      * @param f is the ChessBoard GUI Frame
      */
 
-    public Game(JFrame f){
+    public Game(JFrame f, int depth){
         this.f = f;
         cb = new ChessBoard();
 
@@ -145,7 +145,6 @@ public class Game{
             // EXPECTIMAX AGENT
             } else if (wExpectiMaxActive) {
                 String chosen = dice.getChosen();
-                int depth = 3;
                 expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
                 expectiMaxPlayer.expectiMaxPlay();
             }
@@ -184,7 +183,6 @@ public class Game{
         	// EXPECTIMAX AGENT
         	} else if (bEpectiMaxActive) {
                 String chosen = dice.getChosen();
-                int depth = 3;
                 expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
                 expectiMaxPlayer.expectiMaxPlay();
             }
