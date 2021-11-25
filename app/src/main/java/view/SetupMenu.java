@@ -233,7 +233,7 @@ public class SetupMenu {
                     startGamebaord(GameMode,depth);
                 }
                 else{
-                    startGamebaord(GameMode,3);
+                    startGamebaord(GameMode,-1);
                 }
                 frame.dispose();
             }
@@ -253,12 +253,11 @@ public class SetupMenu {
         if(mode.equals("PvP")){
             System.out.println("Mode: "+"PvP");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f);
+            Game game = new Game(f, -1);
 
             // Set agents that we want to use to true
             game.setwNoAgent(true);
             game.setbNoAgent(true);
-            game.setDepth(depth);
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
@@ -276,12 +275,11 @@ public class SetupMenu {
         else if(mode.equals("PvAI")){
             System.out.println("Mode: "+"PvAI");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f);
+            Game game = new Game(f, depth);
 
             // Set agents that we want to use to true
             game.setwNoAgent(true);
             game.setbEpectiMaxActive(true);
-            game.setDepth(depth);
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
@@ -301,12 +299,11 @@ public class SetupMenu {
             //in that case, assume PvP
             System.out.println("Mode: "+"PvP");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f);
+            Game game = new Game(f, depth);
 
             // Set agents that we want to use to true
             game.setwBaseLineActive(true);
             game.setbEpectiMaxActive(true);
-            game.setDepth(depth);
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
