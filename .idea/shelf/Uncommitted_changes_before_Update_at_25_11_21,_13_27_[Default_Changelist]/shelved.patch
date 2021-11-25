@@ -1,0 +1,728 @@
+Index: .idea/modules/Project_2-1_Group18.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules/Project_2-1_Group18.iml b/.idea/modules/Project_2-1_Group18.iml
+new file mode 100644
+--- /dev/null	(date 1637842842998)
++++ b/.idea/modules/Project_2-1_Group18.iml	(date 1637842842998)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$/../.." />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+new file mode 100644
+--- /dev/null	(date 1637842844475)
++++ b/.idea/gradle.xml	(date 1637842844475)
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
++  <component name="GradleSettings">
++    <option name="linkedExternalProjectsSettings">
++      <GradleProjectSettings>
++        <option name="distributionType" value="DEFAULT_WRAPPED" />
++        <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.8.3/libexec" />
++        <option name="modules">
++          <set>
++            <option value="$PROJECT_DIR$" />
++            <option value="$PROJECT_DIR$/app" />
++          </set>
++        </option>
++      </GradleProjectSettings>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+new file mode 100644
+--- /dev/null	(date 1637842844481)
++++ b/.idea/jarRepositories.xml	(date 1637842844481)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="MavenRepo" />
++      <option name="name" value="MavenRepo" />
++      <option name="url" value="https://repo.maven.apache.org/maven2/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	(date 1637842843011)
++++ b/.idea/compiler.xml	(date 1637842843011)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="14" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import view.SetupMenu;\n\npublic class App \n{\n\tpublic static void main(String[] args) \n\t{\n\t\tSetupMenu menu = new SetupMenu();\n\t}\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/App.java b/app/src/main/java/App.java
+--- a/app/src/main/java/App.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/App.java	(date 1637843246676)
+@@ -1,6 +1,6 @@
+ import view.SetupMenu;
+ 
+-public class App 
++public class  App
+ {
+ 	public static void main(String[] args) 
+ 	{
+Index: .idea/.name
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.name b/.idea/.name
+new file mode 100644
+--- /dev/null	(date 1637842842962)
++++ b/.idea/.name	(date 1637842842962)
+@@ -0,0 +1,1 @@
++DiceChess
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1637842842311)
++++ b/.idea/vcs.xml	(date 1637842842311)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1637842843005)
++++ b/.idea/misc.xml	(date 1637842843005)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" project-jdk-name="14" project-jdk-type="JavaSDK" />
++</project>
+\ No newline at end of file
+Index: app/src/main/java/controller/Evaluation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Evaluation.java b/app/src/main/java/controller/Evaluation.java
+new file mode 100644
+--- /dev/null	(date 1637802380000)
++++ b/app/src/main/java/controller/Evaluation.java	(date 1637802380000)
+@@ -0,0 +1,545 @@
++package controller;
++
++import java.util.ArrayList;
++
++public class Evaluation {
++    private Square[][] board;
++    private ArrayList<Piece> livePieces;
++
++    private double pawnWeight;
++    private double knightWeight;
++    private double bishopWeight;
++    private double rookWeight;
++    private double queenWeight;
++    private double kingWeight;
++    private double score;
++    private double[][] kingThreatWeight = { //Arbitrary weights of squares around the king,
++        //Value of particular square is mutliplied by the number of threats made by player
++        {2.0,2.0,2.0},
++        {2.0,4.0,2.0},
++        {2.0,2.0,2.0}
++    };
++
++    private double[][] squareEval = { //The arbitrary values I gave to all squares in a chess board.
++        //Value of particular square is multiplied by the number of threats made by player
++        {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0}, 
++        {1.0,2.0,2.0,2.0,2.0,2.0,2.0,1.0},
++        {1.0,2.0,3.0,3.0,3.0,3.0,2.0,1.0},
++        {1.0,2.0,3.0,4.0,4.0,3.0,2.0,1.0},
++        {1.0,2.0,3.0,4.0,4.0,3.0,2.0,1.0},
++        {1.0,2.0,3.0,3.0,3.0,3.0,2.0,1.0},
++        {1.0,2.0,2.0,2.0,2.0,2.0,2.0,1.0},
++        {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0}, 
++    };
++    /**
++     * Constructor Evaluation : when constructed, everything is computed, and you can access the score with Evaluation.getScore()
++     * @param cb the chessboard to evaluate
++     */
++    public Evaluation(ChessBoard cb) {
++        this.board = cb.getBoard();
++        this.livePieces = cb.getLivePieces();
++        pawnWeight = 10.0;
++        knightWeight = 31.0;
++        bishopWeight = 29.0;
++        rookWeight = 50.0;
++        queenWeight = 90.0;
++        kingWeight = 10000.0;
++        score = this.getCenterControlEval() + this.getKingSafetyEval() + this.getMaterialEval();
++    }
++
++    public double getScore(){
++        return this.score;
++    }
++    /*
++    public double getMobilityEval(){
++        //Get a score that measures mobility
++    }
++
++    public double getKingTropism(){
++        //Get a score that measures king tropism (number of moves for pieces to reach the king)
++        //i.e. the king might be safe but queen can threaten it in 1 move
++    }
++    */
++    /**
++     * Method getMaterialEval : not neessary for now but for later, since we'll probably have to tune piece weights
++     * @return score of difference in material
++     */
++    public double getMaterialEval(){
++        int whiteKings = 0, blackKings = 0;
++        int whiteQueens = 0, blackQueens = 0;
++        int whiteKnights = 0, blackKnights = 0;
++        int whiteBishops = 0, blackBishops = 0;
++        int whiteRooks = 0, blackRooks = 0;
++        int whitePawns = 0, blackPawns = 0;
++
++        for(Piece p : livePieces){
++            if(p.isWhite()){
++                switch(p.getPieceName()){
++                    case "Pawn" : whitePawns++;
++                    case "Knight" : whiteKnights++;
++                    case "Bishop" : whiteBishops++;
++                    case "Rook" : whiteRooks++;
++                    case "Queen" : whiteQueens++;
++                    case "King" : whiteKings++;
++                }
++            } else{
++                switch(p.getPieceName()){
++                    case "Pawn" : blackPawns++;
++                    case "Knight" : blackKnights++;
++                    case "Bishop" : blackBishops++;
++                    case "Rook" : blackRooks++;
++                    case "Queen" : blackQueens++;
++                    case "King" : blackKings++;
++                }
++            }
++        }
++        return (pawnWeight * (whitePawns - blackPawns)) + (knightWeight * (whiteKnights - blackKnights)) + (bishopWeight * (whiteBishops-blackBishops)) + (rookWeight * (whiteRooks - blackRooks)) + (queenWeight * (whiteQueens - blackQueens)) + (kingWeight * (whiteKings - blackKings)); 
++    }
++    /**
++     * Method getCenterControlEval : assesses difference in center control scores
++     * @return a double indicating the center control evaluation
++     */
++    public double getCenterControlEval(){
++        double whiteEval = 0.0;
++        double blackEval = 0.0;
++        for(int i = 0; i<8; i++){
++            for(int j = 0; j<8; j++){
++                whiteEval += squareEval[i][j] * this.getNumThreats(board[i][j], false);
++                blackEval += squareEval[i][j] * this.getNumThreats(board[i][j], true);
++            }
++        }
++
++        return blackEval - whiteEval;
++    }
++    /**
++     * Method getKingSafetyEval : returns a double indicating the difference in evaluation of king safety
++     * between white and black
++     * @return double king safety evaluation
++     */
++    public double getKingSafetyEval(){
++        double whiteEval = 0.0;
++        double blackEval = 0.0;
++        int wX=0, wY=0;
++        int bX=0, bY=0;
++
++        
++        for(Piece p : livePieces){
++            if(p.getPieceName() == "King"){
++                if(p.isWhite()){
++                    wX = p.getCurrentPosition().getXPos();
++                    wY = p.getCurrentPosition().getYPos();
++                } else {
++                    bX = p.getCurrentPosition().getXPos();
++                    bY = p.getCurrentPosition().getYPos();
++                }
++                
++            }
++        }
++        
++        double[][] whiteGrid = this.getKingThreatsGrid(board[wY][wX]);
++        double[][] blackGrid = this.getKingThreatsGrid(board[bY][bX]);
++        
++        for(int i =0; i<3; i++){
++            for(int j=0; j<3; j++){
++                whiteEval += whiteGrid[i][j] * kingThreatWeight[i][j];
++                blackEval += blackGrid[i][j] * kingThreatWeight[i][j];
++            }
++        }
++        return blackEval - whiteEval;
++    }
++    /**
++     * Method getKingThreatsGrid : private method used to give a threat grid around the king
++     * @param kingPos
++     * @return a 3x3 double array representing the number of threats on each sqaure around the king.
++     * The center of the array ([1][1]) is where the king is
++     */
++    private double[][] getKingThreatsGrid(Square kingPos){
++        boolean isWhite = kingPos.getPieceOnSq().isWhite();
++        double[][] grid = new double [3][3];
++        int X = kingPos.getXPos();
++        int Y = kingPos.getYPos();
++        if(Y+1 < 8){
++            if(X-1 >= 0){grid[0][0]= (double) this.getNumThreats(board[Y+1][X-1], isWhite);}
++            grid[0][1]= (double) this.getNumThreats(board[Y+1][X], isWhite);
++            if(X+1 < 8){grid[0][2]= (double) this.getNumThreats(board[Y+1][X+1], isWhite);}
++        }
++        
++
++        if(X-1 >= 0){grid[1][0]= (double) this.getNumThreats(board[Y][X-1], isWhite);}
++        grid[1][1]= (double) this.getNumThreats(board[Y][X], isWhite);
++        if(X+1 < 8){grid[1][2]= (double) this.getNumThreats(board[Y][X+1], isWhite);}
++
++        if(Y-1 > 8){
++            if(X-1 >= 0){grid[2][0]= (double) this.getNumThreats(board[Y-1][X-1], isWhite);}
++            grid[2][1]= (double) this.getNumThreats(board[Y-1][X], isWhite);
++            if(X+1 < 8){grid[2][2]= (double) this.getNumThreats(board[Y-1][X+1], isWhite);}
++        }
++        
++        return grid;
++    }
++    /**
++     * Method getNumThreats :
++     * @param pos square at which we evaluate threats
++     * @param isWhite boolean indicating what player tries to access threat grid
++     * @return an int representing the number of attacks on the square
++     */
++
++    public int getNumThreats(Square pos, boolean isWhite){
++        int numThreats = 0;
++        ArrayList<Piece> enemyPieces = new ArrayList<Piece>();
++        for(Piece pie : livePieces){
++            if(!(pie.isWhite() == isWhite)){
++                enemyPieces.add(pie);
++            }
++        }
++        for(Piece p : enemyPieces){
++
++            if(p.getPieceName() == "Pawn"){
++                if(isWhite){
++                    if(p.getCurrentPosition().getXPos() == pos.getXPos()-1){
++                        if(p.getCurrentPosition().getYPos() == pos.getYPos()-1){
++                            numThreats++;
++                        }
++                    }
++                    if(p.getCurrentPosition().getXPos() == pos.getXPos()+1){
++                        if(p.getCurrentPosition().getYPos() == pos.getYPos()-1){
++                            numThreats++;
++                        }
++                    }
++                } else{
++                    if(p.getCurrentPosition().getXPos() == pos.getXPos()-1){
++                        if(p.getCurrentPosition().getYPos() == pos.getYPos()+1){
++                            numThreats++;
++                        }
++                    }
++                    if(p.getCurrentPosition().getXPos() == pos.getXPos()+1){
++                        if(p.getCurrentPosition().getYPos() == pos.getYPos()+1){
++                            numThreats++;
++                        }
++                    }
++                }
++                
++            }
++            if(p.getPieceName() == "Knight"){
++                int a = Math.abs(p.getCurrentPosition().getYPos() - pos.getYPos());
++                int b = Math.abs(p.getCurrentPosition().getXPos() - pos.getXPos());
++                
++                if(a * b == 2) numThreats++;
++            }
++
++            if(p.getPieceName() == "Bishop"){
++                int X = p.getCurrentPosition().getXPos();
++                int Y = p.getCurrentPosition().getYPos();
++                while(true) {
++                    Y--;
++                    X++;
++                    if(Y < 0 || X > 7) {
++                        break;
++                    }
++                      //p is up right diagonal
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    }  
++                }
++                
++                // check right up diagonal (Y ++, X ++) -> check if any is 0
++                X = p.getCurrentPosition().getXPos();
++                Y = p.getCurrentPosition().getYPos();
++        
++                while(true) {
++                    Y++;
++                    X++;
++                    if(Y > 7 || X > 7) {
++                        break;
++                    }
++                    //down right diagonal
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                
++                // check left down diagonal (Y --, X --) -> check if any is 0
++                X = p.getCurrentPosition().getXPos();
++                Y = p.getCurrentPosition().getYPos();
++                 
++                while(true) {
++                    Y--;
++                    X--;
++                    if(Y < 0 || X < 0) {
++                        break;
++                    }
++                    //up left diagonal
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                
++                // check right down diagonal (Y--, X ++) -> check if any is 0
++                X = p.getCurrentPosition().getXPos();
++                Y = p.getCurrentPosition().getYPos();
++                        
++                while(true) {
++                    Y++;
++                    X--;
++                    if(Y > 	7 || X < 0) {
++                        break;
++                    }
++                    //down left diagonal
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++            }
++            if(p.getPieceName() == "Rook"){
++                int X = p.getCurrentPosition().getXPos();
++                int Y = p.getCurrentPosition().getYPos();
++                while(true){
++                    X++;
++                    if(X > 7){ break; }
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                X = p.getCurrentPosition().getXPos();
++                while(true){
++                    X--;
++                    if(X < 0){ break; }
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                X = p.getCurrentPosition().getXPos();
++                while(true){
++                    Y++;
++                    if(Y > 7){ break; }
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                Y = p.getCurrentPosition().getYPos();
++                while(true){
++                    Y--;
++                    if(Y < 0){ break; }
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++
++            }
++            if(p.getPieceName() == "Queen"){
++                //Diagonal
++                int X = p.getCurrentPosition().getXPos();
++                int Y = p.getCurrentPosition().getYPos();
++                while(true) {
++                    Y--;
++                    X++;
++                    if(Y < 0 || X > 7) {
++                        break;
++                    }
++                    //p is up right diagonal
++
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                
++                // check right up diagonal (Y ++, X ++) -> check if any is 0
++                X = p.getCurrentPosition().getXPos();
++                Y = p.getCurrentPosition().getYPos();
++        
++                while(true) {
++                    Y++;
++                    X++;
++                    if(Y > 7 || X > 7) {
++                        break;
++                    }
++                    //down right diagonal
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                
++                // check left down diagonal (Y --, X --) -> check if any is 0
++                X = p.getCurrentPosition().getXPos();
++                Y = p.getCurrentPosition().getYPos();
++                 
++                while(true) {
++                    Y--;
++                    X--;
++                    if(Y < 0 || X < 0) {
++                        break;
++                    }
++                    //up left diagonal
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                
++                // check right down diagonal (Y--, X ++) -> check if any is 0
++                X = p.getCurrentPosition().getXPos();
++                Y = p.getCurrentPosition().getYPos();
++                        
++                while(true) {
++                    Y++;
++                    X--;
++                    if(Y > 	7 || X < 0) {
++                        break;
++                    }
++                    //down left diagonal
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                
++                //Horizontal
++                X = p.getCurrentPosition().getXPos();
++                Y = p.getCurrentPosition().getYPos();
++                while(true){
++                    X++;
++                    if(X > 7){ break; }
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                X = p.getCurrentPosition().getXPos();
++                while(true){
++                    X--;
++                    if(X < 0){ break; }
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                X = p.getCurrentPosition().getXPos();
++                while(true){
++                    Y++;
++                    if(Y > 7){ break; }
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++                Y = p.getCurrentPosition().getYPos();
++                while(true){
++                    Y--;
++                    if(Y < 0){ break; }
++                    if(X == pos.getXPos() && Y == pos.getYPos()){
++                        numThreats++;
++                    }
++                    
++                    if(board[Y][X].isTakenSquare()) {
++                        
++                        break;
++                    } 
++                }
++
++            }
++            if(p.getPieceName() == "King"){
++                int X = p.getCurrentPosition().getXPos();
++                int Y = p.getCurrentPosition().getYPos();
++                if(pos.getYPos() == Y+1 && pos.getXPos() == X-1){numThreats++;}
++                if(pos.getYPos() == Y+1 && pos.getXPos() == X){numThreats++;}
++                if(pos.getYPos() == Y+1 && pos.getXPos() == X+1){numThreats++;}
++
++                if(pos.getYPos() == Y && pos.getXPos() == X-1){numThreats++;}
++                if(pos.getYPos() == Y && pos.getXPos() == X+1){numThreats++;}
++
++                if(pos.getYPos() == Y-1 && pos.getXPos() == X-1){numThreats++;}
++                if(pos.getYPos() == Y-1 && pos.getXPos() == X){numThreats++;}
++                if(pos.getYPos() == Y-1 && pos.getXPos() == X+1){numThreats++;}
++                
++            }
++        }
++        return numThreats;
++    }
++    /**
++     * Method printThreatGrid : for testing purpose
++     * Print a 8x8 grid that represents the number of threats posed on each square
++     * @param isWhite boolean indicatin whether to look for black pieces treats or white pieces threats
++     */
++    private void printThreatGrid(boolean isWhite){
++        System.out.println("Threat grid : ");
++        for(int y = 0; y < 8; y++){
++            for(int x = 0; x < 8; x++){
++                System.out.print(this.getNumThreats(board[y][x], isWhite)+ "  ");
++            }
++            System.out.println("  ");
++        }
++    }
++
++
++}
++
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1637240610424)
++++ b/.idea/.gitignore	(date 1637240610424)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml

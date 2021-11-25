@@ -1,0 +1,727 @@
+Index: app/src/main/java/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import view.SetupMenu;\n\npublic class App \n{\n\tpublic static void main(String[] args) \n\t{\n\t\tSetupMenu menu = new SetupMenu();\n\t}\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/App.java b/app/src/main/java/App.java
+--- a/app/src/main/java/App.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/App.java	(date 1637802380000)
+@@ -4,6 +4,7 @@
+ {
+ 	public static void main(String[] args) 
+ 	{
++
+ 		SetupMenu menu = new SetupMenu();
+ 	}
+ }
+Index: app/src/main/java/controller/Rook.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\r\nimport java.util.ArrayList;\r\n\r\nimport javax.swing.JOptionPane;\r\n\r\npublic class Rook extends Piece {\r\n\r\n    /**\r\n     * @param white true if the Rook is white, false if black\r\n     */\r\n    public Rook(boolean white) {\r\n        super.setWhite(white);\r\n        super.pieceName = \"Rook\";\r\n        if(isWhite()) super.setValue(50);\r\n\t\telse super.setValue(-50);\r\n    }\r\n\r\n    /**\r\n     *\r\n     * @param s square that you want to move to\r\n     * @return true if the square is not taken from another piece of the same team, false otherwise\r\n     */\r\n    private boolean movePermission(Square s) {\r\n        if (!s.isTakenSquare() || !this.sameTeam(s.getPieceOnSq())) {\r\n            return true;\r\n        } else {\r\n            return false;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Checks for the legal moves of the Rook(up, down, right, left)\r\n     * @param cb\r\n     * @return ArrayList of squares\r\n     */\r\n    public ArrayList<Square> getLegalMoves(ChessBoard cb) {\r\n        ArrayList<Square> legalMoves = new ArrayList<>();\r\n        int x = this.getCurrentPosition().getXPos();\r\n        int y = this.getCurrentPosition().getYPos();\r\n        Square[][] board = cb.getBoard();\r\n\r\n        // go stright right\r\n        for (int i = x+1; i < 8; i++) {\r\n            Square tempSquare = board[y][i];\r\n            if (movePermission(tempSquare)) {\r\n                legalMoves.add(tempSquare);\r\n                if(tempSquare.isTakenSquare()){\r\n                    break;\r\n                }\r\n            } else {\r\n                break;\r\n            }\r\n        }\r\n         x = this.getCurrentPosition().getXPos();\r\n         y = this.getCurrentPosition().getYPos();\r\n\r\n\r\n        // go stright left\r\n        for (int i = x-1; i > -1; i--) {\r\n            Square tempSquare = board[y][i];\r\n            if (movePermission(tempSquare)) {\r\n                legalMoves.add(tempSquare);\r\n                if(tempSquare.isTakenSquare()){\r\n                    break;\r\n                }\r\n            } else {\r\n                break;\r\n            }\r\n        }\r\n        x = this.getCurrentPosition().getXPos();\r\n        y = this.getCurrentPosition().getYPos();\r\n\r\n        // go stright down\r\n        for (int j = y+1; j < 8; j++) {\r\n            Square tempSquare = board[j][x];\r\n            if (movePermission(tempSquare)) {\r\n                legalMoves.add(tempSquare);\r\n                if(tempSquare.isTakenSquare()){\r\n                    break;\r\n                }\r\n            } else {\r\n                break;\r\n            }\r\n        }\r\n        x = this.getCurrentPosition().getXPos();\r\n        y = this.getCurrentPosition().getYPos();\r\n\r\n        // go stright up\r\n        for (int j = y-1; j > -1; j--) {\r\n            Square tempSquare = board[j][x];\r\n            if (movePermission(tempSquare)) {\r\n                legalMoves.add(tempSquare);\r\n                if(tempSquare.isTakenSquare()){\r\n                    break;\r\n                }\r\n            } else {\r\n                break;\r\n            }\r\n        }\r\n\r\n        return legalMoves;\r\n    }\r\n\r\n    /**\r\n     * Moves the Rook to the target square if the target square it in the legalMoves\r\n     * @param target square you want to move to\r\n     * @param cb chessboard\r\n     * @param legalMoves ArrayList of squares\r\n     */\r\n    @Override\r\n    public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){\r\n        Square[] moveDescription = {this.getCurrentPosition(), target};\r\n        cb.setLastPlyPlayed(moveDescription);\r\n        \r\n        if(getIfNotYetMoved()) { setNotYetMoved(false);}\r\n        super.getCurrentPosition().removePiece(this);\r\n        if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture\r\n            Piece captured = target.getPieceOnSq();\r\n            System.out.println(\"The \" + captured.getColorName()+ \" \" + captured.pieceName + \" was captured by the \" +getColorName()+ \" \" + pieceName);\r\n            cb.getLivePieces().remove(captured);    // mark this as a fallen piece\r\n            cb.getDeadPieces().add(captured);\r\n            if(captured.pieceName.equals(\"King\")){\r\n                System.out.println(\"The \"+ captured.getColorName() + \" King has fallen\");\r\n                System.out.println(this.getColorName() + \" Wins!!!\");\r\n                //JOptionPane.showMessageDialog(null, this.getColorName()+ \" Wins!!! \", \"InfoBox: \" + \"END GAME\", JOptionPane.INFORMATION_MESSAGE);\r\n                cb.setNewChessBoard();\r\n            }\r\n        }\r\n        target.placePiece(this);\r\n        if(getIfNotYetMoved()){ setNotYetMoved(false); }\r\n        checkingKing(legalMoves);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Rook.java b/app/src/main/java/controller/Rook.java
+--- a/app/src/main/java/controller/Rook.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/Rook.java	(date 1637802380000)
+@@ -116,12 +116,12 @@
+         super.getCurrentPosition().removePiece(this);
+         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
+             Piece captured = target.getPieceOnSq();
+-            System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
++            //System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
+             cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+             cb.getDeadPieces().add(captured);
+             if(captured.pieceName.equals("King")){
+-                System.out.println("The "+ captured.getColorName() + " King has fallen");
+-                System.out.println(this.getColorName() + " Wins!!!");
++                //System.out.println("The "+ captured.getColorName() + " King has fallen");
++                //System.out.println(this.getColorName() + " Wins!!!");
+                 //JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
+                 cb.setNewChessBoard();
+             }
+Index: app/src/main/java/controller/ChessBoard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\r\nimport java.util.ArrayList;\r\n\r\nimport view.SquareButton;\r\n\r\npublic class ChessBoard{\r\n\r\n    private Square [][] board;\r\n    private ArrayList<Piece> livePieces;\r\n    private ArrayList<Piece> deadPieces;\r\n    private Square[] lastPlyPlayed = new Square[2];\r\n\r\n\r\n    /**\r\n     * Constructor ChessBoard() : constructs a chessboard and fills it with the standard piece set\r\n     */\r\n    public ChessBoard(){\r\n        board =  new Square[8][8];        \r\n        for(int row=0; row<8; row++){\r\n            for(int col=0; col<8; col++){\r\n               board[row][col] = new Square(row, col); \r\n            }\r\n        }\r\n        livePieces= new ArrayList<Piece>();\r\n        deadPieces = new ArrayList<Piece>();\r\n       setUpBoard();      \r\n    }\r\n\r\n    //constructor for practice testing board\r\n    public ChessBoard(boolean test){\r\n        board = new Square[8][8];\r\n        for(int row=0; row<8; row++){\r\n            for(int col=0; col<8; col++){\r\n               board[row][col] = new Square(row, col); \r\n            }\r\n        }\r\n        livePieces= new ArrayList<Piece>();\r\n        deadPieces= new ArrayList<Piece>();\r\n    }\r\n\r\n    public void copyCB(ChessBoard original){\r\n        //ChessBoard newCB = new ChessBoard(false);\r\n        ArrayList<Piece> newLiveP = getLivePieces();\r\n        Square[][] ogBoard = original.getBoard();\r\n        Square[][] newBoard = getBoard();\r\n        for(int row=0; row<8; row++){\r\n            for(int col=0; col<8; col++){\r\n                if(ogBoard[row][col].isTakenSquare()){\r\n                    Piece taken = ogBoard[row][col].getPieceOnSq();\r\n                    if(taken.pieceName.equals(\"Pawn\")){\r\n                        Pawn pC= new Pawn(taken.isWhite());\r\n                        pC.copyPiece(taken);\r\n                        newLiveP.add(pC);\r\n                        newBoard[row][col].placePiece(pC);\r\n                    }else if (taken.pieceName.equals(\"Rook\")){\r\n                        Rook rC = new Rook(taken.isWhite());\r\n                        rC.copyPiece(taken);\r\n                        newLiveP.add(rC);\r\n                        newBoard[row][col].placePiece(rC);\r\n                    }else if (taken.pieceName.equals(\"Bishop\")){\r\n                        Bishop bC = new Bishop(taken.isWhite());\r\n                        bC.copyPiece(taken);\r\n                        newLiveP.add(bC);\r\n                        newBoard[row][col].placePiece(bC);\r\n                    }else if (taken.pieceName.equals(\"Knight\")){\r\n                        Knight kC = new Knight(taken.isWhite());\r\n                        kC.copyPiece(taken);\r\n                        newLiveP.add(kC);\r\n                        newBoard[row][col].placePiece(kC);\r\n                    }else if (taken.pieceName.equals(\"Queen\")){\r\n                        Queen qC = new Queen(taken.isWhite());\r\n                        qC.copyPiece(taken);\r\n                        newLiveP.add(qC);\r\n                        newBoard[row][col].placePiece(qC);\r\n                    }else if (taken.pieceName.equals(\"King\")){\r\n                        King kC = new King(taken.isWhite());\r\n                        kC.copyPiece(taken);\r\n                        newLiveP.add(kC);\r\n                        newBoard[row][col].placePiece(kC);\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    public Square[][] getBoard(){\r\n        return board;\r\n    }\r\n\r\n    public void setUpBoard(){\r\n        for(int i=0; i<8; i++ ){ \r\n            board[6][i].placePiece(new Pawn(true));  //White Pawns     \r\n            board[1][i].placePiece(new Pawn(false)); //Black Pawns\r\n        }\r\n        \r\n        board[7][0].placePiece(new Rook(true));//White rook\r\n        board[7][7].placePiece(new Rook(true));  //White rook\r\n        board[0][0].placePiece(new Rook(false)); //Black rook\r\n        board[0][7].placePiece(new Rook(false)); //Black rook\r\n\r\n        board[7][1].placePiece(new Knight(true));  //White Knight\r\n        board[7][6].placePiece(new Knight(true));  //White Knight\r\n        board[0][1].placePiece(new Knight(false)); //Black knight\r\n        board[0][6].placePiece(new Knight(false)); // Black knight\r\n\r\n        board[7][2].placePiece(new Bishop(true));  //White Bishop\r\n        board[7][5].placePiece(new Bishop(true));  //White Bishop\r\n        board[0][2].placePiece(new Bishop(false)); //Black Bishop\r\n        board[0][5].placePiece(new Bishop(false)); // Black Bishop\r\n\r\n        board[7][3].placePiece(new Queen(true));  //White Queen\r\n        board[7][4].placePiece(new King(true));  //White King\r\n        board[0][4].placePiece(new King(false)); //Black King\r\n        board[0][3].placePiece(new Queen(false)); // Black Queen\r\n        \r\n        board[6][0].placePiece(new Pawn(true)); \r\n        board[6][1].placePiece(new Pawn(true)); \r\n        board[6][2].placePiece(new Pawn(true)); \r\n        board[6][3].placePiece(new Pawn(true)); \r\n        board[6][4].placePiece(new Pawn(true)); \r\n        board[6][5].placePiece(new Pawn(true)); \r\n        board[6][6].placePiece(new Pawn(true)); \r\n        board[6][7].placePiece(new Pawn(true)); \r\n\r\n        //Adding white pieces then black pieces to livePieces ArrayList\r\n\r\n        for(int rW = 6; rW<8;rW++){\r\n            for(int cW=0;cW<8;cW++){\r\n                livePieces.add(board[rW][cW].getPieceOnSq());\r\n            }\r\n        }\r\n        for(int rB = 1; rB>=0;rB--){\r\n            for(int cB=0;cB<8;cB++){\r\n                livePieces.add(board[rB][cB].getPieceOnSq());\r\n            }\r\n        }\r\n    }\r\n\r\n    public ArrayList<Piece> getLivePieces(){\r\n        return livePieces;\r\n    } \r\n    public ArrayList<Piece> getDeadPieces(){\r\n        return deadPieces;\r\n    }\r\n    /**\r\n     * Method getOccupingPiece : \r\n     * @param y : y coordinate of square\r\n     * @param x : x coordinate of square\r\n     * @return : piece that occupies Square[y][x] of chessboard\r\n     */\r\n    public Piece getOccupingPiece(int y, int x){\r\n        \r\n        if (x < 0 || x > 7 || y < 0 || y > 7) {\r\n            try {\r\n                throw new Exception(\"Not on Board\");\r\n            }catch (Exception e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n        return getSquare(y, x).getPieceOnSq();\r\n    }\r\n\r\n\r\n    public Square getSquare(SquareButton sqb){\r\n        for(int i=0;i<8;i++){\r\n            for(int j=0;j<8;j++){\r\n                if(board[i][j].getButtonOnSquare().equals(sqb)){\r\n                    return board[i][j];\r\n                }\r\n            }\r\n        }\r\n        return null;\r\n    }\r\n\r\n    /**\r\n     * Method getSquare : \r\n     * @param y : y coordinate of square\r\n     * @param x : x coordinate of square\r\n     * @return : the square located at board[y][x]\r\n     */\r\n    public Square getSquare(int y, int x)\r\n    {\r\n        if (x < 0 || x > 7 || y < 0 || y > 7) {\r\n            try {\r\n                throw new Exception(\"Not on Board\");\r\n            } catch (Exception e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n        return board[y][x];\r\n    }\r\n\r\n\r\n    public void printBoard(){\r\n        \r\n        for(int i = 0; i<board.length ; i++){\r\n            for(int y = 0; y<board.length ; y++){\r\n                if(board[i][y].isTakenSquare()) {\r\n                    System.out.print(\"  \" + board[i][y].getPieceOnSq().pieceName + \"  \");\r\n                }\r\n                else { System.out.print(\"  empty  \");}\r\n            }\r\n            System.out.println(\" \");\r\n        }\r\n    }\r\n    /**\r\n     * Method makeBoardCopy : copies the current board\r\n     * @return 2d array of square (=board) copying current board\r\n     */\r\n    public Square[][] makeBoardCopy(){\r\n        Square [][] board_copy = new Square[8][8];\r\n        board_copy = board;\r\n        return board_copy; \r\n    }\r\n    /**\r\n     * method setLastPlyPlayed : used for En Passant\r\n     * @param lastMove array of length 2 of squares, describing the last move played :\r\n     * first element is original position square and second element is destination square\r\n     */\r\n    public void setLastPlyPlayed(Square[] lastMove){\r\n        lastPlyPlayed[0] = lastMove[0];\r\n        lastPlyPlayed[1] = lastMove[1];\r\n    }\r\n    /**\r\n     * method getLastPlyPlayed : used for En Passant\r\n     * @return Square array of size 2 describing the last move played\r\n     */\r\n    public Square[] getLastPlyPlayed(){\r\n        return this.lastPlyPlayed;\r\n    }\r\n    /**\r\n     * Method setNewChessBoard : delete all pieces and create new set of  std pieces\r\n     */\r\n    public void setNewChessBoard(){\r\n        this.deletePieces();\r\n        this.setUpBoard();\r\n    }\r\n    /**\r\n     * Method deletePieces : deletes all pieces of the board\r\n     */\r\n    public void deletePieces(){\r\n        for(int i = 0; i<=7; i++){\r\n            for(int j = 0; j<= 7; j++){\r\n                Piece p = board[i][j].getPieceOnSq();\r\n                board[i][j].removePiece(p);\r\n            }\r\n        }\r\n    }\r\n\r\n    public double getBoardValue(){\r\n        double sum = 0;\r\n        for(Piece p : livePieces){\r\n            sum += p.getValue();\r\n        }\r\n        return sum;\r\n    }\r\n\r\n    public boolean missingKing(){\r\n        int sum = 0;\r\n        for(Piece p: livePieces){\r\n            if(p.pieceName.equals(\"King\")) { sum++;} \r\n        } \r\n        if(sum!=2){\r\n            return true;\r\n        }\r\n        return false;\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/ChessBoard.java b/app/src/main/java/controller/ChessBoard.java
+--- a/app/src/main/java/controller/ChessBoard.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/ChessBoard.java	(date 1637802380000)
+@@ -86,6 +86,9 @@
+     public Square[][] getBoard(){
+         return board;
+     }
++    public void setBoard(Square[][] board){
++        this.board = board;
++    }
+ 
+     public void setUpBoard(){
+         for(int i=0; i<8; i++ ){ 
+@@ -139,6 +142,9 @@
+     public ArrayList<Piece> getLivePieces(){
+         return livePieces;
+     } 
++    public void addLivePiece(Piece p){
++        livePieces.add(p);
++    }
+     public ArrayList<Piece> getDeadPieces(){
+         return deadPieces;
+     }
+@@ -248,8 +254,12 @@
+     }
+ 
+     public double getBoardValue(){
+-        double sum = 0;
+-        for(Piece p : livePieces){
++        Evaluation eval = new Evaluation(this);
++        return eval.getScore();
++    }
++    public double getBoardValueOld(){
++        double sum = 0.0;
++        for(Piece p: livePieces){
+             sum += p.getValue();
+         }
+         return sum;
+@@ -258,7 +268,7 @@
+     public boolean missingKing(){
+         int sum = 0;
+         for(Piece p: livePieces){
+-            if(p.pieceName.equals("King")) { sum++;} 
++            if(p.pieceName.equals("King"))  sum++;  
+         } 
+         if(sum!=2){
+             return true;
+Index: app/src/main/java/controller/Game.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\n\nimport view.*;\n\nimport java.util.ArrayList;\nimport java.util.Random;\n\nimport javax.swing.ImageIcon;\nimport javax.swing.JFrame;\n\npublic class Game{\n\n    private ChessBoard cb;\n    public boolean newTurn=true;\n    private Dice dice;\n    private Player playing = null;\n    private WhitePlayer wPlayer;\n    private BaseLineAgent baseLinePlayer;\n    private ExpectiMaxAgent expectiMaxPlayer;\n    private BlackPlayer bPlayer;\n    private Piece heldPiece = null;\n    private ButtonPanel buttonPanel;\n    private boolean diceClicked=false;\n    private JFrame f;\n    private boolean noMoves = false;\n    // Booleans to select which agent is going to play against which other agent\n    private boolean wNoAgent = false;\n    private boolean bNoAgent = false;\n    private boolean wBaseLineActive  = false;\n    private boolean bBaseLineActive = false;\n    private boolean wExpectiMaxActive = false;\n    private boolean bEpectiMaxActive = false;\n    private boolean noAgent = false;\n    private boolean baseLineActive = false;     // Make true to play with BaseLine Agent\n    private boolean expectiMaxActive = true;\n    private int depth=-1;                       //-1 means no depth (PvP)\n\n\n    /**\n     * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations\n     * @param f is the ChessBoard GUI Frame\n     */\n\n    public Game(JFrame f){\n        this.f = f;\n        cb = new ChessBoard();\n\n        dice = new Dice();\n        bPlayer = new BlackPlayer(cb);\n        wPlayer = new WhitePlayer(cb);\n        buttonPanel= new ButtonPanel(this);\n        this.noAgent=noAgent;\n        this.depth=depth;\n    }\n    public JFrame getFrame(){\n        return f;\n    }\n    public ChessBoard getChessBoard(){\n        return cb;\n    }\n    public void setNewChessBoard(){\n        this.cb = new ChessBoard();\n        \n    }\n    public boolean isNewTurn(){\n        return newTurn;\n    }\n    public Dice getDice(){\n        return dice;\n    }\n    public Player whosPlaying(){\n        return playing;\n    }\n    public void newTurn(){\n        newTurn=true;\n        diceClicked=false;\n        wPlayer.flipTurns(bPlayer);\n        updateBoard();\n    } \n    public void setButtonPanel(ButtonPanel buttonPanel){\n        this.buttonPanel = buttonPanel;\n    }\n    public void setDiceClicked(boolean b) {\n        diceClicked = b;\n    }\n\n    //public Castle getCastling(){ return castling;}\n    public WhitePlayer getWhitePlayer(){return wPlayer;}\n    public BlackPlayer getBlackPlayer(){return bPlayer;}\n\n    public void setbNoAgent(boolean b) { this.bNoAgent = b; }\n    public void setwNoAgent(boolean b) { this.wNoAgent = b; }\n    public void setbBaseLineActive(boolean b) { this.bBaseLineActive = b; }\n    public void setwBaseLineActive(boolean b) { this.wBaseLineActive = b; }\n    public void setbEpectiMaxActive(boolean b) { this.bEpectiMaxActive = b; }\n    public void setwExpectiMaxActive(boolean b) { this.wExpectiMaxActive = b; }\n\n    public void setDepth(int d) { this.depth = d; }\n\n    /**\n     * When Ever the Green Dice button is clicked by the user this method checks whether it is even a turn for the user\n     */\n    public void play(){\n        //noMoves = false;\n\n        if(wPlayer.getIsMyTurn()){        //if its w player's turn\n\n            // Normal player (NO AGENT)\n            if (wNoAgent) {\n                playing = wPlayer;\n                newTurn = false;\n                String chosen = dice.getChosen();\n                //String chosen = dice.getRoleDice(); //roll the dice\n\n                if (!wPlayer.canMove(chosen)) {         //if player has no pieces to move we switch turns\n                    //System.out.println(\"Sorry white , you have no possible moves. Turn goes to black\");\n                    noMoves = true;\n                    newTurn();\n                } else {\n                    noMoves = false;\n                }\n\n            // BASELINE AGENT\n            } else if (wBaseLineActive) {\n                baseLinePlayer = new BaseLineAgent(this, cb);\n                String chosen = dice.getChosen();\n                baseLinePlayer.baseLinePlay(chosen);\n\n            // EXPECTIMAX AGENT\n            } else if (wExpectiMaxActive) {\n                String chosen = dice.getChosen();\n                int depth = 3;\n                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);\n                expectiMaxPlayer.expectiMaxPlay();\n            }\n        }\n\n        else if(bPlayer.getIsMyTurn()){\n\n        \t// Normal player (NO AGENT)\n        \tif (bNoAgent) {\n        \t\tplaying = bPlayer;\n        \t\tnewTurn= false;\n            \tString chosen = dice.getChosen();\n            \t//loop through all live pieces to see if dice chosen piece piece is there\n            \tfor(Piece p: cb.getLivePieces()){\n            \t\tif(p.isWhite()){ continue; }\n\n            \t\tif(p.getPieceName().equals(chosen) ){ //if the chosen piece is not dead\n                        break;\n            \t\t}\n            \t}\n\n            \tif(!bPlayer.canMove(chosen)){\n            \t\t//System.out.println(\"Sorry black , you have no possible moves. Turn goes to white\");\n            \t\tnoMoves = true;\n            \t\tnewTurn();\n            \t} else {\n                    noMoves = false;\n                }\n\n        \t// BASELINE AGENT\n        \t} else if (bBaseLineActive) {\n                baseLinePlayer = new BaseLineAgent(this, cb);\n                String chosen = dice.getChosen();\n            \tbaseLinePlayer.baseLinePlay(chosen);\n\n        \t// EXPECTIMAX AGENT\n        \t} else if (bEpectiMaxActive) {\n                String chosen = dice.getChosen();\n                int depth = 3;\n                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);\n                expectiMaxPlayer.expectiMaxPlay();\n            }\n        }\n    }\n\n    /**\n     * This Method checks which button clicks are legal by the user and their correspondence to the ual \n     * In game play. \n     * @param clickedOnce a boolean that checks whether this click by the user is the first one or second\n     * @param clickedButton is the button that was clicked by the user\n     * @return true if the user is allowed to make these choices\n     */\n\n    public boolean isLegalChoice(boolean clickedOnce, SquareButton clickedButton){\n        Square clickedSquare = cb.getSquare(clickedButton); //get clicked square\n        Piece clickedPiece = clickedSquare.getPieceOnSq();\n        \n        if(wPlayer.getIsMyTurn()){ //if its the white turn\n            if(!diceClicked){ return false;}\n            if(!clickedOnce){ //and this click is the choice of which piece to move \n                if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing\n                else if (clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getChosen()) ){ //if the player selected the correct piece to move\n                    heldPiece = clickedPiece;\n                    heldPiece.setHighlighted(true);\n                    highlightPiece(heldPiece, clickedSquare);\n                    System.out.println(\"legal first click\");\n                    buttonPanel.setText(\"legal first click\");\n\n                    return true;\n                }\n            }\n            else{ //if this is the second click\n                \n                if(heldPiece!=null && cb.getSquare(clickedButton).equals(heldPiece.getCurrentPosition())){   //if the player wants to move another piece\n                    heldPiece.setHighlighted(false);\n                    heldPiece=null;\n                    clickedOnce = false;\n                    System.out.println(\"released\");\n                    return true;\n                }\n                else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to\n                   \n                    int distance = Math.abs(clickedSquare.getXPos()-heldPiece.getCurrentPosition().getXPos());    //calculating the distance from the piece to desired moving location                \n                    \n                    if(heldPiece.getPieceName().equals(\"King\") && distance>1){                  //if the size of this movement is larger than 1 for the king it means this is castling\n                        ((King)heldPiece).doCastling(clickedSquare, cb, heldPiece);\n                        newTurn();\n                        return true;\n                    }\n                    if(heldPiece.getPieceName().equals(\"Pawn\") && clickedSquare.getYPos()==0){\n                        heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));\n                        Piece newPiece = clickedSquare.getPieceOnSq();\n                        ((Pawn)newPiece).promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);\n                        newTurn();\n                        return true;\n                    }\n\n                    else{  //if its just a non castling move\n                        heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there    \n                        System.out.println(\"legal second click\");\n                        heldPiece.setHighlighted(false);\n                        heldPiece = null;\n                        newTurn();\n                        return true;\n                    }                    \n                }\n            }\n        }\n\n        else if(bPlayer.getIsMyTurn()){ //if its the black turn\n            if(!diceClicked){ return false;}\n            if(!clickedOnce){ //and this click is the choice of which piece to move \n                if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing\n                else if (!clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getChosen())){ //if the player selected the correct piece to move\n                    heldPiece = clickedPiece;\n                    heldPiece.setHighlighted(true);\n                    highlightPiece(heldPiece, clickedSquare);\n                    System.out.println(\"legal first click\");\n                    return true;\n                }\n            }\n            else{ //if this is the second click\n                if(heldPiece!=null && cb.getSquare(clickedButton).equals(heldPiece.getCurrentPosition())){   //if the player wants to move another piece\n                    heldPiece.setHighlighted(false);\n                    heldPiece=null;\n                    clickedOnce = false;\n                    System.out.println(\"released\");\n                    updateBoard();\n                    return true;\n                }\n                else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to\n                    \n                    int distance = Math.abs(clickedSquare.getXPos()-heldPiece.getCurrentPosition().getXPos());    //calculating the distance from the piece to desired moving location                \n                    \n                    if(heldPiece.getPieceName().equals(\"King\") && distance>1){                  //if the size of this movement is larger than 1 for the king it means this is castling\n                        ((King)heldPiece).doCastling(clickedSquare,cb,heldPiece);\n                        newTurn();\n                        return true;\n                    }\n                    if(heldPiece.getPieceName().equals(\"Pawn\") && clickedSquare.getYPos()==7){\n                        heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));\n                        Piece newPiece = clickedSquare.getPieceOnSq();\n                        ((Pawn)newPiece).promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);\n                        newTurn();\n                        return true;\n                    }\n\n                    else{  //if its just a non castling move\n                        heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there\n                        heldPiece.setHighlighted(false);\n                        heldPiece = null;    \n                        newTurn();\n                        System.out.println(\"legal second click\");\n                        return true;                    \n                    }\n                }\n            }    \n        }\n        return false;\n    }\n\n    /**\n     * This repaints the board after any movement or capture\n     */\n    public void updateBoard(){\n        Square[][] board = cb.getBoard();\n        wPlayer.updateScore();  //accounting for any captures\n        bPlayer.updateScore();\n        for(int i=0; i<8; i++){\n            for(int j=0;j<8;j++){\n                if(board[i][j].isTakenSquare()){\n                    Piece occupying = board[i][j].getPieceOnSq();\n                    board[i][j].getButtonOnSquare().setIcon(occupying.getImgIcon());\n                }\n                else{\n                    board[i][j].getButtonOnSquare().setIcon(new ImageIcon());\n                }\n            }\n        }\n    }\n\n    /**\n     * This method highlights a legal clicked piece\n     * @param piece is the piece in question needing highlighting\n     * @param square is the Square in question to highlight\n     */\n    public void highlightPiece(Piece piece, Square square) {\n        square.removeImage();\n\n        updateBoard();\n        square.placeImage(piece);\n    }\n\n    public boolean isNoMoves() { return noMoves; }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Game.java b/app/src/main/java/controller/Game.java
+--- a/app/src/main/java/controller/Game.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/Game.java	(date 1637802380000)
+@@ -4,6 +4,7 @@
+ 
+ import java.util.ArrayList;
+ import java.util.Random;
++import java.awt.*;
+ 
+ import javax.swing.ImageIcon;
+ import javax.swing.JFrame;
+@@ -34,7 +35,7 @@
+     private boolean baseLineActive = false;     // Make true to play with BaseLine Agent
+     private boolean expectiMaxActive = true;
+     private int depth=-1;                       //-1 means no depth (PvP)
+-
++    private DicePanel dp;
+ 
+     /**
+      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
+@@ -75,8 +76,19 @@
+         newTurn=true;
+         diceClicked=false;
+         wPlayer.flipTurns(bPlayer);
++        if(bEpectiMaxActive && bPlayer.getIsMyTurn() ){   // for black AI agent
++            whichPiece();  
++            play();
++        }
+         updateBoard();
+-    } 
++
++    }
++    public DicePanel getDicePanel(){
++        return dp;
++    }
++    public void setDicePanel(DicePanel dp){
++        this.dp = dp;
++    }
+     public void setButtonPanel(ButtonPanel buttonPanel){
+         this.buttonPanel = buttonPanel;
+     }
+@@ -300,12 +312,19 @@
+         bPlayer.updateScore();
+         for(int i=0; i<8; i++){
+             for(int j=0;j<8;j++){
++                SquareButton button = board[i][j].getButtonOnSquare();
++                    if(button!=null && button.getButtonColor().equals(Color.DARK_GRAY)) {
++                        button.setBackground(Color.DARK_GRAY);
++                    }
++                    else if(button!=null && button.getButtonColor().equals(Color.WHITE)) {
++                        button.setBackground(Color.WHITE);
++                    }
+                 if(board[i][j].isTakenSquare()){
+                     Piece occupying = board[i][j].getPieceOnSq();
+-                    board[i][j].getButtonOnSquare().setIcon(occupying.getImgIcon());
++                    button.setIcon(occupying.getImgIcon());
+                 }
+                 else{
+-                    board[i][j].getButtonOnSquare().setIcon(new ImageIcon());
++                    button.setIcon(new ImageIcon());
+                 }
+             }
+         }
+@@ -323,5 +342,94 @@
+         square.placeImage(piece);
+     }
+ 
++    public void whichPiece(){
++        String name="";
++        boolean whiteTurn = getWhitePlayer().getIsMyTurn();
++        if (whiteTurn) {
++            ArrayList<String> movable = getWhitePlayer().getMovableNames();
++            name = getDice().getRndPiece(movable);
++
++            if (isNoMoves()) {
++                dp.getTextLabel().setText("NO MOVES AVAILABLE, BLACK'S TURN!");
++            } else {
++                dp.getTextLabel().setText("WHITE PLAYER'S TURN");
++            }
++
++        } else {
++            ArrayList<String> movable = getBlackPlayer().getMovableNames();
++            name = getDice().getRndPiece(movable);    
++            if (isNoMoves()) {
++                dp.getTextLabel().setText("NO MOVES AVAILABLE, WHITE'S TURN!");
++            } else {
++                dp.getTextLabel().setText("BLACK PLAYER'S TURN");
++            }
++        }
++        //game.newTurn();
++        setDiceClicked(true);
++      
++            switch (name){
++                case "Pawn":
++                    if(whiteTurn){
++                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wpawn.png"))));
++                        break;
++                    }
++                    else{
++                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bpawn.png"))));
++                        break;
++                    }
++
++                case "Rook":
++                    if(whiteTurn){
++                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wrook.png"))));
++                        break;
++                    }
++                else{
++                    dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("brook.png"))));
++                    break;
++                }
++
++                case "Knight":
++                    if(whiteTurn){
++                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wknight.png"))));
++                        break;
++                    }
++                else{
++                    dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bknight.png"))));
++                    break;
++                }
++
++                case "Bishop":
++                    if(whiteTurn){
++                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wbishop.png"))));
++                        break;
++                    }
++                    else{
++                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bbishop.png"))));
++                        break;
++                        }
++
++                case "Queen":
++                if(whiteTurn){
++                    dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wqueen.png"))));
++                    break;
++                }
++                else{
++                    dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bqueen.png"))));
++                    break;
++                }
++
++                case "King":
++                    if(whiteTurn){
++                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("wking.png"))));
++                        break;
++                    }
++                    else{
++                        dp.getResultLabel().setIcon(new ImageIcon(ImageLoader.loadImage(dp.getFilePath().getFilePath("bking.png"))));
++                        break;
++                    }
++                }
++    
++    }
++
+     public boolean isNoMoves() { return noMoves; }
+ }
+Index: app/src/main/java/controller/King.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\r\n\r\nimport java.util.ArrayList;\r\n\r\nimport javax.swing.JOptionPane;\r\n\r\npublic class King extends Piece {\r\n\r\n    /**\r\n     * @param white true if the King is white, false if black\r\n     */\r\n    public King(boolean white) {\r\n        super.setWhite(white);\r\n        super.pieceName = \"King\";\r\n        if(isWhite()) super.setValue(900);\r\n\t\telse super.setValue(-900);\r\n    }\r\n\r\n    /**\r\n     * Checks for the legal moves of the King\r\n     * @param chessBoard\r\n     * @return ArrayList of squares\r\n     */\r\n    public ArrayList <Square> getLegalMoves(ChessBoard cb) {\r\n        ArrayList <Square> legalMoves = new ArrayList <>();\r\n        int x = this.getCurrentPosition().getXPos();\r\n        int y = this.getCurrentPosition().getYPos();\r\n        Square[][] board = cb.getBoard();\r\n        for (int row = -1; row <= 1; row++) {\r\n            for (int col = -1; col <= 1; col++) {\r\n                if (row == 0 && col == 0) continue;\r\n                int newY = y + row;\r\n                int newX = x + col;\r\n                if (newY > 7 || newY < 0 || newX > 7 || newX < 0) {\r\n                    continue;\r\n                } //preventing out of bounds error\r\n                Square iPos = board[y + row][x + col];\r\n                if (iPos.isTakenSquare()) { //if some other piece is on that square\r\n                    if (!this.sameTeam(iPos.getPieceOnSq())) { //if it is from different color\r\n                        Piece opponent = iPos.getPieceOnSq();\r\n                        legalMoves.add(iPos); //add this square to optional moves array\r\n                    }\r\n                } else { //if no piece is on that square add this to legal moves\r\n                    legalMoves.add(iPos);\r\n                }\r\n            }\r\n        }\r\n        closeCastle(legalMoves, cb); //checking for king side castling option\r\n        farCastle(legalMoves, cb); //checking for queen side castling option\r\n\r\n        return legalMoves;\r\n    }\r\n\r\n    /**\r\n     * Moves the King to the target square if the target square it in the legalMoves\r\n     * @param target square you want to move to\r\n     * @param cb chessboard\r\n     * @param legalMoves ArrayList of squares\r\n     */\r\n    @Override\r\n    public void move(Square target, ChessBoard cb, ArrayList<Square> legalmoves){\r\n        \r\n        Square[] moveDescription = {this.getCurrentPosition(), target};\r\n        cb.setLastPlyPlayed(moveDescription);\r\n        \r\n        if(super.getIfNotYetMoved()){ setNotYetMoved(false);}\r\n        getCurrentPosition().removePiece(this);\r\n        if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture\r\n            Piece captured = target.getPieceOnSq();\r\n            System.out.println(\"The \" + captured.getColorName()+ \" \" + captured.pieceName + \" was captured by the \" +getColorName()+ \" \" + pieceName);\r\n            cb.getLivePieces().remove(captured);    // mark this as a fallen piece\r\n            cb.getDeadPieces().add(captured);\r\n            if(captured.pieceName.equals(\"King\")){\r\n                System.out.println(\"The \"+ captured.getColorName() + \" King has fallen\");\r\n                System.out.println(this.getColorName() + \" Wins!!!\");\r\n                //JOptionPane.showMessageDialog(null, this.getColorName()+ \" Wins!!! \", \"InfoBox: \" + \"END GAME\", JOptionPane.INFORMATION_MESSAGE);\r\n                cb.setNewChessBoard();                   \r\n            }\r\n        }\r\n        target.placePiece(this);\r\n        if(getIfNotYetMoved()){ setNotYetMoved(false); }    \r\n        checkingKing(getLegalMoves(cb));\r\n        }\r\n    \r\n    /** \r\n     * This method adds the squares to legal moves if close castling is possible\r\n     * Rules for castling:\r\n     * 1. If the King or Rook in question have moved then No castling is possible\r\n     * 2. Spaces between king and rook must be empty\r\n     * 3. The King cannot be in check\r\n     * 4. The Squares the king passes over must not be under attack including the landing square\r\n     * @param legalMoves Arraylist of squares\r\n     * @param cb chessboard\r\n     */\r\n\r\n    public void closeCastle(ArrayList < Square > legalMoves, ChessBoard cb) {\r\n        Square[][] board = cb.getBoard();\r\n        if (!this.getIfNotYetMoved()) {\r\n            return; // RULE 1 if the king moved there is no possibilty for castling\r\n        } \r\n        if (isWhite()) {                 //for a white king\r\n            if(getCurrentPosition().getYPos()!=7 || getCurrentPosition().getXPos()!= 4) return;\r\n            if(board[7][7].isTakenSquare() && board[7][7].getPieceOnSq().getPieceName().equals(\"Rook\") && !board[7][7].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return\r\n                return;\r\n            }\r\n            if (board[7][5].isTakenSquare() || board[7][6].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal\r\n                return;\r\n            }\r\n            for (Piece blackPiece: cb.getLivePieces()) {\r\n                if (!blackPiece.isWhite()) { //making sure its an oponents piece\r\n                    for (int col = 4; col < 7; col++) { //loop through all the steps from the King's to Rook's location \r\n                        Square sqOnPath = cb.getSquare(7, col);\r\n                        if (blackPiece.getLegalMoves(cb).contains(sqOnPath)) { //if any of the oposing pieces are attacking the king in all its sqaurs on its path \r\n                            return; //RULE 3 & 4, making sure the king is not in check in any step from start-finish \r\n                        }\r\n                        //this doesnt work because rook has considered the king to be in its path even though its pawn is blocking\r\n                    }\r\n                }\r\n            }\r\n            System.out.println(\"close castling possible\");\r\n            legalMoves.add(cb.getSquare(7, 6));\r\n            \r\n        } else if (!isWhite()) { //if its the Black King\r\n            if(getCurrentPosition().getYPos()!=0 || getCurrentPosition().getXPos()!= 4) return;\r\n            if(board[0][7].isTakenSquare() && board[0][7].getPieceOnSq().getPieceName().equals(\"Rook\") && !board[0][7].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return\r\n                return;\r\n            }\r\n            if (board[0][5].isTakenSquare() || board[0][6].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal\r\n                return;\r\n            }\r\n            for (Piece whitePiece: cb.getLivePieces()) {\r\n                if (whitePiece.isWhite()) { //making sure its an oponents piece\r\n                    for (int col = 4; col < 7; col++) { //loop through all the steps from the King's to Rook's location \r\n                        Square sqOnPath = cb.getSquare(0, col);\r\n                        if (whitePiece.getLegalMoves(cb).contains(sqOnPath)) { //if any of the oposing pieces are attacking the king in all its sqaurs on its path \r\n                            return; //RULE 3 & 4, making sure the king is not in check in any step from start-finish \r\n                        }\r\n                    }\r\n                }\r\n            }\r\n            System.out.println(\"close castling possible\");\r\n            legalMoves.add(cb.getSquare(0,  6));\r\n        }\r\n    }\r\n\r\n    \r\n\r\n    /** \r\n     * This method adds the squares to legal moves if far castling is possible\r\n     * Rules for castling:\r\n     * 1. If the King or Rook in question have moved then No castling is possible\r\n     * 2. Spaces between king and rook must be empty\r\n     * 3. The King cannot be in check\r\n     * 4. The Squares the king passes over must not be under attck including the landing square\r\n     * @param legalMoves Arraylist of squares\r\n     * @param cb chessboard\r\n     */\r\n\r\n    public void farCastle(ArrayList <Square> legalMoves, ChessBoard cb) {\r\n        Square[][] board = cb.getBoard();\r\n        if (!this.getIfNotYetMoved()) {\r\n            return;\r\n        } // RULE 1 if the king moved there is no possibilty for castling\r\n\r\n        //for a white king\r\n        if (isWhite()) {\r\n            if(getCurrentPosition().getYPos()!=7 || getCurrentPosition().getXPos()!= 4) return;\r\n            if(board[7][0].isTakenSquare() && board[7][0].getPieceOnSq().getPieceName().equals(\"Rook\") && !board[7][0].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return\r\n                return;\r\n            }\r\n\r\n            if (board[7][3].isTakenSquare() || board[7][2].isTakenSquare() || board[7][1].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal\r\n                return;\r\n            }\r\n            for (Piece blackPiece: cb.getLivePieces()) {\r\n                if (!blackPiece.isWhite()) { //making sure its an oponents piece\r\n                    for (int col = 4; col >= 2; col--) { //loop through all the steps from the King's to Rook's location \r\n                        Square sqOnPath = cb.getSquare(7, col);\r\n                        if (blackPiece.getLegalMoves(cb).contains(sqOnPath)) { //if any of the oposing pieces are attacking the king in all its sqaurs on its path \r\n                            return; //RULE 3 & 4, making sure the king is not in check in any step from start-finish \r\n                        }\r\n                    }\r\n                }\r\n            }\r\n            System.out.println(\"far castling possible\");\r\n            legalMoves.add(cb.getSquare(7, 2));\r\n\r\n        } else { //if its the Black King\r\n            if(getCurrentPosition().getYPos()!=0 || getCurrentPosition().getXPos()!= 4) return;\r\n            if(board[0][0].isTakenSquare() && board[0][0].getPieceOnSq().getPieceName().equals(\"Rook\") && !board[0][0].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return\r\n                return;\r\n            }\r\n            if (board[0][3].isTakenSquare() || board[0][2].isTakenSquare() || board[0][1].isTakenSquare()) { // RULE 2 if there is a piece in the way it is ilegal\r\n                return;\r\n            }\r\n            for (Piece whitePiece: cb.getLivePieces()) {\r\n                if (whitePiece.isWhite()) { //making sure its an oponents piece\r\n                    for (int col = 4; col >= 2; col--) { //loop through all the steps from the King's to Rook's location \r\n                        Square sqOnPath = cb.getSquare(0, col);\r\n                        if (whitePiece.getLegalMoves(cb).contains(sqOnPath)) { //if any of the oposing pieces are attacking the king in all its sqaurs on its path \r\n                            return; //RULE 3 & 4, making sure the king is not in check in any step from start-finish \r\n                        }\r\n                    }\r\n                }\r\n            }\r\n            System.out.println(\"far castling possible\");\r\n            legalMoves.add(cb.getSquare(0, 2));\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n    /**\r\n     * This takes care of all castling situations both far and close castling/\r\n     * \r\n     * @param clickedSquare the sqaure the player wants to move to\r\n     */\r\n    public void doCastling(Square clickedSquare , ChessBoard cb, Piece heldKing){\r\n        if(heldKing.isWhite()){\r\n            heldKing.move(clickedSquare,cb,heldKing.getLegalMoves(cb));\r\n            if(clickedSquare.getXPos()>4){             //if it is  a close castling\r\n                Piece rook = cb.getBoard()[7][7].getPieceOnSq();\r\n                rook.move(cb.getBoard()[7][5], cb, rook.getLegalMoves(cb));\r\n            }\r\n            else {                                      //if it is a far castling\r\n                Piece rook = cb.getBoard()[7][0].getPieceOnSq();\r\n                rook.move(cb.getBoard()[7][3],cb,rook.getLegalMoves(cb));\r\n            }\r\n        }\r\n        else if(!heldKing.isWhite()){\r\n            heldKing.move(clickedSquare,cb,heldKing.getLegalMoves(cb));\r\n            if(clickedSquare.getXPos()>4){             //if it is  a close castling\r\n                Piece rook = cb.getBoard()[0][7].getPieceOnSq();\r\n                rook.move(cb.getBoard()[0][5], cb, rook.getLegalMoves(cb));\r\n            }\r\n            else {                                      //if it is a far castling\r\n                Piece rook = cb.getBoard()[0][0].getPieceOnSq();\r\n                rook.move(cb.getBoard()[0][3],cb,rook.getLegalMoves(cb));\r\n            }\r\n        }\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/King.java b/app/src/main/java/controller/King.java
+--- a/app/src/main/java/controller/King.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/King.java	(date 1637802380000)
+@@ -67,12 +67,12 @@
+         getCurrentPosition().removePiece(this);
+         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
+             Piece captured = target.getPieceOnSq();
+-            System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
++            //System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
+             cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+             cb.getDeadPieces().add(captured);
+             if(captured.pieceName.equals("King")){
+-                System.out.println("The "+ captured.getColorName() + " King has fallen");
+-                System.out.println(this.getColorName() + " Wins!!!");
++                //System.out.println("The "+ captured.getColorName() + " King has fallen");
++                //System.out.println(this.getColorName() + " Wins!!!");
+                 //JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
+                 cb.setNewChessBoard();                   
+             }
+@@ -117,7 +117,7 @@
+                     }
+                 }
+             }
+-            System.out.println("close castling possible");
++            //System.out.println("close castling possible");
+             legalMoves.add(cb.getSquare(7, 6));
+             
+         } else if (!isWhite()) { //if its the Black King
+@@ -138,7 +138,7 @@
+                     }
+                 }
+             }
+-            System.out.println("close castling possible");
++            //System.out.println("close castling possible");
+             legalMoves.add(cb.getSquare(0,  6));
+         }
+     }
+@@ -182,7 +182,7 @@
+                     }
+                 }
+             }
+-            System.out.println("far castling possible");
++            //System.out.println("far castling possible");
+             legalMoves.add(cb.getSquare(7, 2));
+ 
+         } else { //if its the Black King
+@@ -203,7 +203,7 @@
+                     }
+                 }
+             }
+-            System.out.println("far castling possible");
++            //System.out.println("far castling possible");
+             legalMoves.add(cb.getSquare(0, 2));
+         }
+ 
+Index: app/src/main/java/controller/Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\nimport java.util.ArrayList;\nimport java.util.Random;\n\n\n/**\n * this is a super class that white and black player  classes extend it\n */\n\n\npublic abstract class Player {\n\n     ChessBoard cb;\n    private ArrayList<Piece> livePieces;\n    private boolean isMyTurn;\n    private String color=\"Black\";\n    Random rnd;\n    /**\n    * constructor\n    * @param chessBoard Object Giving the board States \n    * \n\t*/\n    public Player(ChessBoard cb){\n        this.cb= cb;\n        livePieces = cb.getLivePieces();\n        rnd = new Random();\n    }\n    public void setColor(String color){\n        this.color =color;\n    }\n    public String getColor(){\n        return color;\n    }\n\n    \n    \n    \n//    public String rollDice(){\n//        int roll = rnd.nextInt(6)+1;\n//        String p=\"\";\n//        switch (roll){\n//            case 1:\n//                p =  \"Pawn\";\n//                break;\n//            case 2:\n//                p=  \"Rook\";\n//                break;\n//            case 3:\n//                p= \"Knight\";\n//                break;\n//            case 4:\n//                p= \"Bishop\";\n//                break;\n//            case 5:\n//                p= \"Queen\";\n//                break;\n//            case 6:\n//                p= \"King\";\n//                break;\n//        }\n//        return p;\n//    }\n    \n    /** \n     * this method changing players  rounds\n     * @param P player object of this class \n     */\n\n    public void flipTurns(Player P){\n            this.setIsMyTurn(!this.getIsMyTurn());\n            P.setIsMyTurn(!P.getIsMyTurn());\n        }\n\n    public boolean getIsMyTurn(){ return isMyTurn;}\n    public void setIsMyTurn(boolean a){ isMyTurn=a;}\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Player.java b/app/src/main/java/controller/Player.java
+--- a/app/src/main/java/controller/Player.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/Player.java	(date 1637802380000)
+@@ -33,34 +33,8 @@
+     }
+ 
+     
+-    
++
+     
+-//    public String rollDice(){
+-//        int roll = rnd.nextInt(6)+1;
+-//        String p="";
+-//        switch (roll){
+-//            case 1:
+-//                p =  "Pawn";
+-//                break;
+-//            case 2:
+-//                p=  "Rook";
+-//                break;
+-//            case 3:
+-//                p= "Knight";
+-//                break;
+-//            case 4:
+-//                p= "Bishop";
+-//                break;
+-//            case 5:
+-//                p= "Queen";
+-//                break;
+-//            case 6:
+-//                p= "King";
+-//                break;
+-//        }
+-//        return p;
+-//    }
+-    
+     /** 
+      * this method changing players  rounds
+      * @param P player object of this class 
+Index: app/src/main/java/controller/Tree.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\n\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.Comparator;\nimport java.util.List;\nimport java.util.stream.Collectors;\n\npublic class Tree {\n    private Node root;\n    private int depth;\n    private Boolean isWhite;\n    private String[] pieceNames ;\n    private List test; //generate\n\n    public Node getRoot() {\n        return root;\n    }\n\n    public Boolean getIsWhite(){ return this.isWhite;}\n\n    public void setRoot(Node root) {\n        this.root = root;\n    }\n\n    public Tree(int depth, Game game, String pieceName, Boolean isWhite) {\n        this.root = new Node(false, pieceName, game.getChessBoard());\n        this.depth = depth;\n        this.isWhite = game.getWhitePlayer().getIsMyTurn();\n\n        this.pieceNames = new String[]{ \"Rook\", \"Bishop\", \"Queen\", \"King\", \"Knight\", \"Pawn\" };\n        this.test = new ArrayList();\n        this.generateTurns();\n    }\n\n    private void generateTurns(){\n        boolean toadd = isWhite;\n        for (int i = 0; i < depth; i++) {\n            this.test.add(toadd);\n            this.test.add(toadd);\n            toadd = !toadd;\n        }\n        Collections.reverse(test);\n        System.out.println(test);\n    }\n\n    // Get best board\n    public Node getBestBoard(){\n\n        return root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get();\n    }\n\n    // Generate tree methods\n    public void generateTree(){\n        createLegalMovesNodes(root, this.isWhite);\n        // Check if you can capture king\n        if(checkCapture()){\n            return;\n        }\n        depth = (depth - 1)*2;\n        generate(root.getChildren(), true);\n    }\n\n    public boolean checkCapture(){\n\n        boolean canCaptureKing = false;\n\n        for (Node child : this.root.getChildren())\n        {\n           if(child.getBoard().missingKing()){\n               child.setValue(-10000);\n               canCaptureKing = true;\n           }\n        }\n        return canCaptureKing;\n    }\n\n    private void generate(ArrayList<Node> nodes, Boolean pieceNode){\n        if(depth > 0) {\n            for (Node n : nodes) {\n                if (pieceNode) {\n                    createPiecesNodes(n, (boolean)test.get(depth));\n                } else {\n                    //System.out.println(depth);\n                   // createLegalMovesNodes(n, this.isWhite); //check if number is even or not\n                    createLegalMovesNodes(n, (boolean)test.get(depth));\n                    //this.isWhite = !this.isWhite;\n                }\n                depth = depth - 1;\n                generate(n.getChildren(), !pieceNode);\n                depth = depth + 1;\n            }\n        }\n    }\n\n    public void createPiecesNodes(Node n, boolean isWhite){\n        ArrayList<String> pieceNames = getMovableNames(n.getBoard(), isWhite);\n        for (String pieceName : pieceNames)\n        {\n            Node temp = new Node(false, pieceName, n.getBoard());\n            n.addChild(temp);\n        }\n    }\n\n\n    public ArrayList<Piece> getAllMovablePieces(ChessBoard cb, boolean isWhite){\n        ArrayList<Piece> movablePieces = new ArrayList<Piece>();\n        for(Piece p: cb.getLivePieces() ){\n            if((p.isWhite() == isWhite) && p.getLegalMoves(cb).size()>0){\n                movablePieces.add(p);\n            }\n        }\n        return movablePieces;\n    }\n\n    public ArrayList<String> getMovableNames(ChessBoard currentboard, boolean isWhite){\n        ArrayList<Piece> movablePieces = getAllMovablePieces(currentboard, isWhite);\n        ArrayList<String> names = new ArrayList<>();\n        for(Piece p : movablePieces){\n            if(!names.contains(p.pieceName)){\n                names.add(p.pieceName);\n            }\n        }\n        return names;\n    }\n\n\n    public void createLegalMovesNodes(Node n, Boolean isWhite){\n        List<Piece> pieceObjects = n.getBoard()\n                .getLivePieces().stream()\n                .filter(p -> p.getPieceName().equals(n.getPiece()))\n                .filter(p -> p.isWhite() == isWhite)\n                .collect(Collectors.toList());\n        for (Piece piece : pieceObjects)\n        {\n            ArrayList<ChessBoard> tempScenarios = runScenarios(n.getBoard(), piece);\n            for (ChessBoard scenario : tempScenarios){\n                int value = (int)scenario.getBoardValue();\n                Node temp = new Node(true, scenario, value);\n                n.addChild(temp);\n            }\n        }\n    }\n\n    // Calculate tree methods\n    public void calculateTree(ArrayList<Node> nodes){\n        if(depth > 0) {\n            for (Node n : nodes) {\n                depth = depth - 1;\n                calculateTree(n.getChildren());\n                if (n.isProbability()) {\n                    //calculateProbability(n);\n                    getMaxValue(n);\n                }\n                else {\n                    //getMaxValue(n);\n                   if((boolean)test.get(depth) == true){\n                       getMaxValue(n);\n                   }\n                   else{\n                       getMinValue(n);\n                   }\n                //   if(isWhite){ getMaxValue(n); }\n                //    else{ getMinValue(n); }\n                //    this.isWhite = !this.isWhite; // Check if depth is even or odd\n                }\n                depth = depth + 1;\n\n            }\n        }\n       }\n\n    public void calculateProbability(Node n){\n        double value = 0;\n        for (Node child : n.getChildren()) {\n            value = value + ((double)child.getValue())/(n.getChildren().size());\n        }\n        n.setValue(value);\n    }\n\n    public void getMaxValue(Node n){\n        double value = 0;\n        for (Node child : n.getChildren()) {\n            if(child.getValue() > value){\n                value = child.getValue();\n            }\n            //System.out.println(child.getValue());\n        }\n        //System.out.println(value);\n        n.setValue(value);\n    }\n\n    public void getMinValue(Node n){\n        double value = 10000;\n        for (Node child : n.getChildren()) {\n            if(child.getValue() < value){\n                value = child.getValue();\n            }\n        }\n        if(n.getChildren().size() == 0){\n            value = 0;\n        }\n        //System.out.println(value);\n        n.setValue(value);\n    }\n\n    public ArrayList<ChessBoard> runScenarios(ChessBoard originalCB, Piece movingPiece){\n        ArrayList<ChessBoard> allCenerios = new ArrayList<ChessBoard>();\n        ChessBoard copyBoard = this.copyBoard(originalCB);\n        Piece movingPieceCopy = copyBoard.getBoard()[movingPiece.getCurrentPosition().getYPos()][movingPiece.getCurrentPosition().getXPos()].getPieceOnSq();\n        ArrayList<Square> legalMoves = movingPieceCopy.getLegalMoves(copyBoard);\n\n//        System.out.println(\"CHESSBOARD: \");\n//        originalCB.printBoard();\n//        System.out.println();\n\n        for(Square legalSquare : legalMoves ){\n            copyBoard = this.copyBoard(originalCB);\n            movingPieceCopy = copyBoard.getBoard()[movingPiece.getCurrentPosition().getYPos()][movingPiece.getCurrentPosition().getXPos()].getPieceOnSq();\n\n            Square toMove = copyBoard.getBoard()[legalSquare.getYPos()][legalSquare.getXPos()];\n            ArrayList<Square> fakeLegalMoves = new ArrayList<Square>();\n            fakeLegalMoves.add(toMove);\n\n            movingPieceCopy.move(toMove, copyBoard , fakeLegalMoves);\n            ChessBoard copy = copyBoard(copyBoard);\n            allCenerios.add(copy);\n        }\n        return allCenerios;\n    }\n\n    public ChessBoard copyBoard(ChessBoard cb){\n        ChessBoard copy = new ChessBoard(true);\n        for(Piece p : cb.getLivePieces()){\n            int y = p.getCurrentPosition().getYPos();\n            int x = p.getCurrentPosition().getXPos();\n            Piece newP = null;\n            if(p.getPieceName().equals(\"Pawn\")) {\n                newP = new Pawn(p.isWhite());\n            }\n            if(p.getPieceName().equals(\"Rook\")) {\n                newP = new Rook(p.isWhite());\n            }\n            if(p.getPieceName().equals(\"Knight\")) {\n                newP = new Knight(p.isWhite());\n            }\n            if(p.getPieceName().equals(\"Queen\")) {\n                newP = new Queen(p.isWhite());\n            }\n            if(p.getPieceName().equals(\"King\")) {\n                newP = new King(p.isWhite());\n            }\n            if(p.getPieceName().equals(\"Bishop\")) {\n                newP = new Bishop(p.isWhite());\n            }\n            copy.getLivePieces().add(newP);\n            copy.getBoard()[y][x].placePiece(newP);\n        }\n        return copy;\n    }\n\n    public Square getBestSquare(){\n        ChessBoard best = root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get().getBoard();\n        Square bestSquare = null;\n        System.out.println(\"best board is : \");\n        best.printBoard();\n        System.out.println(\"The children of the root: \");\n        for (Node n : root.getChildren()) {\n            System.out.println(n.getValue());\n            n.getBoard().printBoard();\n        }\n        List<Piece> pieceObjectsBestBoard = best\n                .getLivePieces().stream()\n                .filter(p -> p.getPieceName().equals(root.getPiece()))\n                .filter(p -> p.isWhite() == isWhite)\n                .collect(Collectors.toList());\n\n        for (Piece piece : pieceObjectsBestBoard)\n        {\n            Square squareOriginalBoard = root.getBoard().getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];\n            if(!squareOriginalBoard.isTakenSquare() || squareOriginalBoard.getPieceOnSq().isWhite() != this.isWhite){\n                bestSquare = squareOriginalBoard;\n            }\n        }\n        return bestSquare;\n    }\n\n    public Piece getBestPiece(){\n        ChessBoard best = root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get().getBoard();\n        Piece bestPiece = null;\n\n        List<Piece> pieceObjectsOriginalBoard = root.getBoard()\n                .getLivePieces().stream()\n                .filter(p -> p.getPieceName().equals(root.getPiece()))\n                .filter(p -> p.isWhite() == isWhite)\n                .collect(Collectors.toList());\n\n        for (Piece piece : pieceObjectsOriginalBoard)\n        {\n            Square squareBestBoard = best.getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];\n            if(!squareBestBoard.isTakenSquare()){\n                bestPiece = piece;\n            }\n        }\n        return bestPiece;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Tree.java b/app/src/main/java/controller/Tree.java
+--- a/app/src/main/java/controller/Tree.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/Tree.java	(date 1637802380000)
+@@ -59,6 +59,7 @@
+         }
+         depth = (depth - 1)*2;
+         generate(root.getChildren(), true);
++        calculateTree(root.getChildren());
+     }
+ 
+     public boolean checkCapture(){
+Index: app/src/main/java/controller/Pawn.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\r\nimport java.util.ArrayList;\r\nimport java.util.Random;\r\n\r\nimport javax.swing.*;\r\n\r\nimport view.ImageLoader;\r\nimport java.awt.event.ActionListener;\r\nimport java.awt.event.*;\r\n\r\n\r\npublic class Pawn extends Piece{\r\n\r\n\r\n    public Pawn(boolean white){\r\n        super.setWhite(white);\r\n        super.pieceName = \"Pawn\";\r\n        if(isWhite()) super.setValue(10);\r\n\t\telse super.setValue(-10);    \r\n    }\r\n\r\n    /*\r\n    method legalMovesCalc\r\n    @param cb is the current state of the chessboard\r\n    @return ArrayList<Square> an array of squares describing the legal squares this piece can move to\r\n     */\r\n    public ArrayList<Square> getLegalMoves(ChessBoard cb){\r\n        ArrayList<Square> legalMoves = new ArrayList<>();\r\n        int x = this.getCurrentPosition().getXPos();\r\n        int y = this.getCurrentPosition().getYPos();\r\n        Square[][] board = cb.getBoard();\r\n        if(this.isWhite()){\r\n            if(y-1 >= 0){\r\n                if(!board[y-1][x].isTakenSquare()){ // Move 1 square forward for white\r\n                    legalMoves.add(board[y-1][x]);  \r\n                }\r\n                if(y == 6){\r\n                    if(!board[y-1][x].isTakenSquare() && !board[y-2][x].isTakenSquare()){ // Move 2 squares forward for white\r\n                        legalMoves.add(board[y-2][x]);\r\n                    }\r\n                }\r\n                \r\n                if(x+1 <= 7){ //Capture to the right for white\r\n                    if(board[y-1][x+1].isTakenSquare()){\r\n                        if(!this.sameTeam(board[y-1][x+1].getPieceOnSq())){\r\n                            legalMoves.add(board[y-1][x+1]);\r\n                        }\r\n                    }\r\n                }\r\n                if(x-1 >= 0){ //Capture to the left for white\r\n                    if(board[y-1][x-1].isTakenSquare()){\r\n                        if(!this.sameTeam(board[y-1][x-1].getPieceOnSq())){\r\n                            legalMoves.add(board[y-1][x-1]);\r\n                        }\r\n                    }\r\n                }\r\n                if(y==3){   //En Passant for white : only works if the pawn is on y = 3\r\n                    if(x+1 < 8){ //En Passant to the right for white\r\n                        Square rSq = board[y][x+1];\r\n                        if(rSq.isTakenSquare()){ //If the piece is a pawn and it is black\r\n\r\n                            if(rSq.getPieceOnSq().pieceName == \"Pawn\" && !rSq.getPieceOnSq().isWhite()){\r\n                                Square[] lastMove = cb.getLastPlyPlayed();\r\n                                if(lastMove[0] != null) {\r\n                                    if (lastMove[0].getYPos() == 1 && lastMove[1].getYPos() == 3) {\r\n                                        legalMoves.add(board[y - 1][x + 1]);\r\n                                        System.out.println(\"to the right was added!!\");\r\n                                    }\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                    if(x-1 >= 0){ //En passant to the left for white\r\n                        Square lSq = board[y][x-1];\r\n                        if(lSq.isTakenSquare()){ //If the piece is a pawn and it is black\r\n                            if(lSq.getPieceOnSq().pieceName == \"Pawn\" && !lSq.getPieceOnSq().isWhite()){\r\n                                Square[] lastMove = cb.getLastPlyPlayed();\r\n                                if(lastMove[0] != null) {\r\n                                    if (lastMove[0].getYPos() == 1 && lastMove[1].getYPos() == 3) {\r\n                                        legalMoves.add(board[y - 1][x - 1]);\r\n                                    }\r\n                                }\r\n                                \r\n                            }\r\n                        } \r\n                    }\r\n                }\r\n            }\r\n            \r\n            \r\n        } else{\r\n            if(y+1 <= 7){\r\n                if(!board[y+1][x].isTakenSquare()){ // Move 1 square forward for black\r\n                    legalMoves.add(board[y+1][x]);\r\n                }\r\n                if(y == 1){ \r\n                    if(!board[y+1][x].isTakenSquare() &&!board[y+2][x].isTakenSquare()){ // Move 2 squares forward for black\r\n                        legalMoves.add(board[y+2][x]);\r\n                    }\r\n                }\r\n                if(x+1 <= 7){ //Capture to the right\r\n                    if(board[y+1][x+1].isTakenSquare() && !this.sameTeam(board[y+1][x+1].getPieceOnSq())){\r\n                        legalMoves.add(board[y+1][x+1]);\r\n                    }\r\n                }\r\n                if(x-1 >= 0){ //Capture to the left\r\n                    if(board[y+1][x-1].isTakenSquare() && !this.sameTeam(board[y+1][x-1].getPieceOnSq())){\r\n                        legalMoves.add(board[y+1][x-1]);\r\n                    }\r\n                }\r\n                if(y==4){   //En Passant for black : only works if the pawn is on y = 4\r\n                    if(x+1 <= 7){ //En Passant to the right for black\r\n                        Square rSq = board[y][x+1];\r\n                        if(rSq.isTakenSquare()){ //If the piece is a pawn and it is white\r\n                \r\n                            if(rSq.getPieceOnSq().pieceName == \"Pawn\" && rSq.getPieceOnSq().isWhite()){\r\n                                Square[] lastMove = cb.getLastPlyPlayed();\r\n                                if(lastMove[0] != null) {\r\n                                    if (lastMove[0].getYPos() == 6 && lastMove[1].getYPos() == 4) {\r\n                                        legalMoves.add(board[y + 1][x + 1]);\r\n                                    }\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                    if(x-1 >= 0){ //En passant to the left for black\r\n                        Square lSq = board[y][x-1];\r\n                        if(lSq.isTakenSquare()){ //If the piece is a pawn and it is white\r\n                            if(lSq.getPieceOnSq().pieceName == \"Pawn\" && lSq.getPieceOnSq().isWhite()){\r\n                                Square[] lastMove = cb.getLastPlyPlayed();\r\n                                if(lastMove[0] != null) {\r\n                                    if (lastMove[0].getYPos() == 6 && lastMove[1].getYPos() == 4) {\r\n                                        legalMoves.add(board[y + 1][x - 1]);\r\n                                    }\r\n                                }\r\n                            }\r\n                        } \r\n                    }\r\n                }\r\n            }\r\n        }\r\n        return legalMoves;\r\n    }\r\n    /*\r\n        method move\r\n        @param target : the target square the player wishes to move to\r\n        @param cb : the current chessboard\r\n        @param legalMoves : list of legal moves for the current piece\r\n        @return void\r\n        this override does the same as the original \"move\" method, but handles En Passant in addition\r\n    */\r\n    @Override\r\n    public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){\r\n        Square[][] board = cb.getBoard();\r\n        Square currentPos = this.getCurrentPosition();\r\n        //Create and fill array to store last move played in the game\r\n        Square[] moveDescription = new Square[2];\r\n        moveDescription[0] = currentPos;\r\n        moveDescription[1] = target;\r\n        cb.setLastPlyPlayed(moveDescription);\r\n\r\n        currentPos.removePiece(this);\r\n        if(target.getPieceOnSq()!=null){//if there is an opposing piece on target square a.k.a Capture\r\n            Piece captured = target.getPieceOnSq();\r\n            System.out.println(\"The \" + captured.getColorName()+ \" \" + captured.pieceName + \" was captured by the \" +getColorName()+ \" \" + pieceName);\r\n            cb.getLivePieces().remove(captured);    // mark this as a fallen piece\r\n            if(captured.pieceName.equals(\"King\")){\r\n                System.out.println(\"The \"+ captured.getColorName() + \" King has fallen\");\r\n                System.out.println(this.getColorName() + \" Wins!!!\");\r\n                //JOptionPane.showMessageDialog(null, this.getColorName()+ \" Wins!!! \", \"InfoBox: \" + \"END GAME\", JOptionPane.INFORMATION_MESSAGE);\r\n            }\r\n            \r\n        } else {\r\n            if(target.getXPos() != this.getCurrentPosition().getXPos()){ //if the target and the current pos have the different x\r\n                //Pawn is going to go diagonally, but since target is null, it is doing en passant\r\n                //Have to remove piece captured en passant\r\n                Square squareToEmpty = board[this.getCurrentPosition().getYPos()][target.getXPos()];\r\n                cb.getLivePieces().remove(squareToEmpty.getPieceOnSq());\r\n                squareToEmpty.removePiece(squareToEmpty.getPieceOnSq());\r\n            }\r\n        }\r\n        \r\n        target.placePiece(this);\r\n        checkingKing(legalMoves);\r\n    }\r\n\r\n\r\n    /**\r\n     * This method takes care of all promotions which occur when a pawn reaches the last row.\r\n     * \r\n     * @param isWhite boolean to know if the piece is black or white\r\n     * @param pawn the pawn reaching the last row to which a promotion is needed\r\n     * @param target the last sqaure that the pawn is moving towards\r\n     * @param cb the chessboard\r\n     * When the pawn reaches the last row then a dice is rolled. If the dice rolled a 5, then the Piece to promote to\r\n     * between Knight,Bishop,Rook and Queen.\r\n     * If the dice rolls 1 the pawn will become a knight,if 2 then bishop if 3 then rook and if 4 then queen \r\n     */    \r\n    public void promote(boolean isWhite, Piece pawn, Square target, ChessBoard cb){\r\n        Dice promoteDice = new Dice();\r\n        promoteDice.randomize();\r\n        Random rnd = new Random();\r\n        int roll = rnd.nextInt(5)+1;\r\n        target.removePiece(pawn);\r\n\r\n        if(roll==1){\r\n            Knight newKnight = new Knight(isWhite);\r\n            if(isWhite)    newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/wknight.png\")));\r\n            else           newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/bknight.png\")));\r\n\r\n            newKnight.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rknight.png\")));\r\n            cb.getLivePieces().add(newKnight);\r\n            target.placePiece(newKnight);\r\n        }\r\n        else if(roll==2){\r\n            Bishop newBishop = new Bishop(isWhite);\r\n            if(isWhite)    newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/wbishop.png\")));\r\n            else           newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/bbishop.png\")));\r\n\r\n            newBishop.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rbishop.png\")));\r\n            cb.getLivePieces().add(newBishop);\r\n            target.placePiece(newBishop);\r\n        }\r\n        else if(roll==3){\r\n            Rook newRook = new Rook(isWhite);\r\n            if(isWhite)    newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/wrook.png\")));\r\n            else           newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/brook.png\")));\r\n\r\n            newRook.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rrook.png\")));\r\n            cb.getLivePieces().add(newRook);\r\n            target.placePiece(newRook);\r\n        \r\n        }\r\n        else if(roll==4){\r\n            Queen newQueen = new Queen(isWhite);\r\n            if(isWhite)    newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/wqueen.png\")));\r\n            else           newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/bqueen.png\")));\r\n\r\n            newQueen.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rqueen.png\")));\r\n            cb.getLivePieces().add(newQueen);\r\n            target.placePiece(newQueen);\r\n        }\r\n        else if(roll==5){\r\n            JFrame frame = new JFrame(\"Promotion\");\r\n            frame.setLocationRelativeTo(null);\r\n            JPanel pPanel = new JPanel();\r\n            JButton bishopButton = new JButton(\"Bishop\");\r\n            JButton knightButton = new JButton(\"Knight\");\r\n            JButton rookButton = new JButton(\"Rook\");\r\n            JButton queenButton = new JButton(\"Queen\");\r\n\r\n            bishopButton.addActionListener(new ActionListener(){  \r\n                public void actionPerformed(ActionEvent e){  \r\n                    Bishop newBishop = new Bishop(isWhite);\r\n                    if(isWhite)    newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/wbishop.png\")));\r\n                    else           newBishop.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/bbishop.png\")));\r\n\r\n                    newBishop.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rbishop.png\")));\r\n                    cb.getLivePieces().add(newBishop);\r\n                    target.placePiece(newBishop);\r\n                    frame.dispose();\r\n                    cb.printBoard();\r\n                }  \r\n            });  \r\n            knightButton.addActionListener(new ActionListener(){  \r\n                public void actionPerformed(ActionEvent e){  \r\n                    Knight newKnight = new Knight(isWhite);\r\n                    if(isWhite)    newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/wknight.png\")));\r\n                    else           newKnight.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/bknight.png\")));\r\n\r\n                    newKnight.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rknight.png\")));\r\n                    cb.getLivePieces().add(newKnight);\r\n                    target.placePiece(newKnight);\r\n                }  \r\n            });\r\n            \r\n            rookButton.addActionListener(new ActionListener(){  \r\n                public void actionPerformed(ActionEvent e){  \r\n                    Rook newRook = new Rook(isWhite);\r\n                    if(isWhite)    newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/wrook.png\")));\r\n                    else           newRook.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/brook.png\")));\r\n\r\n                    newRook.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rrook.png\")));\r\n                    cb.getLivePieces().add(newRook);\r\n                    target.placePiece(newRook); \r\n                    frame.dispose();\r\n                }  \r\n            });\r\n            queenButton.addActionListener(new ActionListener(){  \r\n                public void actionPerformed(ActionEvent e){ \r\n                    Queen newQueen = new Queen(isWhite);\r\n                    if(isWhite)    newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/wqueen.png\")));\r\n                    else           newQueen.setImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rqueen.png\")));\r\n\r\n                    newQueen.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage(\"app/src/main/java/view/resources/rqueen.png\")));\r\n                    cb.getLivePieces().add(newQueen);\r\n                    target.placePiece(newQueen);\r\n                    frame.dispose();\r\n                }  \r\n            });\r\n            pPanel.add(bishopButton);\r\n            pPanel.add(knightButton);\r\n            pPanel.add(rookButton);\r\n            pPanel.add(queenButton);\r\n            frame.add(pPanel);\r\n            frame.pack();\r\n            frame.setVisible(true);\r\n        }\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Pawn.java b/app/src/main/java/controller/Pawn.java
+--- a/app/src/main/java/controller/Pawn.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/Pawn.java	(date 1637802380000)
+@@ -64,7 +64,7 @@
+                                 if(lastMove[0] != null) {
+                                     if (lastMove[0].getYPos() == 1 && lastMove[1].getYPos() == 3) {
+                                         legalMoves.add(board[y - 1][x + 1]);
+-                                        System.out.println("to the right was added!!");
++                                        //System.out.println("to the right was added!!");
+                                     }
+                                 }
+                             }
+@@ -162,11 +162,11 @@
+         currentPos.removePiece(this);
+         if(target.getPieceOnSq()!=null){//if there is an opposing piece on target square a.k.a Capture
+             Piece captured = target.getPieceOnSq();
+-            System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
++            //System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
+             cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+             if(captured.pieceName.equals("King")){
+-                System.out.println("The "+ captured.getColorName() + " King has fallen");
+-                System.out.println(this.getColorName() + " Wins!!!");
++                //System.out.println("The "+ captured.getColorName() + " King has fallen");
++                //System.out.println(this.getColorName() + " Wins!!!");
+                 //JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
+             }
+             
+Index: app/src/main/java/controller/Piece.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\r\n\r\nimport view.*;\r\nimport java.util.ArrayList;\r\n\r\nimport javax.swing.ImageIcon;\r\nimport javax.swing.JOptionPane;\r\n\r\n\r\npublic abstract class Piece {\r\n    private boolean isAlive = true;\r\n    private boolean isWhite  = true;\r\n    private Square currentPos;\r\n    private double value;\r\n    private boolean promoted;\r\n    private boolean checkingKing=false;\r\n    String pieceName;\r\n    private ImageIcon imgIcon = new ImageIcon(); \r\n    private boolean notYetMoved = true; \r\n    private ImageIcon highlightedImgIcon = new ImageIcon();\r\n    private boolean highlighted= false;\r\n\r\n    public Piece(){}\r\n\r\n    //copying constructor\r\n    public void copyPiece(Piece toCopy){\r\n        isAlive = toCopy.isAlive();\r\n        isWhite = toCopy.isWhite();\r\n        currentPos = toCopy.getCurrentPosition();\r\n        value = toCopy.getValue();\r\n        promoted = toCopy.getPromoted();\r\n        checkingKing = toCopy.getCheckingKing();\r\n        pieceName = toCopy.pieceName;\r\n        imgIcon = toCopy.getImgIcon();\r\n        notYetMoved = toCopy.getIfNotYetMoved();\r\n        highlightedImgIcon = toCopy.getHighlightedImgIcon();\r\n        highlighted = toCopy.getHighlighted();\r\n    }\r\n\r\n\r\n    /**\r\n     * Assigns square to the position proparty of the class\r\n     * @param position square\r\n     */\r\n    public Piece(Square position){\r\n        currentPos = position;\r\n    }\r\n    \r\n    public String getPieceName(){\r\n        return pieceName;\r\n    }\r\n    public boolean isWhite(){\r\n        return isWhite;\r\n    }\r\n    public void setWhite(boolean w){\r\n        this.isWhite = w;\r\n    }\r\n    public boolean isAlive(){\r\n        return isAlive;\r\n    }\r\n    public void setAlive(boolean l){\r\n        this.isAlive = l;\r\n    }\r\n    public Square getCurrentPosition(){\r\n        return currentPos;\r\n    }\r\n    public void setCurrentPosition(Square s){\r\n        currentPos = s;\r\n    }\r\n    public double getValue(){\r\n        return value;\r\n    }\r\n    public void setValue(double value){\r\n        this.value = value;\r\n    }\r\n    public ImageIcon getImgIcon(){\r\n        return imgIcon;\r\n    }\r\n    public void setImgIcon(ImageIcon imgIcon){\r\n        this.imgIcon = imgIcon;\r\n    }\r\n    public void setHighlightedImgIcon(ImageIcon highlightedImgIcon) {this.highlightedImgIcon = highlightedImgIcon; }\r\n    public ImageIcon getHighlightedImgIcon() { return highlightedImgIcon;}\r\n    public void removeIcon() {this.imgIcon = null; }\r\n    public void setHighlighted(boolean b) {this.highlighted = b;}\r\n    public boolean getHighlighted() {return highlighted; }\r\n    \r\n    public boolean getCheckingKing(){\r\n        return checkingKing;\r\n    }\r\n    public boolean getIfNotYetMoved(){\r\n        return notYetMoved;\r\n    }\r\n    public void setNotYetMoved(boolean b){\r\n        notYetMoved=b;\r\n    }\r\n\r\n    /**\r\n     * Check if King is being checked and change checkingKing proparty status\r\n     * @param legalMoves ArrayList of squares\r\n     */\r\n    public void checkingKing(ArrayList<Square> legalMoves){\r\n            for(Square sq : legalMoves){\r\n                if(sq.isTakenSquare() && sq.getPieceOnSq().pieceName.equals(\"King\")){\r\n                    checkingKing = true;\r\n                    System.out.println(pieceName + \" is Checking the King\");\r\n                    break;\r\n                }\r\n                checkingKing=false;\r\n            }\r\n        }\r\n\r\n    /**\r\n     * Compares if two pieces are from the same team\r\n     * @param otherP piece to compare\r\n     * @return true if the otherP is the same color as this piece\r\n     */\r\n    public boolean sameTeam(Piece otherP){\r\n        if(this.isWhite() == otherP.isWhite()){\r\n            return true;\r\n        }\r\n        return false;\r\n    }\r\n    \r\n    public String getColorName(){\r\n        if(isWhite) return \"White\";\r\n        return \"Black\"; \r\n    }\r\n\r\n    /**\r\n     * Moves the Piece to the target square if the target square it in the legalMoves\r\n     * @param target square you want to move to\r\n     * @param cb chessboard\r\n     * @param legalMoves ArrayList of squares\r\n     */\r\n    public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){\r\n        Square[] moveDescription = {currentPos, target};\r\n        cb.setLastPlyPlayed(moveDescription);\r\n\r\n        currentPos.removePiece(this);\r\n        if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture\r\n            Piece captured = target.getPieceOnSq();\r\n            System.out.println(\"The \" + captured.getColorName()+ \" \" + captured.pieceName + \" was captured by the \" +getColorName()+ \" \" + pieceName);\r\n            cb.getLivePieces().remove(captured);    // mark this as a fallen piece\r\n            cb.getDeadPieces().add(captured);\r\n            if(captured.pieceName.equals(\"King\")){\r\n                System.out.println(\"The \"+ captured.getColorName() + \" King has fallen\");\r\n                System.out.println(this.getColorName() + \" Wins!!!\");\r\n                //JOptionPane.showMessageDialog(null, this.getColorName()+ \" Wins!!! \", \"InfoBox: \" + \"END GAME\", JOptionPane.INFORMATION_MESSAGE);\r\n                cb.setNewChessBoard();\r\n            }\r\n        }\r\n        target.placePiece(this);\r\n        if(notYetMoved){ \r\n            notYetMoved = false;\r\n        }\r\n        checkingKing(legalMoves);\r\n    }\r\n    public boolean getPromoted(){\r\n        return this.promoted;\r\n    }\r\n    public void setPromoted(boolean isPromoted){\r\n        this.promoted = isPromoted;\r\n    }\r\n\r\n\r\n    public abstract ArrayList<Square> getLegalMoves(ChessBoard cb);\r\n    //abstract boolean isCheckingKing(Square location, Square OpposingKing); \r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Piece.java b/app/src/main/java/controller/Piece.java
+--- a/app/src/main/java/controller/Piece.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/Piece.java	(date 1637802380000)
+@@ -5,7 +5,8 @@
+ 
+ import javax.swing.ImageIcon;
+ import javax.swing.JOptionPane;
+-
++import javax.swing.*;
++import java.awt.*;
+ 
+ public abstract class Piece {
+     private boolean isAlive = true;
+@@ -103,7 +104,7 @@
+             for(Square sq : legalMoves){
+                 if(sq.isTakenSquare() && sq.getPieceOnSq().pieceName.equals("King")){
+                     checkingKing = true;
+-                    System.out.println(pieceName + " is Checking the King");
++                    //System.out.println(pieceName + " is Checking the King");
+                     break;
+                 }
+                 checkingKing=false;
+@@ -134,18 +135,22 @@
+      * @param legalMoves ArrayList of squares
+      */
+     public void move(Square target, ChessBoard cb, ArrayList<Square> legalMoves){
++        
++
++        if(currentPos.getButtonOnSquare()!=null)     currentPos.getButtonOnSquare().setBackground(Color.ORANGE);
++        if(target.getButtonOnSquare()!=null)         target.getButtonOnSquare().setBackground(Color.ORANGE);
+         Square[] moveDescription = {currentPos, target};
+         cb.setLastPlyPlayed(moveDescription);
+ 
+         currentPos.removePiece(this);
+         if(target.getPieceOnSq()!=null){                     //if there is an opposing piece on target square a.k.a Capture
+             Piece captured = target.getPieceOnSq();
+-            System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
++            //System.out.println("The " + captured.getColorName()+ " " + captured.pieceName + " was captured by the " +getColorName()+ " " + pieceName);
+             cb.getLivePieces().remove(captured);    // mark this as a fallen piece
+             cb.getDeadPieces().add(captured);
+             if(captured.pieceName.equals("King")){
+-                System.out.println("The "+ captured.getColorName() + " King has fallen");
+-                System.out.println(this.getColorName() + " Wins!!!");
++                //System.out.println("The "+ captured.getColorName() + " King has fallen");
++                //System.out.println(this.getColorName() + " Wins!!!");
+                 //JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
+                 cb.setNewChessBoard();
+             }
+Index: app/src/main/java/controller/ExpectiMaxAgent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\n\npublic class ExpectiMaxAgent extends BlackPlayer{\n\n    private ChessBoard cb;\n    private Game game;\n    private String chosenPiece;\n    private int depth;\n    private boolean isWhite;\n    private boolean noMoves;\n    private Tree tree;\n\n    public ExpectiMaxAgent(Game game, ChessBoard cb, String chosenPiece, int depth, boolean isWhite) {\n        super(cb);\n        this.cb = cb;\n        this.game = game;\n        this.chosenPiece = chosenPiece;\n        this.depth = depth;\n        this.isWhite = isWhite;\n        this.tree = new Tree(depth, game, chosenPiece, isWhite);\n    }\n\n    public void expectiMaxPlay() {\n        game.newTurn = false;\n\n        if (this.canMove(chosenPiece)) {\n            noMoves = false;\n\n            tree.generateTree();\n            tree.calculateTree(tree.getRoot().getChildren());\n\n            Piece best = tree.getBestPiece();\n            Square bestMove = tree.getBestSquare();\n\n            System.out.println(\"Yes Moves\");\n            System.out.println(best.getPieceName());\n            System.out.println(\"X: \" + bestMove.getXPos() + \" Y: \" + bestMove.getYPos());\n\n            best.move(bestMove, cb,  best.getLegalMoves(cb));\n\n            Node b = tree.getBestBoard();\n            b.getBoard().printBoard();\n            System.out.println(\"/////////////////////////////////\" + b.getValue());\n            game.updateBoard();\n            game.newTurn();\n\n        } else {\n            noMoves = true;\n            game.newTurn();\n            System.out.println(\"No Moves\");\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/ExpectiMaxAgent.java b/app/src/main/java/controller/ExpectiMaxAgent.java
+--- a/app/src/main/java/controller/ExpectiMaxAgent.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/ExpectiMaxAgent.java	(date 1637802380000)
+@@ -27,7 +27,7 @@
+             noMoves = false;
+ 
+             tree.generateTree();
+-            tree.calculateTree(tree.getRoot().getChildren());
++            //tree.calculateTree(tree.getRoot().getChildren());
+ 
+             Piece best = tree.getBestPiece();
+             Square bestMove = tree.getBestSquare();
+Index: app/src/main/java/view/DicePanel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package view;\n\nimport controller.*;\nimport javax.swing.*;\nimport javax.swing.border.EmptyBorder;\nimport java.awt.*;\nimport java.awt.event.ActionEvent;\nimport java.awt.event.ActionListener;\nimport java.awt.image.BufferedImage;\nimport java.util.ArrayList;\nimport java.util.Random;\n\npublic class DicePanel implements ActionListener {\n\n    private FilePath FilePath = new FilePath();\n    private BufferedImage image = ImageLoader.loadImage(FilePath.getFilePath(\"GreenButton.png\"));\n    private JPanel finalPanel = new JPanel();\n    private JButton diceButton = new JButton();\n    private JLabel resultLabel = new JLabel();\n    private JPanel dicePanel = new JPanel();\n    private JLabel textLabel = new JLabel(\"WHITE PLAYER START\");\n    private JPanel textPanel = new JPanel();\n    private Game game;\n    private Random rand = new Random();\n    private Dice dice;\n\n    DicePanel(Game game) { \n        this.game = game;\n        dice = new Dice();    \n        initialize();\n    }\n\n    public void initialize() {\n        dicePanel.setLayout(new GridLayout(1, 2));\n        dicePanel.setBackground(Color.LIGHT_GRAY);\n        textPanel.setBackground(Color.LIGHT_GRAY);\n        finalPanel.setBackground(Color.LIGHT_GRAY);\n\n        finalPanel.setLayout(new GridLayout(2, 1));\n\n        diceButton.setIcon(new ImageIcon(image));\n        diceButton.setBackground(Color.LIGHT_GRAY);\n        diceButton.setBorderPainted(false);\n        diceButton.addActionListener(this);\n\n        resultLabel.setBorder(new EmptyBorder(2, 2, 2, 2));\n\n        textLabel.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 16));\n        textLabel.setForeground(Color.RED);\n\n        dicePanel.add(diceButton, 0, 0);\n        dicePanel.add(resultLabel, 0,1);\n\n        textPanel.add(textLabel);\n\n        finalPanel.add(dicePanel);\n        finalPanel.add(textPanel);\n    }\n\n    public JPanel getDicePanel() { return finalPanel; }\n\n    @Override\n    /**\n     * Dice\n     * At the moment it only works for the white pieces\n     */\n\n    public void actionPerformed(ActionEvent e) {\n        \n        if(e.getSource() == diceButton) {\n            game.updateBoard();\n            if(!game.isNewTurn()) return; \n            else{\n\n                // Set who's turn is it on the board\n                if (game.getWhitePlayer().getIsMyTurn()) {\n                    if (game.isNoMoves()) {\n                        this.textLabel.setText(\"NO MOVES AVAILABLE, BLACK'S TURN!\");\n                    } else {\n                        this.textLabel.setText(\"WHITE PLAYER'S TURN\");\n                    }\n\n                } else {\n                    if (game.isNoMoves()) {\n                        this.textLabel.setText(\"NO MOVES AVAILABLE, WHITE'S TURN!\");\n                    } else {\n                        this.textLabel.setText(\"BLACK PLAYER'S TURN\");\n                    }\n                }\n                System.out.println(game.isNoMoves());\n\n                //game.newTurn();\n                game.setDiceClicked(true);\n               // game.getDice().randomize();\n                //String name =  game.getDice().getRoleDice();\n                String name;\n                if(game.getWhitePlayer().getIsMyTurn()){\n                    ArrayList<String> movable = game.getWhitePlayer().getMovableNames();\n                    name = game.getDice().getRndPiece(movable);\n                }\n                else{\n                    ArrayList<String> movable = game.getBlackPlayer().getMovableNames();\n                    name = game.getDice().getRndPiece(movable);    \n                }\n                switch (name){\n                    case \"Pawn\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wpawn.png\"))));\n                            break;\n                        }\n                        else{\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bpawn.png\"))));\n                            break;\n                        }\n\n                    case \"Rook\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wrook.png\"))));\n                            break;\n                        }\n                    else{\n                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"brook.png\"))));\n                        break;\n                    }\n\n                    case \"Knight\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wknight.png\"))));\n                            break;\n                        }\n                    else{\n                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bknight.png\"))));\n                        break;\n                    }\n\n                    case \"Bishop\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wbishop.png\"))));\n                            break;\n                        }\n                        else{\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bbishop.png\"))));\n                            break;\n                            }\n\n                    case \"Queen\":\n                    if(game.getWhitePlayer().getIsMyTurn()){\n                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wqueen.png\"))));\n                        break;\n                    }\n                    else{\n                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bqueen.png\"))));\n                        break;\n                    }\n\n                    case \"King\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wking.png\"))));\n                            break;\n                        }\n                        else{\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bking.png\"))));\n                            break;\n                        }\n                    }\n                game.play();\n            }\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/view/DicePanel.java b/app/src/main/java/view/DicePanel.java
+--- a/app/src/main/java/view/DicePanel.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/view/DicePanel.java	(date 1637802380000)
+@@ -7,6 +7,7 @@
+ import java.awt.event.ActionEvent;
+ import java.awt.event.ActionListener;
+ import java.awt.image.BufferedImage;
++import java.io.File;
+ import java.util.ArrayList;
+ import java.util.Random;
+ 
+@@ -26,10 +27,13 @@
+ 
+     DicePanel(Game game) { 
+         this.game = game;
++        game.setDicePanel(this);
+         dice = new Dice();    
+         initialize();
+     }
+ 
++        
++
+     public void initialize() {
+         dicePanel.setLayout(new GridLayout(1, 2));
+         dicePanel.setBackground(Color.LIGHT_GRAY);
+@@ -57,7 +61,10 @@
+         finalPanel.add(textPanel);
+     }
+ 
+-    public JPanel getDicePanel() { return finalPanel; }
++    public JPanel getDicePanel()   { return finalPanel;   }
++    public JLabel getTextLabel()   { return textLabel;    }
++    public JLabel getResultLabel() { return resultLabel;  }
++    public FilePath getFilePath()  { return FilePath;     }
+ 
+     @Override
+     /**
+@@ -72,97 +79,98 @@
+             if(!game.isNewTurn()) return; 
+             else{
+ 
+-                // Set who's turn is it on the board
+-                if (game.getWhitePlayer().getIsMyTurn()) {
+-                    if (game.isNoMoves()) {
+-                        this.textLabel.setText("NO MOVES AVAILABLE, BLACK'S TURN!");
+-                    } else {
+-                        this.textLabel.setText("WHITE PLAYER'S TURN");
+-                    }
+-
+-                } else {
+-                    if (game.isNoMoves()) {
+-                        this.textLabel.setText("NO MOVES AVAILABLE, WHITE'S TURN!");
+-                    } else {
+-                        this.textLabel.setText("BLACK PLAYER'S TURN");
+-                    }
+-                }
+-                System.out.println(game.isNoMoves());
+-
+-                //game.newTurn();
+-                game.setDiceClicked(true);
+-               // game.getDice().randomize();
+-                //String name =  game.getDice().getRoleDice();
+-                String name;
+-                if(game.getWhitePlayer().getIsMyTurn()){
+-                    ArrayList<String> movable = game.getWhitePlayer().getMovableNames();
+-                    name = game.getDice().getRndPiece(movable);
+-                }
+-                else{
+-                    ArrayList<String> movable = game.getBlackPlayer().getMovableNames();
+-                    name = game.getDice().getRndPiece(movable);    
+-                }
+-                switch (name){
+-                    case "Pawn":
+-                        if(game.getWhitePlayer().getIsMyTurn()){
+-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wpawn.png"))));
+-                            break;
+-                        }
+-                        else{
+-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bpawn.png"))));
+-                            break;
+-                        }
+-
+-                    case "Rook":
+-                        if(game.getWhitePlayer().getIsMyTurn()){
+-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wrook.png"))));
+-                            break;
+-                        }
+-                    else{
+-                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("brook.png"))));
+-                        break;
+-                    }
++            //     // Set who's turn is it on the board
++            //     if (game.getWhitePlayer().getIsMyTurn()) {
++            //         if (game.isNoMoves()) {
++            //             this.textLabel.setText("NO MOVES AVAILABLE, BLACK'S TURN!");
++            //         } else {
++            //             this.textLabel.setText("WHITE PLAYER'S TURN");
++            //         }
++
++            //     } else {
++            //         if (game.isNoMoves()) {
++            //             this.textLabel.setText("NO MOVES AVAILABLE, WHITE'S TURN!");
++            //         } else {
++            //             this.textLabel.setText("BLACK PLAYER'S TURN");
++            //         }
++            //     }
++            //     System.out.println(game.isNoMoves());
++
++            //     //game.newTurn();
++            //     game.setDiceClicked(true);
++            //    // game.getDice().randomize();
++            //     //String name =  game.getDice().getRoleDice();
++            //     String name;
++            //     if(game.getWhitePlayer().getIsMyTurn()){
++            //         ArrayList<String> movable = game.getWhitePlayer().getMovableNames();
++            //         name = game.getDice().getRndPiece(movable);
++            //     }
++            //     else{
++            //         ArrayList<String> movable = game.getBlackPlayer().getMovableNames();
++            //         name = game.getDice().getRndPiece(movable);    
++            //     }
++            //     switch (name){
++            //         case "Pawn":
++            //             if(game.getWhitePlayer().getIsMyTurn()){
++            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wpawn.png"))));
++            //                 break;
++            //             }
++            //             else{
++            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bpawn.png"))));
++            //                 break;
++            //             }
+ 
+-                    case "Knight":
+-                        if(game.getWhitePlayer().getIsMyTurn()){
+-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wknight.png"))));
+-                            break;
+-                        }
+-                    else{
+-                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bknight.png"))));
+-                        break;
+-                    }
++            //         case "Rook":
++            //             if(game.getWhitePlayer().getIsMyTurn()){
++            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wrook.png"))));
++            //                 break;
++            //             }
++            //         else{
++            //             resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("brook.png"))));
++            //             break;
++            //         }
+ 
+-                    case "Bishop":
+-                        if(game.getWhitePlayer().getIsMyTurn()){
+-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wbishop.png"))));
+-                            break;
+-                        }
+-                        else{
+-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bbishop.png"))));
+-                            break;
+-                            }
++            //         case "Knight":
++            //             if(game.getWhitePlayer().getIsMyTurn()){
++            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wknight.png"))));
++            //                 break;
++            //             }
++            //         else{
++            //             resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bknight.png"))));
++            //             break;
++            //         }
+ 
+-                    case "Queen":
+-                    if(game.getWhitePlayer().getIsMyTurn()){
+-                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wqueen.png"))));
+-                        break;
+-                    }
+-                    else{
+-                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bqueen.png"))));
+-                        break;
+-                    }
++            //         case "Bishop":
++            //             if(game.getWhitePlayer().getIsMyTurn()){
++            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wbishop.png"))));
++            //                 break;
++            //             }
++            //             else{
++            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bbishop.png"))));
++            //                 break;
++            //                 }
+ 
+-                    case "King":
+-                        if(game.getWhitePlayer().getIsMyTurn()){
+-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wking.png"))));
+-                            break;
+-                        }
+-                        else{
+-                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bking.png"))));
+-                            break;
+-                        }
+-                    }
++            //         case "Queen":
++            //         if(game.getWhitePlayer().getIsMyTurn()){
++            //             resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wqueen.png"))));
++            //             break;
++            //         }
++            //         else{
++            //             resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bqueen.png"))));
++            //             break;
++            //         }
++
++            //         case "King":
++            //             if(game.getWhitePlayer().getIsMyTurn()){
++            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("wking.png"))));
++            //                 break;
++            //             }
++            //             else{
++            //                 resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("bking.png"))));
++            //                 break;
++            //             }
++            //         }
++                game.whichPiece();
+                 game.play();
+             }
+         }
