@@ -104,7 +104,7 @@ public abstract class Piece {
             for(Square sq : legalMoves){
                 if(sq.isTakenSquare() && sq.getPieceOnSq().pieceName.equals("King")){
                     checkingKing = true;
-                    System.out.println(pieceName + " is Checking the King");
+                    //System.out.println(pieceName + " is Checking the King");
                     break;
                 }
                 checkingKing=false;
@@ -150,8 +150,7 @@ public abstract class Piece {
             cb.getDeadPieces().add(captured);
             if(captured.pieceName.equals("King")){
                 //System.out.println("The "+ captured.getColorName() + " King has fallen");
-                //
-                System.out.println(this.getColorName() + " Wins!!!");
+                //System.out.println(this.getColorName() + " Wins!!!");
                 //JOptionPane.showMessageDialog(null, this.getColorName()+ " Wins!!! ", "InfoBox: " + "END GAME", JOptionPane.INFORMATION_MESSAGE);
                 cb.setNewChessBoard();
             }
