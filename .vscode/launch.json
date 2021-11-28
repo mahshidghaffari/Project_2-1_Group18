@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Base_vs_Expecti",
+            "request": "launch",
+            "mainClass": "Base_vs_Expecti",
+            "projectName": "DiceChess"
+        },
+        {
+            "type": "java",
+            "name": "Launch Base_vs_Expecti",
+            "request": "launch",
+            "mainClass": "Base_vs_Expecti",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "Launch MotionTest",
             "request": "launch",
             "mainClass": "MotionTest",

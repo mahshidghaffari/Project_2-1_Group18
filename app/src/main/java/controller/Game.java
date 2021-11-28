@@ -4,6 +4,7 @@ import view.*;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.awt.*;
 
 import javax.swing.ImageIcon;
@@ -25,6 +26,7 @@ public class Game{
     private JFrame f;
     private boolean noMoves = false;
     // Booleans to select which agent is going to play against which other agent
+    private boolean gameOver = false;
     private boolean wNoAgent = false;
     private boolean bNoAgent = false;
     private boolean wBaseLineActive  = false;
@@ -36,7 +38,7 @@ public class Game{
     private boolean expectiMaxActive = true;
     private int depth=-1;                       //-1 means no depth (PvP)
     private DicePanel dp;
-
+    private int moveCounter=0;
     /**
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
      * @param f is the ChessBoard GUI Frame
@@ -45,7 +47,16 @@ public class Game{
     public Game(JFrame f, int depth){
         this.f = f;
         cb = new ChessBoard();
+        dice = new Dice();
+        bPlayer = new BlackPlayer(cb);
+        wPlayer = new WhitePlayer(cb);
+        buttonPanel= new ButtonPanel(this);
+        this.noAgent=noAgent;
+        this.depth=depth;
+    }
 
+    public Game(int depth){
+        cb = new ChessBoard();
         dice = new Dice();
         bPlayer = new BlackPlayer(cb);
         wPlayer = new WhitePlayer(cb);
@@ -61,7 +72,9 @@ public class Game{
     }
     public void setNewChessBoard(){
         this.cb = new ChessBoard();
-        
+    }
+    public int getMoveCounter(){ 
+        return moveCounter;
     }
     public boolean isNewTurn(){
         return newTurn;
@@ -69,24 +82,39 @@ public class Game{
     public Dice getDice(){
         return dice;
     }
+    public boolean getGameOver(){
+        return gameOver;
+    }
     public Player whosPlaying(){
         return playing;
     }
     public void newTurn(){
-        newTurn=true;
-        diceClicked=false;
-        wPlayer.flipTurns(bPlayer);
-        if(bEpectiMaxActive && bPlayer.getIsMyTurn() ){   // for black AI agent
-            whichPiece();  
-            play();
+        //cb.printBoard();
+        if(cb.missingKing()){
+            gameOver = true;
+            if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
+            return;
         }
-        if(wBaseLineActive && wPlayer.getIsMyTurn() ){
-            whichPiece();  
-            play();    
-        }
+        else{
+            newTurn=true;
+            moveCounter++;
+            // if(wPlayer.getIsMyTurn()){ System.out.println("White Player Turn");}
+            // else { System.out.println("Black Player Turn"); }
+            diceClicked=false;
+            wPlayer.flipTurns(bPlayer);
+            if(bEpectiMaxActive && bPlayer.getIsMyTurn() ){   // for black AI agent
+                whichPiece();  
+                play();
+            }
+            if(wBaseLineActive && wPlayer.getIsMyTurn() ){
+                whichPiece();  
+                play();    
+            }
 
-        updateBoard();
+           updateBoard();
+        }
     }
+
     public DicePanel getDicePanel(){
         return dp;
     }
@@ -209,7 +237,7 @@ public class Game{
                     heldPiece = clickedPiece;
                     heldPiece.setHighlighted(true);
                     highlightPiece(heldPiece, clickedSquare);
-                    System.out.println("legal first click");
+                    //System.out.println("legal first click");
                     buttonPanel.setText("legal first click");
 
                     return true;
@@ -243,7 +271,7 @@ public class Game{
 
                     else{  //if its just a non castling move
                         heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there    
-                        System.out.println("legal second click");
+                        //System.out.println("legal second click");
                         heldPiece.setHighlighted(false);
                         heldPiece = null;
                         newTurn();
@@ -323,6 +351,35 @@ public class Game{
                     }
                 if(board[i][j].isTakenSquare()){
                     Piece occupying = board[i][j].getPieceOnSq();
+                    if(button!=null){
+                        button.setIcon(occupying.getImgIcon());
+                    }
+                }
+                else{
+                    if(button!=null){
+                        button.setIcon(new ImageIcon());
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void resetBoard(){
+        Square[][] board = cb.getBoard();
+        wPlayer.updateScore();  //accounting for any captures
+        bPlayer.updateScore();
+        for(int i=0; i<8; i++){
+            for(int j=0;j<8;j++){
+                SquareButton button = board[i][j].getButtonOnSquare();
+                    if(button!=null && button.getButtonColor().equals(Color.DARK_GRAY)) {
+                        button.setBackground(Color.DARK_GRAY);
+                    }
+                    else if(button!=null && button.getButtonColor().equals(Color.WHITE)) {
+                        button.setBackground(Color.WHITE);
+                    }
+                if(board[i][j].isTakenSquare()){
+                    Piece occupying = board[i][j].getPieceOnSq();
                     button.setIcon(occupying.getImgIcon());
                 }
                 else{
@@ -331,7 +388,6 @@ public class Game{
             }
         }
     }
-
     /**
      * This method highlights a legal clicked piece
      * @param piece is the piece in question needing highlighting
@@ -350,25 +406,28 @@ public class Game{
         if (whiteTurn) {
             ArrayList<String> movable = getWhitePlayer().getMovableNames();
             name = getDice().getRndPiece(movable);
-
-            if (isNoMoves()) {
-                dp.getTextLabel().setText("NO MOVES AVAILABLE, BLACK'S TURN!");
-            } else {
-                dp.getTextLabel().setText("WHITE PLAYER'S TURN");
+            if(dp!=null){
+                if (isNoMoves()) {
+                    dp.getTextLabel().setText("NO MOVES AVAILABLE, BLACK'S TURN!");
+                } else {
+                    dp.getTextLabel().setText("WHITE PLAYER'S TURN");
+                }
             }
 
         } else {
             ArrayList<String> movable = getBlackPlayer().getMovableNames();
-            name = getDice().getRndPiece(movable);    
-            if (isNoMoves()) {
-                dp.getTextLabel().setText("NO MOVES AVAILABLE, WHITE'S TURN!");
-            } else {
-                dp.getTextLabel().setText("BLACK PLAYER'S TURN");
+            name = getDice().getRndPiece(movable);   
+            if(dp!=null){ 
+                if (isNoMoves()) {
+                    dp.getTextLabel().setText("NO MOVES AVAILABLE, WHITE'S TURN!");
+                } else {
+                    dp.getTextLabel().setText("BLACK PLAYER'S TURN");
+                }
             }
         }
         //game.newTurn();
         setDiceClicked(true);
-      
+        if(dp!=null){
             switch (name){
                 case "Pawn":
                     if(whiteTurn){
@@ -430,7 +489,7 @@ public class Game{
                         break;
                     }
                 }
-    
+        }
     }
 
     public boolean isNoMoves() { return noMoves; }
