@@ -28,18 +28,19 @@ public class EvalTest{
         King w = new King(true);
         King b = new King(false);
         //Queen wq = new Queen(true);
-        Queen bq = new Queen(false);
+        Queen bq = new Queen(true);
         cb.addLivePiece(w);
         cb.addLivePiece(b);
         //cb.addLivePiece(wq);
         cb.addLivePiece(bq);
         cb.getBoard()[2][2].placePiece(w);
         cb.getBoard()[5][5].placePiece(b);
-        cb.getBoard()[0][0].placePiece(bq);
+        cb.getBoard()[7][7].placePiece(bq);
         //cb.getBoard()[7][7].placePiece(wq);
         Evaluation eval = new Evaluation(cb);
         eval.setKingThreatWeight(kingGrid);
         eval.printThreatGrid(true);
+        cb.printBoard();
         System.out.println("King safety : "+eval.getKingSafetyEval());
     }
     @Test public void testMaterialEvalPawn(){
@@ -199,7 +200,26 @@ public class EvalTest{
         //cb.getBoard()[7][7].placePiece(wq);
         Evaluation eval = new Evaluation(cb);
         eval.setKingThreatWeight(grid);
-        assertEquals(5.0, eval.getKingSafetyEval());
+        assertEquals(10.0, eval.getKingSafetyEval());
+    }
+
+    @Test public void testKingSafetyEvalBlack(){
+        ChessBoard cb = new ChessBoard(true);
+        King w = new King(true);
+        King b = new King(false);
+        Queen wq = new Queen(true);
+        //Queen bq = new Queen(false);
+        cb.addLivePiece(w);
+        cb.addLivePiece(b);
+        cb.addLivePiece(wq);
+        //cb.addLivePiece(bq);
+        cb.getBoard()[2][2].placePiece(w);
+        cb.getBoard()[5][5].placePiece(b);
+        //cb.getBoard()[0][0].placePiece(bq);
+        cb.getBoard()[7][7].placePiece(wq);
+        Evaluation eval = new Evaluation(cb);
+        eval.setKingThreatWeight(grid);
+        assertEquals(-10.0, eval.getKingSafetyEval());
     }
 
 }
