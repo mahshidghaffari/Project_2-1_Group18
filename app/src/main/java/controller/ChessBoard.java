@@ -1,6 +1,8 @@
 package controller;
 import java.util.ArrayList;
 
+import javax.swing.plaf.synth.SynthSplitPaneUI;
+
 import view.SquareButton;
 
 public class ChessBoard{
@@ -198,16 +200,17 @@ public class ChessBoard{
 
 
     public void printBoard(){
-        
+        System.out.println("____________________________________________________________________________");
         for(int i = 0; i<board.length ; i++){
             for(int y = 0; y<board.length ; y++){
                 if(board[i][y].isTakenSquare()) {
                     System.out.print("  " + board[i][y].getPieceOnSq().pieceName + "  ");
                 }
-                else { System.out.print("  empty  ");}
+                else { System.out.print("  -----  ");}
             }
             System.out.println(" ");
         }
+        System.out.println("____________________________________________________________________________");
     }
     /**
      * Method makeBoardCopy : copies the current board

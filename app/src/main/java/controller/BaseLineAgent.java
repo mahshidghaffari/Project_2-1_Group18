@@ -13,17 +13,17 @@ public class BaseLineAgent extends WhitePlayer {
 	}
 	
     public boolean baseLinePlay(String chosenPiece) {
-    	System.out.println("AI is playing ");
+    	//System.out.println("AI is playing ");
 
         Random rand = new Random();
 
-    	System.out.println(chosenPiece);
+    	//System.out.println(chosenPiece);
     	
     	// go for select the piece with randomization action
     	 ArrayList<Piece> movablePieces = this.getMovablePieces(chosenPiece);
     	
      	if(movablePieces.size() == 0) {
-     		System.out.println("there is no movable piece");
+     		//System.out.println("there is no movable piece");
      		game.newTurn();
      	}else {
      		ArrayList<Square> legalMoves = new ArrayList<Square>();
@@ -35,7 +35,7 @@ public class BaseLineAgent extends WhitePlayer {
      			ArrayList<Square> legalMovesForPiece = piece.getLegalMoves(cb);
      			for(Square legalMove : legalMovesForPiece) {
      				if(legalMove.isTakenSquare()){
-     					System.out.println(legalMove.getPieceOnSq().pieceName);
+     					//System.out.println(legalMove.getPieceOnSq().pieceName);
      					captureMoves.add(legalMove);
 						pieceToCapture.add(piece);
      				}
@@ -44,8 +44,8 @@ public class BaseLineAgent extends WhitePlayer {
      			}
      		}
 
-			System.out.println("Move:" + pieceToMove.toString());
-			System.out.println("Capture:" + pieceToCapture.toString());
+			// System.out.println("Move:" + pieceToMove.toString());
+			// System.out.println("Capture:" + pieceToCapture.toString());
      		
     		if(captureMoves.size()!=0) {
     			int randomMoveCapture = rand.nextInt(captureMoves.size());
@@ -56,7 +56,7 @@ public class BaseLineAgent extends WhitePlayer {
     					randomMoveCapture = i;
     				}
     			}
-    			System.out.println(maxPoint);
+    			//System.out.println(maxPoint);
     			pieceToCapture.get(randomMoveCapture).move(captureMoves.get(randomMoveCapture), cb, captureMoves);
     			
     		}else {

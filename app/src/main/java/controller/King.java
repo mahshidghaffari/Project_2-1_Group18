@@ -45,8 +45,8 @@ public class King extends Piece {
                 }
             }
         }
-        closeCastle(legalMoves, cb); //checking for king side castling option
-        farCastle(legalMoves, cb); //checking for queen side castling option
+        // closeCastle(legalMoves, cb); //checking for king side castling option
+        // farCastle(legalMoves, cb); //checking for queen side castling option
 
         return legalMoves;
     }
@@ -95,10 +95,10 @@ public class King extends Piece {
 
     public void closeCastle(ArrayList < Square > legalMoves, ChessBoard cb) {
         Square[][] board = cb.getBoard();
-        if (!this.getIfNotYetMoved()) {
+        if (!super.getIfNotYetMoved()) {
             return; // RULE 1 if the king moved there is no possibilty for castling
         } 
-        if (isWhite()) {                 //for a white king
+        if (this.isWhite()) {                 //for a white king
             if(getCurrentPosition().getYPos()!=7 || getCurrentPosition().getXPos()!= 4) return;
             if(board[7][7].isTakenSquare() && board[7][7].getPieceOnSq().getPieceName().equals("Rook") && !board[7][7].getPieceOnSq().getIfNotYetMoved()){ //Rule 1 if the rook moved then we can return
                 return;

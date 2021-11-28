@@ -32,8 +32,6 @@ public class DicePanel implements ActionListener {
         initialize();
     }
 
-        
-
     public void initialize() {
         dicePanel.setLayout(new GridLayout(1, 2));
         dicePanel.setBackground(Color.LIGHT_GRAY);
