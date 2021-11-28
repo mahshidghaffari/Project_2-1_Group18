@@ -10,11 +10,14 @@ public class Base_vs_Expecti {
     /**
      * Experimental Class that checks the number of wins between the Base-Line agent 
      * and the ExpectiMax agent. 
-     * 
+     *  Assign max_depth as the maximum depth to be experimented.
+     *  Assign runs to the maximum amount of games played at each depth.
      */
+
     public Base_vs_Expecti(){
         int runs = 100;
-        for(int depth=1;depth<4;depth++){
+        int max_depth=3;
+        for(int depth = 1 ; depth <= max_depth ; depth++){
             System.out.println("In depth "+ depth+" ");
             experiment(runs, depth);
         }
@@ -23,6 +26,7 @@ public class Base_vs_Expecti {
         int eMax = 0;
         int base = 0;
         double avgMoves = 0;
+        
         for(int i=0;i<runs;i++){
             JFrame f = new JFrame("Dice Chess");
             Game game = new Game(f, depth);
@@ -30,6 +34,7 @@ public class Base_vs_Expecti {
             game.setbEpectiMaxActive(true);
             game.play();
             String color="";
+            //checking which team won the game
             for(Piece p: game.getChessBoard().getLivePieces()){
                 if(p.getPieceName().equals("King")){
                     color = p.getColorName();
