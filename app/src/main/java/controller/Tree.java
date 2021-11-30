@@ -41,7 +41,7 @@ public class Tree {
             toadd = !toadd;
         }
         Collections.reverse(test);
-        System.out.println(test);
+        //System.out.println(test);
     }
 
     // Get best board
@@ -171,7 +171,7 @@ public class Tree {
 
             }
         }
-       }
+    }
 
     public void calculateProbability(Node n){
         double value = 0;
@@ -265,13 +265,13 @@ public class Tree {
     public Square getBestSquare(){
         ChessBoard best = root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get().getBoard();
         Square bestSquare = null;
-        System.out.println("best board is : ");
-        best.printBoard();
-        System.out.println("The children of the root: ");
-        for (Node n : root.getChildren()) {
-            System.out.println(n.getValue());
-            n.getBoard().printBoard();
-        }
+        //System.out.println("best board is : ");
+        //best.printBoard();
+        //System.out.println("The children of the root: ");
+        // for (Node n : root.getChildren()) {
+        //     System.out.println(n.getValue());
+        //     n.getBoard().printBoard();
+//        }
         List<Piece> pieceObjectsBestBoard = best
                 .getLivePieces().stream()
                 .filter(p -> p.getPieceName().equals(root.getPiece()))
