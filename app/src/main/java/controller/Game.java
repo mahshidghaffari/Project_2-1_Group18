@@ -90,6 +90,9 @@ public class Game{
     }
     public void newTurn(){
         //cb.printBoard();
+        Evaluation eval = new Evaluation(cb);
+        System.out.println("Material Eval : ");
+        System.out.println(eval.getMaterialEval());
         if(cb.missingKing()){
             gameOver = true;
             if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
