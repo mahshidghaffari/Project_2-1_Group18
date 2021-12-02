@@ -6,7 +6,7 @@ import java.util.Random;
 public class BaseLineAgent extends WhitePlayer {
 	private Game game; 
 	String chosenPiece;
-	private boolean stupid = true;
+	private boolean clever = false;
 	
 	public BaseLineAgent(Game game, ChessBoard cb) {
 		super(cb);
@@ -45,7 +45,7 @@ public class BaseLineAgent extends WhitePlayer {
      			}
      		}
 
-			if(stupid){
+			if(!clever){
 				int randomMove = rand.nextInt(legalMoves.size());
 					 pieceToMove.get(randomMove).move(legalMoves.get(randomMove), cb, legalMoves);
 			}
@@ -78,4 +78,8 @@ public class BaseLineAgent extends WhitePlayer {
      	}
      	return true;
     }
-}
+
+
+	public boolean getClever(){ return clever; }
+	public void setClever(boolean simple){ this.clever = simple;}
+}	

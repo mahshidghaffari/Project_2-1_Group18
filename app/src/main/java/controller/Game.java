@@ -162,6 +162,10 @@ public class Game{
         diceClicked = b;
     }
 
+    public BaseLineAgent getBaseLineAgent(){
+        return baseLinePlayer;
+    }
+
     //public Castle getCastling(){ return castling;}
     public WhitePlayer getWhitePlayer(){return wPlayer;}
     public BlackPlayer getBlackPlayer(){return bPlayer;}
