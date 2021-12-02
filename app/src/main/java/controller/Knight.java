@@ -11,7 +11,6 @@ public class Knight extends Piece {
         if(isWhite()) super.setValue(30);
 		else super.setValue(-30);
     }
-
     /**
      *
      * @param cb The chessboard
