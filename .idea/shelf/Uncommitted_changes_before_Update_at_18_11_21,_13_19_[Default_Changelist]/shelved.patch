@@ -1,0 +1,158 @@
+Index: app/src/main/java/view/DicePanel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package view;\n\nimport controller.*;\nimport javax.swing.*;\nimport javax.swing.border.EmptyBorder;\nimport java.awt.*;\nimport java.awt.event.ActionEvent;\nimport java.awt.event.ActionListener;\nimport java.awt.image.BufferedImage;\nimport java.util.ArrayList;\nimport java.util.Random;\n\npublic class DicePanel implements ActionListener {\n\n    private FilePath FilePath = new FilePath();\n    private BufferedImage image = ImageLoader.loadImage(FilePath.getFilePath(\"GreenButton.png\"));\n    private JPanel finalPanel = new JPanel();\n    private JButton diceButton = new JButton();\n    private JLabel resultLabel = new JLabel();\n    private JPanel dicePanel = new JPanel();\n    private JLabel textLabel = new JLabel(\"WHITE PLAYER START\");\n    private JPanel textPanel = new JPanel();\n    private Game game;\n    private Random rand = new Random();\n    private Dice dice;\n\n    DicePanel(Game game) { \n        this.game = game;\n        dice = new Dice();    \n        initialize();\n    }\n\n    public void initialize() {\n        dicePanel.setLayout(new GridLayout(1, 2));\n        dicePanel.setBackground(Color.LIGHT_GRAY);\n        textPanel.setBackground(Color.LIGHT_GRAY);\n        finalPanel.setBackground(Color.LIGHT_GRAY);\n\n        finalPanel.setLayout(new GridLayout(2, 1));\n\n        diceButton.setIcon(new ImageIcon(image));\n        diceButton.setBackground(Color.LIGHT_GRAY);\n        diceButton.setBorderPainted(false);\n        diceButton.addActionListener(this);\n\n        resultLabel.setBorder(new EmptyBorder(2, 2, 2, 2));\n\n        textLabel.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 16));\n        textLabel.setForeground(Color.RED);\n\n        dicePanel.add(diceButton, 0, 0);\n        dicePanel.add(resultLabel, 0,1);\n\n        textPanel.add(textLabel);\n\n        finalPanel.add(dicePanel);\n        finalPanel.add(textPanel);\n    }\n\n    public JPanel getDicePanel() { return finalPanel; }\n\n    @Override\n    /**\n     * Dice\n     * At the moment it only works for the white pieces\n     */\n\n    public void actionPerformed(ActionEvent e) {\n        \n        if(e.getSource() == diceButton) {\n            game.updateBoard();\n            if(!game.isNewTurn()) return; \n            else{\n\n                // Set who's turn is it on the board\n                if (game.getWhitePlayer().getIsMyTurn()) {\n                    if (game.isNoMoves()) {\n                        this.textLabel.setText(\"NO MOVES AVAILABLE, BLACK'S TURN!\");\n                    } else {\n                        this.textLabel.setText(\"WHITE PLAYER'S TURN\");\n                    }\n\n                } else {\n                    if (game.isNoMoves()) {\n                        this.textLabel.setText(\"NO MOVES AVAILABLE, WHITE'S TURN!\");\n                    } else {\n                        this.textLabel.setText(\"BLACK PLAYER'S TURN\");\n                    }\n                }\n                System.out.println(game.isNoMoves());\n\n                //game.newTurn();\n                game.setDiceClicked(true);\n               // game.getDice().randomize();\n                //String name =  game.getDice().getRoleDice();\n                String name;\n                if(game.getWhitePlayer().getIsMyTurn()){\n                    ArrayList<String> movable = game.getWhitePlayer().getMovableNames();\n                    name = game.getDice().getRndPiece(movable);\n                }\n                else{\n                    ArrayList<String> movable = game.getBlackPlayer().getMovableNames();\n                    name = game.getDice().getRndPiece(movable);    \n                }\n                switch (name){\n                    case \"Pawn\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wpawn.png\"))));\n                            break;\n                        }\n                        else{\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bpawn.png\"))));\n                            break;\n                        }\n\n                    case \"Rook\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wrook.png\"))));\n                            break;\n                        }\n                    else{\n                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"brook.png\"))));\n                        break;\n                    }\n\n                    case \"Knight\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wknight.png\"))));\n                            break;\n                        }\n                    else{\n                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bknight.png\"))));\n                        break;\n                    }\n\n                    case \"Bishop\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wbishop.png\"))));\n                            break;\n                        }\n                        else{\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bbishop.png\"))));\n                            break;\n                            }\n\n                    case \"Queen\":\n                    if(game.getWhitePlayer().getIsMyTurn()){\n                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wqueen.png\"))));\n                        break;\n                    }\n                    else{\n                        resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bqueen.png\"))));\n                        break;\n                    }\n\n                    case \"King\":\n                        if(game.getWhitePlayer().getIsMyTurn()){\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"wking.png\"))));\n                            break;\n                        }\n                        else{\n                            resultLabel.setIcon(new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath(\"bking.png\"))));\n                            break;\n                        }\n                    }\n                game.play();\n            }\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/view/DicePanel.java b/app/src/main/java/view/DicePanel.java
+--- a/app/src/main/java/view/DicePanel.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/view/DicePanel.java	(date 1637237942808)
+@@ -13,7 +13,7 @@
+ public class DicePanel implements ActionListener {
+ 
+     private FilePath FilePath = new FilePath();
+-    private BufferedImage image = ImageLoader.loadImage(FilePath.getFilePath("GreenButton.png"));
++    private ImageIcon image = new ImageIcon(ImageLoader.loadImage(FilePath.getFilePath("GreenButton.png")));
+     private JPanel finalPanel = new JPanel();
+     private JButton diceButton = new JButton();
+     private JLabel resultLabel = new JLabel();
+@@ -38,7 +38,7 @@
+ 
+         finalPanel.setLayout(new GridLayout(2, 1));
+ 
+-        diceButton.setIcon(new ImageIcon(image));
++        diceButton.setIcon(image);
+         diceButton.setBackground(Color.LIGHT_GRAY);
+         diceButton.setBorderPainted(false);
+         diceButton.addActionListener(this);
+Index: app/src/main/java/controller/Game.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\n\nimport view.*;\n\nimport java.util.ArrayList;\nimport java.util.Random;\n\nimport javax.swing.ImageIcon;\nimport javax.swing.JFrame;\n\npublic class Game{\n\n    private ChessBoard cb;\n    public boolean newTurn=true;\n    private Dice dice;\n    private Player playing = null;\n    private WhitePlayer wPlayer;\n    private BaseLineAgent baseLinePlayer;\n    private ExpectiMaxAgent expectiMaxPlayer;\n    private BlackPlayer bPlayer;\n    private Piece heldPiece = null;\n    private ButtonPanel buttonPanel;\n    private boolean diceClicked=false;\n    private JFrame f;\n    private boolean noMoves = false;\n    // Booleans to select which agent is going to play against which other agent\n    private boolean wNoAgent = false;\n    private boolean bNoAgent = false;\n    private boolean wBaseLineActive  = false;\n    private boolean bBaseLineActive = false;\n    private boolean wExpectiMaxActive = false;\n    private boolean bEpectiMaxActive = false;\n    private boolean noAgent = false;\n    private boolean baseLineActive = false;     // Make true to play with BaseLine Agent\n    private boolean expectiMaxActive = true;\n    private int depth=-1;                       //-1 means no depth (PvP)\n\n\n    /**\n     * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations\n     * @param f is the ChessBoard GUI Frame\n     */\n\n    public Game(JFrame f){\n        this.f = f;\n        cb = new ChessBoard();\n\n        dice = new Dice();\n        bPlayer = new BlackPlayer(cb);\n        wPlayer = new WhitePlayer(cb);\n        buttonPanel= new ButtonPanel(this);\n        this.noAgent=noAgent;\n        this.depth=depth;\n    }\n    public JFrame getFrame(){\n        return f;\n    }\n    public ChessBoard getChessBoard(){\n        return cb;\n    }\n    public void setNewChessBoard(){\n        this.cb = new ChessBoard();\n        \n    }\n    public boolean isNewTurn(){\n        return newTurn;\n    }\n    public Dice getDice(){\n        return dice;\n    }\n    public Player whosPlaying(){\n        return playing;\n    }\n    public void newTurn(){\n        newTurn=true;\n        diceClicked=false;\n        wPlayer.flipTurns(bPlayer);\n        updateBoard();\n    } \n    public void setButtonPanel(ButtonPanel buttonPanel){\n        this.buttonPanel = buttonPanel;\n    }\n    public void setDiceClicked(boolean b) {\n        diceClicked = b;\n    }\n\n    //public Castle getCastling(){ return castling;}\n    public WhitePlayer getWhitePlayer(){return wPlayer;}\n    public BlackPlayer getBlackPlayer(){return bPlayer;}\n\n    public void setbNoAgent(boolean b) { this.bNoAgent = b; }\n    public void setwNoAgent(boolean b) { this.wNoAgent = b; }\n    public void setbBaseLineActive(boolean b) { this.bBaseLineActive = b; }\n    public void setwBaseLineActive(boolean b) { this.wBaseLineActive = b; }\n    public void setbEpectiMaxActive(boolean b) { this.bEpectiMaxActive = b; }\n    public void setwExpectiMaxActive(boolean b) { this.wExpectiMaxActive = b; }\n\n    public void setDepth(int d) { this.depth = d; }\n\n    /**\n     * When Ever the Green Dice button is clicked by the user this method checks whether it is even a turn for the user\n     */\n    public void play(){\n        //noMoves = false;\n\n        if(wPlayer.getIsMyTurn()){        //if its w player's turn\n\n            // Normal player (NO AGENT)\n            if (wNoAgent) {\n                playing = wPlayer;\n                newTurn = false;\n                String chosen = dice.getChosen();\n                //String chosen = dice.getRoleDice(); //roll the dice\n\n                if (!wPlayer.canMove(chosen)) {         //if player has no pieces to move we switch turns\n                    //System.out.println(\"Sorry white , you have no possible moves. Turn goes to black\");\n                    noMoves = true;\n                    newTurn();\n                } else {\n                    noMoves = false;\n                }\n\n            // BASELINE AGENT\n            } else if (wBaseLineActive) {\n                baseLinePlayer = new BaseLineAgent(this, cb);\n                String chosen = dice.getChosen();\n                baseLinePlayer.baseLinePlay(chosen);\n\n            // EXPECTIMAX AGENT\n            } else if (wExpectiMaxActive) {\n                String chosen = dice.getChosen();\n                int depth = 3;\n                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);\n                expectiMaxPlayer.expectiMaxPlay();\n            }\n        }\n\n        else if(bPlayer.getIsMyTurn()){\n\n        \t// Normal player (NO AGENT)\n        \tif (bNoAgent) {\n        \t\tplaying = bPlayer;\n        \t\tnewTurn= false;\n            \tString chosen = dice.getChosen();\n            \t//loop through all live pieces to see if dice chosen piece piece is there\n            \tfor(Piece p: cb.getLivePieces()){\n            \t\tif(p.isWhite()){ continue; }\n\n            \t\tif(p.getPieceName().equals(chosen) ){ //if the chosen piece is not dead\n                        break;\n            \t\t}\n            \t}\n\n            \tif(!bPlayer.canMove(chosen)){\n            \t\t//System.out.println(\"Sorry black , you have no possible moves. Turn goes to white\");\n            \t\tnoMoves = true;\n            \t\tnewTurn();\n            \t} else {\n                    noMoves = false;\n                }\n\n        \t// BASELINE AGENT\n        \t} else if (bBaseLineActive) {\n                baseLinePlayer = new BaseLineAgent(this, cb);\n                String chosen = dice.getChosen();\n            \tbaseLinePlayer.baseLinePlay(chosen);\n\n        \t// EXPECTIMAX AGENT\n        \t} else if (bEpectiMaxActive) {\n                String chosen = dice.getChosen();\n                int depth = 3;\n                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);\n                expectiMaxPlayer.expectiMaxPlay();\n            }\n        }\n    }\n\n    /**\n     * This Method checks which button clicks are legal by the user and their correspondence to the ual \n     * In game play. \n     * @param clickedOnce a boolean that checks whether this click by the user is the first one or second\n     * @param clickedButton is the button that was clicked by the user\n     * @return true if the user is allowed to make these choices\n     */\n\n    public boolean isLegalChoice(boolean clickedOnce, SquareButton clickedButton){\n        Square clickedSquare = cb.getSquare(clickedButton); //get clicked square\n        Piece clickedPiece = clickedSquare.getPieceOnSq();\n        \n        if(wPlayer.getIsMyTurn()){ //if its the white turn\n            if(!diceClicked){ return false;}\n            if(!clickedOnce){ //and this click is the choice of which piece to move \n                if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing\n                else if (clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getChosen()) ){ //if the player selected the correct piece to move\n                    heldPiece = clickedPiece;\n                    heldPiece.setHighlighted(true);\n                    highlightPiece(heldPiece, clickedSquare);\n                    System.out.println(\"legal first click\");\n                    buttonPanel.setText(\"legal first click\");\n\n                    return true;\n                }\n            }\n            else{ //if this is the second click\n                \n                if(heldPiece!=null && cb.getSquare(clickedButton).equals(heldPiece.getCurrentPosition())){   //if the player wants to move another piece\n                    heldPiece.setHighlighted(false);\n                    heldPiece=null;\n                    clickedOnce = false;\n                    System.out.println(\"released\");\n                    return true;\n                }\n                else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to\n                   \n                    int distance = Math.abs(clickedSquare.getXPos()-heldPiece.getCurrentPosition().getXPos());    //calculating the distance from the piece to desired moving location                \n                    \n                    if(heldPiece.getPieceName().equals(\"King\") && distance>1){                  //if the size of this movement is larger than 1 for the king it means this is castling\n                        ((King)heldPiece).doCastling(clickedSquare, cb, heldPiece);\n                        newTurn();\n                        return true;\n                    }\n                    if(heldPiece.getPieceName().equals(\"Pawn\") && clickedSquare.getYPos()==0){\n                        heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));\n                        Piece newPiece = clickedSquare.getPieceOnSq();\n                        ((Pawn)newPiece).promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);\n                        newTurn();\n                        return true;\n                    }\n\n                    else{  //if its just a non castling move\n                        heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there    \n                        System.out.println(\"legal second click\");\n                        heldPiece.setHighlighted(false);\n                        heldPiece = null;\n                        newTurn();\n                        return true;\n                    }                    \n                }\n            }\n        }\n\n        else if(bPlayer.getIsMyTurn()){ //if its the black turn\n            if(!diceClicked){ return false;}\n            if(!clickedOnce){ //and this click is the choice of which piece to move \n                if(!clickedSquare.isTakenSquare()){ return false; }    //if the sqaure is empty then do nothing\n                else if (!clickedPiece.isWhite() && clickedPiece.getPieceName().equals(dice.getChosen())){ //if the player selected the correct piece to move\n                    heldPiece = clickedPiece;\n                    heldPiece.setHighlighted(true);\n                    highlightPiece(heldPiece, clickedSquare);\n                    System.out.println(\"legal first click\");\n                    return true;\n                }\n            }\n            else{ //if this is the second click\n                if(heldPiece!=null && cb.getSquare(clickedButton).equals(heldPiece.getCurrentPosition())){   //if the player wants to move another piece\n                    heldPiece.setHighlighted(false);\n                    heldPiece=null;\n                    clickedOnce = false;\n                    System.out.println(\"released\");\n                    updateBoard();\n                    return true;\n                }\n                else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to\n                    \n                    int distance = Math.abs(clickedSquare.getXPos()-heldPiece.getCurrentPosition().getXPos());    //calculating the distance from the piece to desired moving location                \n                    \n                    if(heldPiece.getPieceName().equals(\"King\") && distance>1){                  //if the size of this movement is larger than 1 for the king it means this is castling\n                        ((King)heldPiece).doCastling(clickedSquare,cb,heldPiece);\n                        newTurn();\n                        return true;\n                    }\n                    if(heldPiece.getPieceName().equals(\"Pawn\") && clickedSquare.getYPos()==7){\n                        heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));\n                        Piece newPiece = clickedSquare.getPieceOnSq();\n                        ((Pawn)newPiece).promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);\n                        newTurn();\n                        return true;\n                    }\n\n                    else{  //if its just a non castling move\n                        heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there\n                        heldPiece.setHighlighted(false);\n                        heldPiece = null;    \n                        newTurn();\n                        System.out.println(\"legal second click\");\n                        return true;                    \n                    }\n                }\n            }    \n        }\n        return false;\n    }\n\n    /**\n     * This repaints the board after any movement or capture\n     */\n    public void updateBoard(){\n        Square[][] board = cb.getBoard();\n        wPlayer.updateScore();  //accounting for any captures\n        bPlayer.updateScore();\n        for(int i=0; i<8; i++){\n            for(int j=0;j<8;j++){\n                if(board[i][j].isTakenSquare()){\n                    Piece occupying = board[i][j].getPieceOnSq();\n                    board[i][j].getButtonOnSquare().setIcon(occupying.getImgIcon());\n                }\n                else{\n                    board[i][j].getButtonOnSquare().setIcon(new ImageIcon());\n                }\n            }\n        }\n    }\n\n    /**\n     * This method highlights a legal clicked piece\n     * @param piece is the piece in question needing highlighting\n     * @param square is the Square in question to highlight\n     */\n    public void highlightPiece(Piece piece, Square square) {\n        square.removeImage();\n\n        updateBoard();\n        square.placeImage(piece);\n    }\n\n    public boolean isNoMoves() { return noMoves; }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/controller/Game.java b/app/src/main/java/controller/Game.java
+--- a/app/src/main/java/controller/Game.java	(revision c457d95107ee30a7d0fa9c7e8df073e671a30fd1)
++++ b/app/src/main/java/controller/Game.java	(date 1637237564918)
+@@ -31,8 +31,6 @@
+     private boolean wExpectiMaxActive = false;
+     private boolean bEpectiMaxActive = false;
+     private boolean noAgent = false;
+-    private boolean baseLineActive = false;     // Make true to play with BaseLine Agent
+-    private boolean expectiMaxActive = true;
+     private int depth=-1;                       //-1 means no depth (PvP)
+ 
+ 
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+new file mode 100644
+--- /dev/null	(date 1637237564924)
++++ b/.idea/gradle.xml	(date 1637237564924)
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
++  <component name="GradleSettings">
++    <option name="linkedExternalProjectsSettings">
++      <GradleProjectSettings>
++        <option name="distributionType" value="DEFAULT_WRAPPED" />
++        <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.8.3/libexec" />
++        <option name="modules">
++          <set>
++            <option value="$PROJECT_DIR$" />
++            <option value="$PROJECT_DIR$/app" />
++          </set>
++        </option>
++      </GradleProjectSettings>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	(date 1637237564921)
++++ b/.idea/compiler.xml	(date 1637237564921)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="14" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1637237564930)
++++ b/.idea/vcs.xml	(date 1637237564930)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+new file mode 100644
+--- /dev/null	(date 1637237564927)
++++ b/.idea/jarRepositories.xml	(date 1637237564927)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="MavenRepo" />
++      <option name="name" value="MavenRepo" />
++      <option name="url" value="https://repo.maven.apache.org/maven2/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1637237564911)
++++ b/.idea/misc.xml	(date 1637237564911)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="true" project-jdk-name="14" project-jdk-type="JavaSDK" />
++</project>
+\ No newline at end of file
