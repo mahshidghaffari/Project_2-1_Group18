@@ -93,7 +93,6 @@ public class SetupMenu {
         PanelMidRightCenter.setLayout(null);
 
 
-
         //LABELS
 
         JLabel LabelTopTitle = new JLabel("WELCOME TO DICE CHESS");
@@ -267,7 +266,6 @@ public class SetupMenu {
             f.add(new SidePanel(game).getPane(), BorderLayout.WEST);
             f.add(new MainPanel(game).getMainPanel(), BorderLayout.CENTER);
 
-            f.setResizable(false);
             f.setLocationRelativeTo(null);
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setVisible(true);
@@ -289,7 +287,6 @@ public class SetupMenu {
             f.add(new SidePanel(game).getPane(), BorderLayout.WEST);
             f.add(new MainPanel(game).getMainPanel(), BorderLayout.CENTER);
 
-            f.setResizable(false);
             f.setLocationRelativeTo(null);
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setVisible(true);
@@ -313,7 +310,6 @@ public class SetupMenu {
             f.add(new SidePanel(game).getPane(), BorderLayout.WEST);
             f.add(new MainPanel(game).getMainPanel(), BorderLayout.CENTER);
 
-            f.setResizable(false);
             f.setLocationRelativeTo(null);
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setVisible(true);

@@ -13,7 +13,10 @@ import java.awt.event.ActionListener;
  */
 public class MainPanel implements ActionListener  {
 
+    private JPanel chessboard = new JPanel();
     private JPanel mainPanel = new JPanel();
+    private JPanel xAxis = new JPanel();
+    private JPanel yAxis = new JPanel();
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private ChessBoard cb;
     private Game game;
@@ -26,9 +29,16 @@ public class MainPanel implements ActionListener  {
     }
 
     public void initialize() {
-        mainPanel.setLayout(new GridLayout(8, 8));
+        mainPanel.setLayout(new BorderLayout());
         mainPanel.setPreferredSize(new Dimension(screenSize.height, screenSize.height));
         mainPanel.setBounds(screenSize.height/2, 0, screenSize.height, screenSize.height);
+
+        xAxis.setLayout(new GridLayout(1,8));
+        yAxis.setLayout(new GridLayout(8, 1));
+        xAxis.setPreferredSize(new Dimension(screenSize.height, 20));
+        yAxis.setPreferredSize(new Dimension(20, screenSize.height));
+
+        chessboard.setLayout(new GridLayout(8, 8));
         cb = game.getChessBoard();
         
         // Color the squares/buttons black or white
@@ -95,10 +105,23 @@ public class MainPanel implements ActionListener  {
                         }
                     });
                 cb.getBoard()[i][j].setButtonOnSquare(button);
-                mainPanel.add(button, i, j);
+                chessboard.add(button, i, j);
             }
         }
         initialPositions();
+
+        // Add numbers to x and y axis
+        for (int i = 0; i < 8; i++) {
+            xAxis.add(new JLabel("" + i,  SwingConstants.CENTER));
+            yAxis.add(new JLabel("" + i,  SwingConstants.CENTER));
+            Font font = new Font("Times", Font.BOLD,17);
+            xAxis.setFont(font);
+            yAxis.setFont(font);
+        }
+
+        mainPanel.add(chessboard, BorderLayout.CENTER);
+        mainPanel.add(xAxis, BorderLayout.NORTH);
+        mainPanel.add(yAxis, BorderLayout.WEST);
     }
 
     /**
@@ -184,8 +207,7 @@ public class MainPanel implements ActionListener  {
                 }
             }
         }
-
-     game.updateBoard();
+        game.updateBoard();
     }
 
     @Override

@@ -7,8 +7,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.awt.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class Game{
 
@@ -39,11 +38,11 @@ public class Game{
     private int depth=-1;                       //-1 means no depth (PvP)
     private DicePanel dp;
     private int moveCounter=0;
+
     /**
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
      * @param f is the ChessBoard GUI Frame
      */
-
     public Game(JFrame f, int depth){
         this.f = f;
         cb = new ChessBoard();
@@ -64,6 +63,36 @@ public class Game{
         this.noAgent=noAgent;
         this.depth=depth;
     }
+
+    public void displayEndBoard() {
+        // CLose current frame and display menu
+        this.getFrame().dispose();
+        SetupMenu sm= new SetupMenu();
+
+        // Display frame
+        JFrame endFrame = new JFrame();
+        JPanel endPanel = new JPanel();
+        JLabel endLabel = new JLabel("Game Over, ");
+        endLabel.setFont(new Font("Verdana", Font.BOLD, 12));
+        JLabel winningPlayer;
+
+        if (wPlayer.getIsMyTurn()) {
+            winningPlayer = new JLabel("White player won!");
+
+        } else {
+            winningPlayer = new JLabel("Black player won!");
+        }
+
+        winningPlayer.setFont(new Font("Verdana", Font.BOLD, 12));
+
+        endPanel.add(endLabel);
+        endPanel.add(winningPlayer);
+        endFrame.setSize(300, 70);
+        endFrame.add(endPanel);
+        endFrame.setLocationRelativeTo(null);
+        endFrame.setVisible(true);
+    }
+
     public JFrame getFrame(){
         return f;
     }
@@ -97,6 +126,7 @@ public class Game{
             gameOver = true;
             System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
             if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
+            displayEndBoard();
             return;
         }
         else{
@@ -232,6 +262,9 @@ public class Game{
     public boolean isLegalChoice(boolean clickedOnce, SquareButton clickedButton){
         Square clickedSquare = cb.getSquare(clickedButton); //get clicked square
         Piece clickedPiece = clickedSquare.getPieceOnSq();
+
+        //clickedPiece.setHighlighted(false);
+        //highlightPiece(clickedPiece, clickedSquare);
         
         if(wPlayer.getIsMyTurn()){ //if its the white turn
             if(!diceClicked){ return false;}
@@ -254,6 +287,7 @@ public class Game{
                     heldPiece=null;
                     clickedOnce = false;
                     System.out.println("released");
+                    updateBoard();
                     return true;
                 }
                 else if(heldPiece!=null && heldPiece.getLegalMoves(cb).contains(clickedSquare)){ //if the clicked square is in fact a legal one to move to
@@ -392,6 +426,7 @@ public class Game{
             }
         }
     }
+
     /**
      * This method highlights a legal clicked piece
      * @param piece is the piece in question needing highlighting
