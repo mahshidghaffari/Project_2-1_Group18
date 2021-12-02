@@ -14,22 +14,23 @@ public class Base_vs_Expecti {
      */
 
     public Base_vs_Expecti(){
-        int runs = 100;
+        int runs = 10;
         int max_depth=3;
+        //for each of the depths run 100 games
         for(int depth = 1 ; depth <= max_depth ; depth++){
             System.out.println("In depth "+ depth+" ");
-            experiment(runs, depth);
+            experiment(runs, depth,true);
         }
     }
-    public void experiment(int runs, int depth){
+    public void experiment(int runs, int depth, boolean simpleAgent){
         int eMax = 0;
         int base = 0;
         double avgMoves = 0;
-        
         for(int i=0;i<runs;i++){
             JFrame f = new JFrame("Dice Chess");
             Game game = new Game(f, depth);
             game.setwBaseLineActive(true);
+            //game.getBaseLineAgent().setSimple(simpleAgent);
             game.setbEpectiMaxActive(true);
             game.play();
             String color="";

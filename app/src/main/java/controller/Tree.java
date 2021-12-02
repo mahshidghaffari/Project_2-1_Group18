@@ -169,7 +169,6 @@ public class Tree {
                 //    this.isWhite = !this.isWhite; // Check if depth is even or odd
                 }
                 depth = depth + 1;
-
             }
         }
     }
