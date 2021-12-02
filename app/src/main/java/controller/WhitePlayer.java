@@ -39,7 +39,6 @@ public class WhitePlayer extends Player{
         return false;
     }
 
-
     public ArrayList<Piece> getAllMovablePieces(){
         ArrayList<Piece> movablePieces = new ArrayList<Piece>();
         for(Piece p: livePieces){
@@ -60,7 +59,6 @@ public class WhitePlayer extends Player{
         }
         return names;
     }
-
    
     public double getWhiteScore(){ return score;}
 
