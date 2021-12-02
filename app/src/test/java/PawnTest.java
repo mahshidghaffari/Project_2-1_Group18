@@ -20,7 +20,7 @@ public class PawnTest {
         //board[1][1].placePiece(blackPawn2);
        
         ArrayList<Square> whitePawnLM = whitePawn.getLegalMoves(cb);
-        ArrayList<Square> blackPawn1LM = blackPawn1.getLegalMoves(cb);
+        //ArrayList<Square> blackPawn1LM = blackPawn1.getLegalMoves(cb);
         //ArrayList<Square> blackPawn2LM = blackPawn2.getLegalMoves(cb);
         
         //Test promotion :

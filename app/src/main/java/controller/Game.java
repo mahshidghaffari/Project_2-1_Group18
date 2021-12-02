@@ -90,9 +90,8 @@ public class Game{
     }
     public void newTurn(){
         //cb.printBoard();
-        Evaluation eval = new Evaluation(cb);
-        System.out.println("Material Eval : ");
-        System.out.println(eval.getMaterialEval());
+        // Evaluation eval = new Evaluation(cb);
+        // eval.printDebug(true);
         if(cb.missingKing()){
             gameOver = true;
             System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);

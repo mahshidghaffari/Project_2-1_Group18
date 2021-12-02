@@ -1,8 +1,6 @@
 package controller;
 import java.util.ArrayList;
 
-import javax.swing.plaf.synth.SynthSplitPaneUI;
-
 import view.SquareButton;
 
 public class ChessBoard{
@@ -269,13 +267,11 @@ public class ChessBoard{
     }
     public void printEval(){
         Evaluation eval = new Evaluation(this);
-        System.out.println("Center control eval : " + eval.getCenterControlEval());
-        System.out.println("King safety eval : " + eval.getKingSafetyEval());
-        System.out.println("Material eval : " + eval.getMaterialEval());
-        System.out.println("Threats grid for white : ");
-        eval.printThreatGrid(true);
-        System.out.println("Threats grid for black");
-        eval.printThreatGrid(false);
+        // System.out.println("Center control eval : " + eval.getCenterControlEval());
+        // System.out.println("King safety eval : " + eval.getKingSafetyEval());
+        // System.out.println("Material eval : " + eval.getMaterialEval());
+        eval.printDebug(true);
+        eval.printDebug(false);
     }
 
     public boolean missingKing(){

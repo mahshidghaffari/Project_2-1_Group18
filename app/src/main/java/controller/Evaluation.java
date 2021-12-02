@@ -1,47 +1,57 @@
 package controller;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Evaluation {
+    private ChessBoard cb;
     private Square[][] board;
     private ArrayList<Piece> livePieces;
-
+    private double[][] whiteThreatGrid = new double[8][8];
+    private double[][] blackThreatGrid = new double[8][8];
+    private double score;
+    
     private double pawnWeight;
     private double knightWeight;
     private double bishopWeight;
     private double rookWeight;
     private double queenWeight;
     private double kingWeight;
-    private double score;
-
-    double[][] whiteThreatGrid = new double[8][8];
-    double[][] blackThreatGrid = new double[8][8];
-    private double[][] kingThreatWeight = { //Arbitrary weights of squares around the king,
+    private double pieceOnDiceWeight = 15.0;
+    
+    
+    
+    private double[][] kingDangerWeight = { //Arbitrary weights of squares around the king,
         //Value of particular square is mutliplied by the number of threats made by player
         {2.0,2.0,2.0, 2.0, 2.0},
         {2.0,5.0,5.0, 5.0, 2.0},
-        {2.0,5.0,15.0, 5.0, 2.0},
+        {2.0,5.0,7.0, 5.0, 2.0},
         {2.0,5.0,5.0, 5.0, 2.0},
-        {2.0,4.0,2.0, 2.0, 2.0},
-    
+        {2.0,2.0,2.0, 2.0, 2.0},
+    };
+    private double[][] kingProtectionWeight = { //Arbitrary weights of squares around the king,
+        //Value of particular square is mutliplied by the number of threats made by player
+        {2.0,2.0,2.0, 2.0, 2.0},
+        {2.0,5.0,5.0, 5.0, 2.0},
+        {2.0,5.0,1.0, 5.0, 2.0},
+        {2.0,5.0,5.0, 5.0, 2.0},
+        {2.0,2.0,2.0, 2.0, 2.0},
     };
     private double[][] squareEval = { //The arbitrary values I gave to all squares in a chess board.
         //Value of particular square is multiplied by the number of threats made by player
-        {-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0}, 
-        {-1.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-1.0},
-        {-1.0,-4.0,-6.0,-6.0,-6.0,-6.0,-4.0,-1.0},
-        {-1.0,-4.0,-6.0,-8.0,-8.0,-6.0,-4.0,-1.0},
-        {-1.0,-4.0,-6.0,-8.0,-8.0,-6.0,-4.0,-1.0},
-        {-1.0,-4.0,-6.0,-6.0,-6.0,-6.0,-4.0,-1.0},
-        {-1.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-1.0},
-        {-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0}, 
+        {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}, 
+        {0.0,2.0,2.0,2.0,2.0,2.0,2.0,0.0},
+        {0.0,2.0,5.0,5.0,5.0,5.0,2.0,0.0},
+        {0.0,2.0,5.0,7.0,7.0,5.0,2.0,0.0},
+        {0.0,2.0,5.0,7.0,7.0,5.0,2.0,0.0},
+        {0.0,2.0,5.0,5.0,5.0,5.0,2.0,0.0},
+        {0.0,2.0,2.0,2.0,2.0,2.0,2.0,0.0},
+        {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}, 
     };
     /**
      * Constructor Evaluation : when constructed, everything is computed, and you can access the score with Evaluation.getScore()
      * @param cb the chessboard to evaluate
      */
     public Evaluation(ChessBoard cb) {
+        this.cb = cb;
         this.board = cb.getBoard();
         this.livePieces = cb.getLivePieces();
         pawnWeight = 10.0;
@@ -60,6 +70,24 @@ public class Evaluation {
         }
         score = this.getCenterControlEval() + this.getKingSafetyEval() + this.getMaterialEval();
     }
+    // public double getPiecesOnDiceEval(){
+    //     double whiteEval = 0.0;
+    //     double blackEval = 0.0;
+    //     for(Piece p:livePieces){
+    //         if(p.isWhite()){
+    //             if(p.getLegalMoves(cb).size() != 0){
+    //                 if(p.pieceName == "Pawn"){whiteEval += pieceOnDiceWeight;}
+    //                 if(p.pieceName == "Knight"){whiteEval += pieceOnDiceWeight;}
+    //                 if(p.pieceName == "Bishop"){whiteEval += pieceOnDiceWeight;}
+    //                 if(p.pieceName == "Rook"){whiteEval += pieceOnDiceWeight;}
+    //                 if(p.pieceName == "Queen"){whiteEval += pieceOnDiceWeight;}
+    //                 if(p.pieceName == "King"){whiteEval += pieceOnDiceWeight;}
+    //             }
+    //         } else{
+
+    //         }
+    //     }
+    // }
     public double getScore(){
         return this.score;
     }
@@ -119,7 +147,7 @@ public class Evaluation {
             }
         }
 
-        return whiteEval - blackEval;
+        return blackEval - whiteEval;
     }
     /**
      * Method getKingSafetyEval : returns a double indicating the difference in evaluation of king safety
@@ -144,34 +172,36 @@ public class Evaluation {
             }
         }
         if(wX >= 0 && wY >=0 && bX >= 0 && bY >= 0){
-            double[][] whiteGrid = this.getKingThreatsGrid(board[wY][wX]);
-            double[][] blackGrid = this.getKingThreatsGrid(board[bY][bX]);
+            //Determine the number of enemy threats around the king (threats)
+            double[][] whiteKingDanger = this.getKingThreatsGrid(board[wY][wX], true);
+            double[][] blackKingDanger = this.getKingThreatsGrid(board[bY][bX], false);
+
+            //Determine the number of ally threats around the king (protection)
+            double[][] whiteProtectionGrid = this.getKingThreatsGrid(board[wY][wX], false);
+            double[][] blackProtectionGrid = this.getKingThreatsGrid(board[bY][bX], true);
             
-            for(int i =0; i<whiteGrid.length; i++){
-                for(int j=0; j<whiteGrid[0].length; j++){
-                    whiteEval += whiteGrid[i][j] * kingThreatWeight[i][j];
+            for(int i =0; i<whiteKingDanger.length; i++){
+                for(int j=0; j<whiteKingDanger[0].length; j++){
+                    blackEval += whiteKingDanger[i][j] * kingDangerWeight[i][j];
+                    whiteEval += whiteProtectionGrid[i][j] * kingProtectionWeight[i][j];
                 }
             }
-            for(int i =0; i<blackGrid.length; i++){
-                for(int j=0; j<blackGrid[0].length; j++){
-                    blackEval += blackGrid[i][j] * kingThreatWeight[i][j];
+            for(int i =0; i<blackKingDanger.length; i++){
+                for(int j=0; j<blackKingDanger[0].length; j++){
+                    whiteEval += blackKingDanger[i][j] * kingDangerWeight[i][j];
+                    blackEval += blackProtectionGrid[i][j] * kingProtectionWeight[i][j];
                 }
             }
-            
         }
-        return blackEval - whiteEval;
-        
+        return whiteEval - blackEval;
     }
     /**
      * Method getKingThreatsGrid : private method used to give a threat grid around the king
      * @param kingPos
-     * @return a 3x3 double array representing the number of threats on each sqaure around the king.
-     * The center of the array ([1][1]) is where the king is
+     * @return a 5x5 double array representing the number of threats on each sqaure around the king.
+     * The center of the array is where the king is
      */
-    private double[][] getKingThreatsGrid(Square kingPos){
-        //System.out.println("King pos : " + kingPos.getXPos() + " " + kingPos.getYPos());
-        boolean isWhite = kingPos.getPieceOnSq().isWhite();
-        
+    private double[][] getKingThreatsGrid(Square kingPos, boolean isWhite){
         int X = kingPos.getXPos();
         int Y = kingPos.getYPos();
         
@@ -189,25 +219,42 @@ public class Evaluation {
         if(Y==1){yLeft = 1;}
         if(Y==6){yRight = 1;}
         if(Y==7){yRight = 0;}
-       
         double[][] threatBoard = this.getThreatBoard(isWhite);
-        double[][] grid = new double[1+yLeft+yRight][1+xLeft+xRight];
 
+        //Creates an adaptative-sized array
+        double[][] grid = new double[1+yLeft+yRight][1+xLeft+xRight];
         for (int i = 0; i< grid.length; i++){
             for(int j = 0; j<grid[0].length; j++){
-                //grid[i] = Arrays.copyOfRange(threatBoard[Y+i], X-xLeft, X+xRight);
                 grid[i][j] = threatBoard[Y - yLeft + i][X - xLeft + j];
             }
         }
-        return grid;
+        //fill array with zeros
+        double[][] grid5 = new double[5][5];
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                grid5[i][j] = 0;
+            }
+        }
+        //Copy array into right indices of a 5x5 array (center of 5x5 is kingPos)
+        int newY = Math.max(0, yRight - yLeft);
+        int newX = Math.max(0, xRight - xLeft);
+        
+        for(int i=0; i<grid.length; i++){
+            for(int j=0; j<grid[0].length; j++){
+                grid5[i+newY][j+newX] = grid[i][j];
+
+            }
+        }
+
+        return grid5;
     }
+
     /**
      * Method getNumThreats :
      * @param pos square at which we evaluate threats
      * @param isWhite boolean indicating what player tries to access threat grid
      * @return an int representing the number of attacks on the square
      */
-
     public int getNumThreats(Square pos, boolean isWhite){
         int numThreats = 0;
         ArrayList<Piece> enemyPieces = new ArrayList<Piece>();
@@ -549,32 +596,56 @@ public class Evaluation {
         }
         return numThreats;
     }
-    public void setSquareEval(double[][] grid){
-        this.squareEval = grid;
-    }
-    public void setKingThreatWeight(double[][] grid){
-        this.kingThreatWeight = grid;
-    }
+    
     public double[][] getThreatBoard(boolean isWhite){
         if(isWhite){
             return this.whiteThreatGrid;
         } else{ return this.blackThreatGrid;}
     }
+
+    public void setSquareEval(double[][] grid){
+        this.squareEval = grid;
+    }
+    public void setKingDangerWeight(double[][] grid){
+        this.kingDangerWeight = grid;
+    }
+    public void setKingProtectionWeight(double[][]grid){
+        this.kingProtectionWeight = grid;
+    }
+    public void setPieceWeights(double pawn, double knight, double bishop, double rook, double queen, double king){
+        this.pawnWeight = pawn;
+        this.knightWeight = knight;
+        this.bishopWeight = bishop;
+        this.rookWeight = rook;
+        this.queenWeight = queen;
+        this.kingWeight = king;
+    }
     /**
-     * Method printThreatGrid : for testing purpose
-     * Print a 8x8 grid that represents the number of threats posed on each square
+     * Method printDebug : for testing purpose
+     * Print evaluation (before addition) 
+     * and an 8x8 grid that represents the number of threats posed on each square
      * @param isWhite boolean indicatin whether to look for black pieces treats or white pieces threats
      */
-    public void printThreatGrid(boolean isWhite){
-        System.out.println("Threat grid : ");
+    public void printDebug(boolean isWhite){
+        //Evaluation eval = new Evaluation(cb);
+
+        if(isWhite){
+            System.out.println("White eval debug : ");
+        }else {
+            System.out.println("Black eval debug : ");
+        }
+        System.out.println("----------------------------");
+        System.out.println("Material Evaluation = " + this.getMaterialEval());
+        System.out.println("Center Control Evaluation = " + this.getCenterControlEval());
+        System.out.println("King Safety Evaluation = " + this.getKingSafetyEval());
+        System.out.println("-----------------------");
+        System.out.println("Threat grid: ");
         for(int y = 0; y < 8; y++){
             for(int x = 0; x < 8; x++){
                 System.out.print(this.getNumThreats(board[y][x], isWhite)+ "  ");
             }
             System.out.println("  ");
         }
+        System.out.println("-----------------------");
     }
-
-
 }
-

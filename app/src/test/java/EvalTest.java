@@ -1,8 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import controller.*;
-import java.util.ArrayList;
-
 
 public class EvalTest{
     double[][] grid = {
@@ -15,7 +13,7 @@ public class EvalTest{
         {-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0},
         {-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0},
     };
-    static double[][] kingGrid = {
+    double[][] kingGrid = {
         {1.0, 1.0, 1.0, 1.0, 1.0},
         {1.0, 1.0, 1.0, 1.0, 1.0},
         {1.0, 1.0, 1.0, 1.0, 1.0},
@@ -23,26 +21,6 @@ public class EvalTest{
         {1.0, 1.0, 1.0, 1.0, 1.0},
 
     };
-    public static void main (String[]args){
-        ChessBoard cb = new ChessBoard(true);
-        King w = new King(true);
-        King b = new King(false);
-        //Queen wq = new Queen(true);
-        Queen bq = new Queen(true);
-        cb.addLivePiece(w);
-        cb.addLivePiece(b);
-        //cb.addLivePiece(wq);
-        cb.addLivePiece(bq);
-        cb.getBoard()[2][2].placePiece(w);
-        cb.getBoard()[5][5].placePiece(b);
-        cb.getBoard()[7][7].placePiece(bq);
-        //cb.getBoard()[7][7].placePiece(wq);
-        Evaluation eval = new Evaluation(cb);
-        eval.setKingThreatWeight(kingGrid);
-        eval.printThreatGrid(true);
-        cb.printBoard();
-        System.out.println("King safety : "+eval.getKingSafetyEval());
-    }
     @Test public void testMaterialEvalPawn(){
         ChessBoard cb = new ChessBoard(true);
         // Currently, pawn = 10, knight = 30, bishop = 30, rook = 50, queen = 90, king = 900
@@ -199,7 +177,7 @@ public class EvalTest{
         cb.getBoard()[0][0].placePiece(bq);
         //cb.getBoard()[7][7].placePiece(wq);
         Evaluation eval = new Evaluation(cb);
-        eval.setKingThreatWeight(grid);
+        eval.setKingDangerWeight(grid);
         assertEquals(10.0, eval.getKingSafetyEval());
     }
 
@@ -218,7 +196,7 @@ public class EvalTest{
         //cb.getBoard()[0][0].placePiece(bq);
         cb.getBoard()[7][7].placePiece(wq);
         Evaluation eval = new Evaluation(cb);
-        eval.setKingThreatWeight(grid);
+        eval.setKingDangerWeight(grid);
         assertEquals(-10.0, eval.getKingSafetyEval());
     }
 
