@@ -12,6 +12,7 @@ public class Tree {
     private Boolean isWhite;
     private String[] pieceNames ;
     private List test; //generate
+    private int[]  bounds = {-1290,1290};
 
     public Node getRoot() {
         return root;

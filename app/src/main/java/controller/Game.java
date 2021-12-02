@@ -95,6 +95,7 @@ public class Game{
         System.out.println(eval.getMaterialEval());
         if(cb.missingKing()){
             gameOver = true;
+            System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
             if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
             return;
         }

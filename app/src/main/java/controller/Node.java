@@ -8,6 +8,9 @@ public class Node {
     private ArrayList<Node> children;
     private ChessBoard board;
     private String piece;
+    private double alpha;
+    private double beta;
+    
 
     public Node(boolean isProbability, String piece, ChessBoard board) {
         this.isProbability = isProbability;
@@ -27,6 +30,18 @@ public class Node {
         return board;
     }
 
+    public double getAlpha(){
+        return alpha;
+    }
+    public double getBeta(){
+        return beta;
+    }
+    public void setAlpha(double alpha){
+        this.alpha=alpha;
+    }
+    public void setBeta(double beta){
+        this.beta = beta;
+    }
     public void setBoard(ChessBoard board) {
         this.board = board;
     }
@@ -66,5 +81,13 @@ public class Node {
     // Methods
     public void addChild(Node n){
         this.children.add(n);
+    }
+
+    public double getChildrenAvg(){
+        int sum=0;
+        for(Node n: children){
+            sum+=n.getValue();
+        }
+        return sum/children.size();
     }
 }
