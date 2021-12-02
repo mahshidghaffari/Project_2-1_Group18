@@ -82,4 +82,12 @@ public class Node {
     public void addChild(Node n){
         this.children.add(n);
     }
+
+    public double getChildrenAvg(){
+        int sum=0;
+        for(Node n: children){
+            sum+=n.getValue();
+        }
+        return sum/children.size();
+    }
 }
