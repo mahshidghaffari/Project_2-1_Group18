@@ -15,7 +15,7 @@ public class Evaluation {
     private double rookWeight;
     private double queenWeight;
     private double kingWeight;
-    private double pieceOnDiceWeight = 15.0;
+    private double pieceOnDiceWeight;
     
     
     
@@ -40,8 +40,8 @@ public class Evaluation {
         {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}, 
         {0.0,2.0,2.0,2.0,2.0,2.0,2.0,0.0},
         {0.0,2.0,5.0,5.0,5.0,5.0,2.0,0.0},
-        {0.0,2.0,5.0,7.0,7.0,5.0,2.0,0.0},
-        {0.0,2.0,5.0,7.0,7.0,5.0,2.0,0.0},
+        {0.0,2.0,5.0,8.0,8.0,5.0,2.0,0.0},
+        {0.0,2.0,5.0,8.0,8.0,5.0,2.0,0.0},
         {0.0,2.0,5.0,5.0,5.0,5.0,2.0,0.0},
         {0.0,2.0,2.0,2.0,2.0,2.0,2.0,0.0},
         {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}, 
@@ -51,15 +51,11 @@ public class Evaluation {
      * @param cb the chessboard to evaluate
      */
     public Evaluation(ChessBoard cb) {
+        this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0, 1000.0);
+        this.setPieceOnDiceWeight(15.0);
         this.cb = cb;
         this.board = cb.getBoard();
         this.livePieces = cb.getLivePieces();
-        pawnWeight = 10.0;
-        knightWeight = 30.0;
-        bishopWeight = 30.0;
-        rookWeight = 50.0;
-        queenWeight = 90.0;
-        kingWeight = 10000.0;
 
         for(int i =0; i<8; i++){
             for(int j = 0; j<8; j++){
@@ -68,26 +64,39 @@ public class Evaluation {
 
             }
         }
-        score = this.getCenterControlEval() + this.getKingSafetyEval() + this.getMaterialEval();
+        score = this.getCenterControlEval() + this.getKingSafetyEval() + this.getMaterialEval() + this.getPiecesOnDiceEval();
     }
-    // public double getPiecesOnDiceEval(){
-    //     double whiteEval = 0.0;
-    //     double blackEval = 0.0;
-    //     for(Piece p:livePieces){
-    //         if(p.isWhite()){
-    //             if(p.getLegalMoves(cb).size() != 0){
-    //                 if(p.pieceName == "Pawn"){whiteEval += pieceOnDiceWeight;}
-    //                 if(p.pieceName == "Knight"){whiteEval += pieceOnDiceWeight;}
-    //                 if(p.pieceName == "Bishop"){whiteEval += pieceOnDiceWeight;}
-    //                 if(p.pieceName == "Rook"){whiteEval += pieceOnDiceWeight;}
-    //                 if(p.pieceName == "Queen"){whiteEval += pieceOnDiceWeight;}
-    //                 if(p.pieceName == "King"){whiteEval += pieceOnDiceWeight;}
-    //             }
-    //         } else{
+    public double getPiecesOnDiceEval(){
+        double whiteEval = 0.0;
+        double blackEval = 0.0;
+        boolean[] whitePieceCheck = {false,false,false,false,false,false};
+        boolean[] blackPieceCheck = {false,false,false,false,false,false};
 
-    //         }
-    //     }
-    // }
+        for(Piece p:livePieces){
+            if(p.getLegalMoves(cb).size() != 0){
+                if(p.isWhite()){
+                    if(p.pieceName == "Pawn"){whitePieceCheck[0] = true;}
+                    if(p.pieceName == "Knight"){whitePieceCheck[1] = true;}
+                    if(p.pieceName == "Bishop"){whitePieceCheck[2] = true;}
+                    if(p.pieceName == "Rook"){whitePieceCheck[3]= true;}
+                    if(p.pieceName == "Queen"){whitePieceCheck[4] = true;}
+                    if(p.pieceName == "King"){whitePieceCheck[5] = true;}
+                } else{
+                    if(p.pieceName == "Pawn"){blackPieceCheck[0] = true;}
+                    if(p.pieceName == "Knight"){blackPieceCheck[1] = true;}
+                    if(p.pieceName == "Bishop"){blackPieceCheck[2] = true;}
+                    if(p.pieceName == "Rook"){blackPieceCheck[3]= true;}
+                    if(p.pieceName == "Queen"){blackPieceCheck[4] = true;}
+                    if(p.pieceName == "King"){blackPieceCheck[5] = true;}
+                }
+            }
+        }
+        for(int i=0; i < 6; i++){
+            if(whitePieceCheck[i]){whiteEval += pieceOnDiceWeight;}
+            if(blackPieceCheck[i]){blackEval += pieceOnDiceWeight;}
+        }
+        return whiteEval - blackEval;
+    }
     public double getScore(){
         return this.score;
     }
@@ -619,6 +628,9 @@ public class Evaluation {
         this.rookWeight = rook;
         this.queenWeight = queen;
         this.kingWeight = king;
+    }
+    public void setPieceOnDiceWeight(double w){
+        this.pieceOnDiceWeight = w;
     }
     /**
      * Method printDebug : for testing purpose

@@ -1,5 +1,4 @@
 package controller;
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -10,8 +9,7 @@ import java.util.Random;
 
 public abstract class Player {
 
-     ChessBoard cb;
-    private ArrayList<Piece> livePieces;
+    ChessBoard cb;
     private boolean isMyTurn;
     private String color="Black";
     Random rnd;
@@ -22,7 +20,6 @@ public abstract class Player {
 	*/
     public Player(ChessBoard cb){
         this.cb= cb;
-        livePieces = cb.getLivePieces();
         rnd = new Random();
     }
     public void setColor(String color){

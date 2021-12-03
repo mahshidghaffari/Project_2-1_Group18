@@ -19,7 +19,6 @@ public class EvalTest{
         {1.0, 1.0, 1.0, 1.0, 1.0},
         {1.0, 1.0, 1.0, 1.0, 1.0},
         {1.0, 1.0, 1.0, 1.0, 1.0},
-
     };
     @Test public void testMaterialEvalPawn(){
         ChessBoard cb = new ChessBoard(true);

@@ -37,7 +37,6 @@ public class King extends Piece {
                 Square iPos = board[y + row][x + col];
                 if (iPos.isTakenSquare()) { //if some other piece is on that square
                     if (!this.sameTeam(iPos.getPieceOnSq())) { //if it is from different color
-                        Piece opponent = iPos.getPieceOnSq();
                         legalMoves.add(iPos); //add this square to optional moves array
                     }
                 } else { //if no piece is on that square add this to legal moves

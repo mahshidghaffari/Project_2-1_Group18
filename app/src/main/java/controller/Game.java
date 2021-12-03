@@ -67,7 +67,7 @@ public class Game{
     public void displayEndBoard() {
         // CLose current frame and display menu
         this.getFrame().dispose();
-        SetupMenu sm= new SetupMenu();
+        new SetupMenu();
 
         // Display frame
         JFrame endFrame = new JFrame();
