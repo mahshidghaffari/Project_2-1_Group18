@@ -6,6 +6,7 @@ public class Base_vs_Expecti {
     public static void main(String[] args) {
         new Base_vs_Expecti();
     }
+
     /**
      * Experimental Class that checks the number of wins between the Base-Line agent 
      * and the ExpectiMax agent. 

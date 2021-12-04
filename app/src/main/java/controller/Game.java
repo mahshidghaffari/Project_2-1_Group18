@@ -67,7 +67,7 @@ public class Game{
     public void displayEndBoard() {
         // CLose current frame and display menu
         this.getFrame().dispose();
-        SetupMenu sm= new SetupMenu();
+        new SetupMenu();
 
         // Display frame
         JFrame endFrame = new JFrame();
@@ -119,9 +119,8 @@ public class Game{
     }
     public void newTurn(){
         //cb.printBoard();
-        Evaluation eval = new Evaluation(cb);
-        System.out.println("Material Eval : ");
-        System.out.println(eval.getMaterialEval());
+        // Evaluation eval = new Evaluation(cb);
+        // eval.printDebug(true);
         if(cb.missingKing()){
             gameOver = true;
             System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);

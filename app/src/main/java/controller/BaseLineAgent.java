@@ -1,9 +1,11 @@
 package controller;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class BaseLineAgent extends WhitePlayer {
+
+
+
 	private Game game; 
 	String chosenPiece;
 	private boolean clever = false;
@@ -83,3 +85,4 @@ public class BaseLineAgent extends WhitePlayer {
 	public boolean getClever(){ return clever; }
 	public void setClever(boolean simple){ this.clever = simple;}
 }	
+

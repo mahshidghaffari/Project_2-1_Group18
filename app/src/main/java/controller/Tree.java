@@ -89,6 +89,10 @@ public class Tree {
                         createLegalMovesNodes(n, (boolean) test.get(depth));
                         //this.isWhite = !this.isWhite;
                     }
+                    if((boolean)test.get(depth) == true){
+                        
+                    }
+
                     depth = depth - 1;
                     generate(n.getChildren(), !pieceNode);
                     depth = depth + 1;
@@ -191,6 +195,7 @@ public class Tree {
         }
         //System.out.println(value);
         n.setValue(value);
+        n.setAlpha(value);
     }
 
     public void getMinValue(Node n){
@@ -205,6 +210,7 @@ public class Tree {
         }
         //System.out.println(value);
         n.setValue(value);
+        n.setBeta(value);
     }
 
     public ArrayList<ChessBoard> runScenarios(ChessBoard originalCB, Piece movingPiece){

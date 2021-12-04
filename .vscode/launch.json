@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "Launch Base_vs_Expecti",
             "request": "launch",
             "mainClass": "Base_vs_Expecti",
