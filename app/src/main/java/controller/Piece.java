@@ -1,11 +1,8 @@
 package controller;
 
-import view.*;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.*;
 import java.awt.*;
 
 public abstract class Piece {

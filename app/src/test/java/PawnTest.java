@@ -1,43 +1,9 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
-
-
 import org.junit.jupiter.api.Test;
 import controller.*;
 import java.util.ArrayList;
 
 public class PawnTest {
-    public static void main (String[]args){
-        
-        ChessBoard cb = new ChessBoard(true);
-        Square[][] board = cb.getBoard();
-        Pawn whitePawn = new Pawn(true);
-        Pawn blackPawn1 = new Pawn(false);
-        //Pawn blackPawn2 = new Pawn(false);
-        board[1][0].placePiece(whitePawn);
-        board[6][0].placePiece(blackPawn1);
-        //board[1][1].placePiece(blackPawn2);
-       
-        ArrayList<Square> whitePawnLM = whitePawn.getLegalMoves(cb);
-        ArrayList<Square> blackPawn1LM = blackPawn1.getLegalMoves(cb);
-        //ArrayList<Square> blackPawn2LM = blackPawn2.getLegalMoves(cb);
-        
-        //Test promotion :
-        cb.printBoard();
-        board[6][0].removePiece(blackPawn1);
-        System.out.println("Here the black pawn on row 6 should be out");
-        whitePawn.move(board[0][0], cb, whitePawnLM);
-        cb.printBoard();
-        
-        System.out.println("----------------------------------");
-        //blackPawn1.move(board[3][3], cb, blackPawn2LM);
-        
-        System.out.println("as you can see, the pawn was promoted");
-        System.out.println("here should be the value of promoted boolean (true) : ");
-        System.out.println(board[0][0].getPieceOnSq().getPromoted());
-    }
-
     Pawn whitePawn1 = new Pawn(true);
     Pawn whitePawn2 = new Pawn(true);
     Pawn blackPawn1 = new Pawn(false);
