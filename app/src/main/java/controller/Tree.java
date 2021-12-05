@@ -13,15 +13,20 @@ public class Tree {
     private String[] pieceNames ;
     private List test; //generate
     private int[]  bounds = {-1290,1290};
+    private int numNodes = 0;
 
     public Node getRoot() {
         return root;
+    }
+    public int getNumberOfNodes(){
+        return numNodes;
     }
 
     public Boolean getIsWhite(){ return this.isWhite;}
 
     public void setRoot(Node root) {
         this.root = root;
+        numNodes++;
     }
 
     public Tree(int depth, Game game, String pieceName, Boolean isWhite) {
@@ -79,6 +84,7 @@ public class Tree {
 
     private void generate(ArrayList<Node> nodes, Boolean pieceNode){
         if(depth > 0) {
+            
             for (Node n : nodes) {
                 if (!n.getBoard().missingKing()) {
                     if (pieceNode) {
@@ -103,6 +109,7 @@ public class Tree {
         {
             Node temp = new Node(false, pieceName, n.getBoard());
             n.addChild(temp);
+            numNodes++;
         }
     }
 
@@ -142,6 +149,7 @@ public class Tree {
                 int value = (int)scenario.getBoardValue();
                 Node temp = new Node(true, scenario, value);
                 n.addChild(temp);
+                numNodes++;
             }
         }
     }

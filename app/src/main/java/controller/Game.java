@@ -38,6 +38,7 @@ public class Game{
     private int depth=-1;                       //-1 means no depth (PvP)
     private DicePanel dp;
     private int moveCounter=0;
+    private int totalNumNodes = 0;
 
     /**
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
@@ -124,6 +125,7 @@ public class Game{
         if(cb.missingKing()){
             gameOver = true;
             System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
+            System.out.println("Total number of nodes evaluated : "+ this.totalNumNodes);
             if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
             displayEndBoard();
             return;
@@ -250,6 +252,7 @@ public class Game{
                 String chosen = dice.getChosen();
                 expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
                 expectiMaxPlayer.expectiMaxPlay();
+                this.totalNumNodes += expectiMaxPlayer.numNodes;
             }
         }
     }

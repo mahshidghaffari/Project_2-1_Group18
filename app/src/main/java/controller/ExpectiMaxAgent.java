@@ -9,6 +9,7 @@ public class ExpectiMaxAgent extends BlackPlayer{
     private boolean isWhite;
     private boolean noMoves;
     private Tree tree;
+    int numNodes;
 
     public ExpectiMaxAgent(Game game, ChessBoard cb, String chosenPiece, int depth, boolean isWhite) {
         super(cb);
@@ -18,6 +19,7 @@ public class ExpectiMaxAgent extends BlackPlayer{
         this.depth = depth;
         this.isWhite = isWhite;
         this.tree = new Tree(depth, game, chosenPiece, isWhite);
+        numNodes = 0;
     }
 
     public void expectiMaxPlay() {
@@ -36,6 +38,7 @@ public class ExpectiMaxAgent extends BlackPlayer{
             // System.out.println("X: " + bestMove.getXPos() + " Y: " + bestMove.getYPos());
 
             best.move(bestMove, cb,  best.getLegalMoves(cb));
+            System.out.println("Number of nodes searched : " + tree.getNumberOfNodes());
             
             Node b = tree.getBestBoard();
             //b.getBoard().printBoard();
@@ -48,5 +51,6 @@ public class ExpectiMaxAgent extends BlackPlayer{
             game.newTurn();
             //System.out.println("No Moves");
         }
+        this.numNodes = tree.getNumberOfNodes();
     }
 }
