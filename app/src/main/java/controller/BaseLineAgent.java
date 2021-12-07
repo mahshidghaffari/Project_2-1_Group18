@@ -8,7 +8,7 @@ public class BaseLineAgent extends WhitePlayer {
 
 	private Game game; 
 	String chosenPiece;
-	private boolean clever = false;
+	private boolean clever = false; //if not clever it will play completly random moves
 	
 	public BaseLineAgent(Game game, ChessBoard cb) {
 		super(cb);
@@ -49,7 +49,8 @@ public class BaseLineAgent extends WhitePlayer {
 
 			if(!clever){
 				int randomMove = rand.nextInt(legalMoves.size());
-					 pieceToMove.get(randomMove).move(legalMoves.get(randomMove), cb, legalMoves);
+				int randPiece = rand.nextInt(movablePieces.size());
+					 pieceToMove.get(randPiece).move(legalMoves.get(randomMove), cb, legalMoves);
 			}
 			else{
 

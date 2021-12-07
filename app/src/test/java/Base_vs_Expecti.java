@@ -15,15 +15,15 @@ public class Base_vs_Expecti {
      */
 
     public Base_vs_Expecti(){
-        int runs = 10;
+        int runs = 1000;
         int max_depth=3;
         //for each of the depths run 100 games
         for(int depth = 1 ; depth <= max_depth ; depth++){
             System.out.println("In depth "+ depth+" ");
-            experiment(runs, depth,true);
+            experiment(runs, depth);
         }
     }
-    public void experiment(int runs, int depth, boolean simpleAgent){
+    public void experiment(int runs, int depth){
         int eMax = 0;
         int base = 0;
         double avgMoves = 0;

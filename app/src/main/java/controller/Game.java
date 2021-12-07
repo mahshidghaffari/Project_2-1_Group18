@@ -33,8 +33,6 @@ public class Game{
     private boolean wExpectiMaxActive = false;
     private boolean bEpectiMaxActive = false;
     private boolean noAgent = false;
-    private boolean baseLineActive = false;     // Make true to play with BaseLine Agent
-    private boolean expectiMaxActive = true;
     private int depth=-1;                       //-1 means no depth (PvP)
     private DicePanel dp;
     private int moveCounter=0;
@@ -65,32 +63,36 @@ public class Game{
     }
 
     public void displayEndBoard() {
-        // CLose current frame and display menu
-        this.getFrame().dispose();
-        new SetupMenu();
+        if(wNoAgent || bNoAgent){
+            System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
+            if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
+            // CLose current frame and display menu
+            this.getFrame().dispose();
+            new SetupMenu();
 
-        // Display frame
-        JFrame endFrame = new JFrame();
-        JPanel endPanel = new JPanel();
-        JLabel endLabel = new JLabel("Game Over, ");
-        endLabel.setFont(new Font("Verdana", Font.BOLD, 12));
-        JLabel winningPlayer;
+            // Display frame
+            JFrame endFrame = new JFrame();
+            JPanel endPanel = new JPanel();
+            JLabel endLabel = new JLabel("Game Over, ");
+            endLabel.setFont(new Font("Verdana", Font.BOLD, 12));
+            JLabel winningPlayer;
 
-        if (wPlayer.getIsMyTurn()) {
-            winningPlayer = new JLabel("White player won!");
+            if (wPlayer.getIsMyTurn()) {
+                winningPlayer = new JLabel("White player won!");
 
-        } else {
-            winningPlayer = new JLabel("Black player won!");
+            } else {
+                winningPlayer = new JLabel("Black player won!");
+            }
+
+            winningPlayer.setFont(new Font("Verdana", Font.BOLD, 12));
+
+            endPanel.add(endLabel);
+            endPanel.add(winningPlayer);
+            endFrame.setSize(300, 70);
+            endFrame.add(endPanel);
+            endFrame.setLocationRelativeTo(null);
+            endFrame.setVisible(true);
         }
-
-        winningPlayer.setFont(new Font("Verdana", Font.BOLD, 12));
-
-        endPanel.add(endLabel);
-        endPanel.add(winningPlayer);
-        endFrame.setSize(300, 70);
-        endFrame.add(endPanel);
-        endFrame.setLocationRelativeTo(null);
-        endFrame.setVisible(true);
     }
 
     public JFrame getFrame(){
@@ -123,8 +125,6 @@ public class Game{
         // eval.printDebug(true);
         if(cb.missingKing()){
             gameOver = true;
-            System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
-            if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
             displayEndBoard();
             return;
         }
