@@ -308,13 +308,13 @@ public class Game{
                         newTurn();
                         return true;
                     }
-                    if(heldPiece.getPieceName().equals("Pawn") && clickedSquare.getYPos()==0){
-                        heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));
-                        Piece newPiece = clickedSquare.getPieceOnSq();
-                        ((Pawn)newPiece).promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);
-                        newTurn();
-                        return true;
-                    }
+                    // if(heldPiece.getPieceName().equals("Pawn") && clickedSquare.getYPos()==0){
+                    //     heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));
+                    //     Piece newPiece = clickedSquare.getPieceOnSq();
+                    //     ((Pawn)newPiece).promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);
+                    //     newTurn();
+                    //     return true;
+                    // }
 
                     else{  //if its just a non castling move
                         heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there    
@@ -358,13 +358,13 @@ public class Game{
                         newTurn();
                         return true;
                     }
-                    if(heldPiece.getPieceName().equals("Pawn") && clickedSquare.getYPos()==7){
-                        heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));
-                        Piece newPiece = clickedSquare.getPieceOnSq();
-                        ((Pawn)newPiece).promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);
-                        newTurn();
-                        return true;
-                    }
+                    // if(heldPiece.getPieceName().equals("Pawn") && clickedSquare.getYPos()==7){
+                    //     heldPiece.move(clickedSquare,cb, heldPiece.getLegalMoves(cb));
+                    //     Piece newPiece = clickedSquare.getPieceOnSq();
+                    //     ((Pawn)newPiece).promote(heldPiece.isWhite(),newPiece, clickedSquare, cb);
+                    //     newTurn();
+                    //     return true;
+                    // }
 
                     else{  //if its just a non castling move
                         heldPiece.move(clickedSquare, cb, heldPiece.getLegalMoves(cb)); //move there

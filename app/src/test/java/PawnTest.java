@@ -10,6 +10,37 @@ public class PawnTest {
     Pawn blackPawn2 = new Pawn(false);
     ChessBoard cb = new ChessBoard(true);
     Square[][] board = cb.getBoard();
+    public static void main(String[]args){
+        ChessBoard cb = new ChessBoard(true);
+        Pawn wP = new Pawn(false);
+        cb.placePiece(cb.getSquare(6,0), wP);
+        Move move = new Move(cb.getSquare(6, 0), cb.getSquare(7,0), cb);
+        cb.playMove(move);
+        assertEquals("Queen", cb.getSquare(7,0).getPieceOnSq().getPieceName());
+        if(cb.getSquare(7,0).getPieceOnSq().getPieceName() == "Queen"){
+            System.out.println("Test 1 True");
+        } else {
+            System.out.println("Test 1 False");
+        }
+
+        
+        assertEquals(false, cb.getSquare(7,0).getPieceOnSq().isWhite());
+
+        if(!cb.getSquare(7,0).getPieceOnSq().isWhite()){
+            System.out.println("Test 2 True");
+        } else {
+            System.out.println("Test 2 False");
+        }
+        assertEquals(false, cb.getSquare(6,0).isTakenSquare());
+
+        if(!cb.getSquare(6,0).isTakenSquare()){
+            System.out.println("Test 3 True");
+        } else {
+            System.out.println("Test 3 False");
+        }
+    }
+        
+    
     //Test the forward move of 1 for white when square empty
     @Test public void testForward1White(){
         board[4][4].placePiece(whitePawn1);
@@ -191,23 +222,31 @@ public class PawnTest {
         assertEquals(1,wPLM.size());
     }
 
-    //Test promotion for white (method getPromoted was removed for code clarity purposes)
-    /*
+    //Test promotion for white
+    
     @Test public void testPromotionWhite(){
-        board[1][0].placePiece(whitePawn1);
-        ArrayList<Square> arr = whitePawn1.getLegalMoves(cb);
-        whitePawn1.move(board[0][0], cb, arr);
-        assertTrue(board[0][0].getPieceOnSq().getPromoted());
-    } */
-    //Test promotion for black
-   /*
-    @Test public void testPromotionBlack(){ (method getPromoted was removed for code clarity purposes)
-        board[6][0].placePiece(blackPawn1);
-        ArrayList<Square> arr = blackPawn1.getLegalMoves(cb);
-        blackPawn1.move(board[7][0], cb, arr);
-        assertTrue(board[7][0].getPieceOnSq().getPromoted());
+        ChessBoard cb = new ChessBoard(true);
+        Pawn wP = new Pawn(true);
+        cb.placePiece(cb.getSquare(1,0), wP);
+        Move move = new Move(cb.getSquare(1, 0), cb.getSquare(0,0), cb);
+        cb.playMove(move);
+        assertEquals("Queen", cb.getSquare(0,0).getPieceOnSq().getPieceName());
+        assertEquals(true, cb.getSquare(0,0).getPieceOnSq().isWhite());
+        assertEquals(false, cb.getSquare(1,0).isTakenSquare());
     }
-    */
+    //Test promotion for black
+   
+    @Test public void testPromotionBlack(){
+        ChessBoard cb = new ChessBoard(true);
+        Pawn wP = new Pawn(false);
+        cb.placePiece(cb.getSquare(6,0), wP);
+        Move move = new Move(cb.getSquare(6, 0), cb.getSquare(7,0), cb);
+        cb.playMove(move);
+        assertEquals("Queen", cb.getSquare(7,0).getPieceOnSq().getPieceName());
+        assertEquals(false, cb.getSquare(7,0).getPieceOnSq().isWhite());
+        assertEquals(false, cb.getSquare(6,0).isTakenSquare());
+    }
+    
     //Test En Passant to the left for white
     @Test public void testEPLeftWhite(){
         board[3][6].placePiece(whitePawn1);

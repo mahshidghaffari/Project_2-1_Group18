@@ -6,17 +6,17 @@ import javax.swing.JOptionPane;
 import java.awt.*;
 
 public abstract class Piece {
-    private boolean isAlive = true;
-    private boolean isWhite  = true;
-    private Square currentPos;
-    private double value;
-    private boolean promoted;
-    private boolean checkingKing=false;
+    boolean isAlive = true;
+    boolean isWhite  = true;
+    Square currentPos;
+    double value;
+    boolean promoted;
+    boolean checkingKing=false;
     String pieceName;
-    private ImageIcon imgIcon = new ImageIcon(); 
-    private boolean notYetMoved = true; 
-    private ImageIcon highlightedImgIcon = new ImageIcon();
-    private boolean highlighted= false;
+    ImageIcon imgIcon = new ImageIcon(); 
+    boolean notYetMoved = true; 
+    ImageIcon highlightedImgIcon = new ImageIcon();
+    boolean highlighted= false;
 
     public Piece(){}
 

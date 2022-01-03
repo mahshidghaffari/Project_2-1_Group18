@@ -1,6 +1,5 @@
 package controller;
 import java.util.ArrayList;
-
 import view.SquareButton;
 
 public class ChessBoard{
@@ -9,8 +8,8 @@ public class ChessBoard{
     private ArrayList<Piece> livePieces;
     private ArrayList<Piece> deadPieces;
     private Square[] lastPlyPlayed = new Square[2];
-
-
+    private ArrayList<Move> moveHistory = new ArrayList<Move>();
+    
     /**
      * Constructor ChessBoard() : constructs a chessboard and fills it with the standard piece set
      */
@@ -23,7 +22,7 @@ public class ChessBoard{
         }
         livePieces= new ArrayList<Piece>();
         deadPieces = new ArrayList<Piece>();
-       setUpBoard();      
+       setUpBoard();    
     }
 
     //constructor for practice testing board
@@ -36,13 +35,165 @@ public class ChessBoard{
         }
         livePieces= new ArrayList<Piece>();
         deadPieces= new ArrayList<Piece>();
-    }
 
-    public void copyCB(ChessBoard original){
-        //ChessBoard newCB = new ChessBoard(false);
+    }
+    /*
+    Method playMove : allows us to play a move using a move object, and calling the method directly on the chessboard object
+    param myMove : move to play
+    */
+    public void playMove(Move myMove){
+        moveHistory.add(myMove);
+        Piece p = myMove.origin.getPieceOnSq();
+        ArrayList<Square> legalMovesSquares = p.getLegalMoves(this);
+        if(legalMovesSquares.contains(myMove.target)){
+            p.move(myMove.target, this , legalMovesSquares);
+        }
+    }
+    /*
+    Method unplayMove : allows us to unplay a move using a move object, and calling the method directly on the chessboard object
+    param myMove : move that was last played
+    */
+    public void unplayMove(Move movePlayed){
+        if(moveHistory.size() >0){
+            moveHistory.remove(moveHistory.size()-1);
+        
+
+            Piece p = movePlayed.target.getPieceOnSq();
+            movePlayed.target.removePiece(p);
+            movePlayed.origin.placePiece(p);
+            if(movePlayed.captured != null){
+                movePlayed.target.placePiece(movePlayed.captured);
+            }
+        } else{ 
+            System.out.println("Can't unplay Move : ");
+            movePlayed.printMove(); 
+            System.out.println(", there were no moves made yet");
+        }
+        
+    }
+    /*
+    Method getLegalMoves : returns arraylist of Move s that are legal in the current chessboard for a given player
+    param isWhite : which player's legal moves we are requesting
+    */
+    public ArrayList<Move> getLegalMoves(boolean isWhite){
+        ArrayList<Move> moves = new ArrayList<Move>();
+
+        for(Piece p:livePieces){
+            if(p.isWhite() == isWhite){
+                for(int i = 0; i<p.getLegalMoves(this).size(); i++){
+                    Move move = new Move(p.getCurrentPosition(), p.getLegalMoves(this).get(i), this);
+                    moves.add(move);
+                }
+            } 
+        }
+        return moves;
+    }
+    /*
+        Method getLegalMoves : returns arraylist of Move s that are legal in the current chessboard for a given player and a given piece
+        param isWhite : player color
+        param pieceName : name of piece type we want elgal moves for
+    */
+    public ArrayList<Move> getLegalMoves(boolean isWhite, String pieceName){
+        ArrayList<Move> moves = new ArrayList<Move>();
+
+        for(Piece p:livePieces){
+            if(p.isWhite() == isWhite){
+                if(p.pieceName.equals(pieceName)){
+                    for(int i = 0; i<p.getLegalMoves(this).size(); i++){
+                        moves.add(new Move(p.getCurrentPosition(), p.getLegalMoves(this).get(i), this));
+                    }
+                }
+            } 
+        }
+        return moves;
+    }
+    public void placePiece(Square s, Piece p){
+        this.board[s.getYPos()][s.getXPos()].placePiece(p);
+        this.livePieces.add(p);
+    }
+    /*
+    Method createCopy : called on a cb, returns a new chessboard object identical to the cb
+    */
+    public ChessBoard createCopy(){
+        //Create new empty board
+        ChessBoard newCb = new ChessBoard(true); 
+        newCb.moveHistory = this.moveHistory;
+        Square[][] newBoard = newCb.getBoard();
+        System.out.println("number of live pieces : " + livePieces.size());
+        //For each livePiece, copy it and place it on the board
+        for(int y=0; y<8;y++){
+            for(int x=0; x<8; x++){
+                if(this.board[y][x].isTakenSquare()){
+                    Piece p = this.board[y][x].getPieceOnSq();
+                    boolean isWhite = p.isWhite();
+                    boolean checkingKing = p.getCheckingKing();
+                    boolean hasMoved = p.getIfNotYetMoved();
+                    String pieceName = p.getPieceName();
+
+                    switch(pieceName){
+                        case "Pawn":
+                            Pawn nP = new Pawn(isWhite);
+                            nP.setCurrentPosition(newBoard[y][x]);
+                            nP.checkingKing = checkingKing;
+                            newBoard[y][x].placePiece(nP); 
+                            nP.setNotYetMoved(hasMoved);
+                            newCb.addLivePiece(nP);
+                            break;
+                        case "Knight":
+                            Knight nK = new Knight(isWhite);
+                            nK.setCurrentPosition(newBoard[y][x]);
+                            nK.checkingKing = checkingKing;
+                            newBoard[y][x].placePiece(nK); 
+                            nK.setNotYetMoved(hasMoved);
+                            newCb.addLivePiece(nK);
+                            break;
+                        case "Bishop":
+                            Bishop nB = new Bishop(isWhite);
+                            nB.setCurrentPosition(newBoard[y][x]);
+                            nB.checkingKing = checkingKing;
+                            newBoard[y][x].placePiece(nB); 
+                            nB.setNotYetMoved(hasMoved);
+                            newCb.addLivePiece(nB);
+                            break;
+                        case "Rook":
+                            Rook nR = new Rook(isWhite);
+                            nR.setCurrentPosition(newBoard[y][x]);
+                            nR.checkingKing = checkingKing;
+                            newBoard[y][x].placePiece(nR); 
+                            nR.setNotYetMoved(hasMoved);
+                            newCb.addLivePiece(nR);
+                            break;
+                        case "Queen":
+                            Queen nQ = new Queen(isWhite);
+                            nQ.setCurrentPosition(newBoard[y][x]);
+                            nQ.checkingKing = checkingKing;
+                            newBoard[y][x].placePiece(nQ); 
+                            nQ.setNotYetMoved(hasMoved);
+                            newCb.addLivePiece(nQ);
+                            break;
+                        case "King":
+                            King nKi = new King(isWhite);
+                            nKi.setCurrentPosition(newBoard[y][x]);
+                            nKi.checkingKing = checkingKing;
+                            newBoard[y][x].placePiece(nKi); 
+                            nKi.setNotYetMoved(hasMoved);
+                            newCb.addLivePiece(nKi);
+                            break;
+                    }
+                }
+            }
+        }
+        //newCb.setBoard(newBoard);
+        return newCb;
+    }
+    
+    
+
+    public void copyCB(ChessBoard newChessBoard){
+        ChessBoard newCB = new ChessBoard(false);
         ArrayList<Piece> newLiveP = getLivePieces();
-        Square[][] ogBoard = original.getBoard();
-        Square[][] newBoard = getBoard();
+        Square[][] ogBoard = this.getBoard();
+        Square[][] newBoard = newChessBoard.getBoard();
         for(int row=0; row<8; row++){
             for(int col=0; col<8; col++){
                 if(ogBoard[row][col].isTakenSquare()){
@@ -258,13 +409,7 @@ public class ChessBoard{
         Evaluation eval = new Evaluation(this);
         return eval.getScore();
     }
-    public double getBoardValueOld(){
-        double sum = 0.0;
-        for(Piece p: livePieces){
-            sum += p.getValue();
-        }
-        return sum;
-    }
+    
     public void printEval(){
         Evaluation eval = new Evaluation(this);
         // System.out.println("Center control eval : " + eval.getCenterControlEval());

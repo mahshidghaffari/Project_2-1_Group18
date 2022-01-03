@@ -18,6 +18,7 @@ public class Pawn extends Piece{
         if(isWhite()) super.setValue(10);
 		else super.setValue(-10);    
     }
+    
 
     /*
     method legalMovesCalc
@@ -25,7 +26,7 @@ public class Pawn extends Piece{
     @return ArrayList<Square> an array of squares describing the legal squares this piece can move to
      */
     public ArrayList<Square> getLegalMoves(ChessBoard cb){
-        ArrayList<Square> legalMoves = new ArrayList<>();
+        ArrayList<Square> legalMoves = new ArrayList<Square>();
         int x = this.getCurrentPosition().getXPos();
         int y = this.getCurrentPosition().getYPos();
         Square[][] board = cb.getBoard();
@@ -181,9 +182,41 @@ public class Pawn extends Piece{
         }
         
         target.placePiece(this);
-        checkingKing(legalMoves);
-    }
 
+        checkingKing(legalMoves);
+        
+        promote(cb);
+    }
+    public void promote(ChessBoard cb){
+        //Loop though all promotion square
+        for(int x = 0;x<7;x++){
+            if(cb.getSquare(0,x).isTakenSquare()){
+                Piece p = cb.getSquare(0,x).getPieceOnSq();
+                
+                if(p.pieceName=="Pawn" && p.isWhite()){
+                    cb.getSquare(0,x).removePiece(p);
+                    Queen nQ = new Queen(true);
+                    cb.addLivePiece(nQ);
+                    cb.getLivePieces().remove(p);
+                    nQ.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/wqueen.png")));
+                    nQ.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
+                    cb.getSquare(0,x).placePiece(nQ);
+                }
+            }
+            if(cb.getSquare(7,x).isTakenSquare()){
+                Piece p = cb.getSquare(7,x).getPieceOnSq();
+                if(p.pieceName=="Pawn" && !p.isWhite()){
+                    cb.getSquare(7,x).removePiece(p);
+                    Queen nQ = new Queen(false);
+                    cb.addLivePiece(nQ);
+                    cb.getLivePieces().remove(p);
+                    nQ.setImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/bqueen.png")));
+                    nQ.setHighlightedImgIcon(new ImageIcon(ImageLoader.loadImage("app/src/main/java/view/resources/rqueen.png")));
+                    cb.getSquare(7,x).placePiece(nQ);
+                }
+            }
+        }
+    }
 
     /**
      * This method takes care of all promotions which occur when a pawn reaches the last row.
