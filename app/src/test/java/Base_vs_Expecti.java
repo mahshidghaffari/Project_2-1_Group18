@@ -15,10 +15,10 @@ public class Base_vs_Expecti {
      */
 
     public Base_vs_Expecti(){
-        int runs = 1000;
+        int runs = 10;
         int max_depth=3;
         //for each of the depths run 100 games
-        for(int depth = 1 ; depth <= max_depth ; depth++){
+        for(int depth = 2 ; depth <= max_depth ; depth++){
             System.out.println("In depth "+ depth+" ");
             experiment(runs, depth);
         }

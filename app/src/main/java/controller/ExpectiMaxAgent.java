@@ -1,5 +1,7 @@
 package controller;
 
+import org.apache.commons.configuration2.interpol.SystemPropertiesLookup;
+
 public class ExpectiMaxAgent extends BlackPlayer{
 
     private ChessBoard cb;
@@ -18,7 +20,7 @@ public class ExpectiMaxAgent extends BlackPlayer{
         this.chosenPiece = chosenPiece;
         this.depth = depth;
         this.isWhite = isWhite;
-        this.tree = new Tree(depth, game, chosenPiece, isWhite);
+        this.tree = new Tree(depth, game, chosenPiece, false);
         numNodes = 0;
     }
 
@@ -27,20 +29,26 @@ public class ExpectiMaxAgent extends BlackPlayer{
 
         if (this.canMove(chosenPiece)) {
             noMoves = false;
+            
+            tree.generateTree2(tree.getRoot());
+            Tree t = tree;
+            //System.out.println("bestMOve : "); 
+           // Node b = tree.getRoot().getBestChild();
 
-            tree.generateTree();
+            //tree.getRoot().getBestChild().getBoard().printBoard();
             //tree.calculateTree(tree.getRoot().getChildren());
             Piece best = tree.getBestPiece();
             Square bestMove = tree.getBestSquare();
+            Node child = tree.getRoot();
 
             // System.out.println("Yes Moves");
             // System.out.println(best.getPieceName());
             // System.out.println("X: " + bestMove.getXPos() + " Y: " + bestMove.getYPos());
 
             best.move(bestMove, cb,  best.getLegalMoves(cb));
-            System.out.println("Number of nodes searched : " + tree.getNumberOfNodes());
+            //System.out.println("Number of nodes searched : " + tree.getNumberOfNodes());
             
-            Node b = tree.getBestBoard();
+            //Node b = tree.getBestBoard();
             //b.getBoard().printBoard();
             //System.out.println("/////////////////////////////////" + b.getValue());
             game.updateBoard();

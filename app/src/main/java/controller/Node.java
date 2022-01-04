@@ -3,31 +3,66 @@ package controller;
 import java.util.ArrayList;
 
 public class Node {
-    private double value;
+    private double value=0;
     private boolean isProbability;
     private ArrayList<Node> children;
     private ChessBoard board;
     private String piece;
     private double alpha;
     private double beta;
+    private boolean isWhite;
+    private Node bestChild;
+
     
 
-    public Node(boolean isProbability, String piece, ChessBoard board) {
+    public Node(boolean isProbability, String piece, ChessBoard board, boolean isWhite) {
         this.isProbability = isProbability;
         this.piece = piece;
         this.board = board;
         this.children = new ArrayList<Node>();
+        this.isWhite = isWhite;
     }
 
-    public Node(boolean isProbability, ChessBoard board, int value) {
+    public Node(boolean isProbability, ChessBoard board, int value, boolean isWhite) {
         this.isProbability = isProbability;
         this.board = board;
         this.children = new ArrayList<Node>();
         this.value = value;
+        this.isWhite = isWhite;
     }
 
+    public Node(ChessBoard board, boolean isWhite){
+        this.board= board;
+        this.children = new ArrayList<Node>();
+        this.isWhite = isWhite;
+
+    }
+    public Node(ChessBoard board , String piece, boolean isWhite){
+        this.board= board;
+        this.children = new ArrayList<Node>();
+        this.isWhite = isWhite;
+        this.piece =piece;
+
+    }
+
+    
     public ChessBoard getBoard() {
         return board;
+    }
+
+    public boolean getisWhite(){
+        return isWhite;
+    }
+    public Node getBestChild() {
+        return bestChild;
+    }
+
+    public void setBestChild(Node b){
+        bestChild = b;
+    }
+    
+    public void setisWhite(boolean isWhite){
+        this.isWhite = isWhite;
     }
 
     public double getAlpha(){

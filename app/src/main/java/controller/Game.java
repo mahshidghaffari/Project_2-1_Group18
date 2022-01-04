@@ -65,7 +65,7 @@ public class Game{
 
     public void displayEndBoard() {
         if(wNoAgent || bNoAgent){
-            System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
+            //System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
             if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
             // CLose current frame and display menu
             this.getFrame().dispose();
@@ -127,8 +127,8 @@ public class Game{
         if(cb.missingKing()){
             gameOver = true;
             
-            System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
-            System.out.println("Total number of nodes evaluated : "+ this.totalNumNodes);
+            //System.out.println("GAME OVER. Number of moves(for 1 player): "+getMoveCounter()/2);
+            //System.out.println("Total number of nodes evaluated : "+ this.totalNumNodes);
             if(dp!=null){ dp.getTextLabel().setText("The King has fallen, Game Over"); }
             displayEndBoard();
             return;
