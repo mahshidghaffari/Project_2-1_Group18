@@ -33,6 +33,7 @@ public class Game{
     private boolean wExpectiMaxActive = false;
     private boolean bEpectiMaxActive = false;
     private boolean noAgent = false;
+    private boolean whiteSelected;
     private int depth=-1;                       //-1 means no depth (PvP)
     private DicePanel dp;
     private int moveCounter=0;
@@ -42,7 +43,7 @@ public class Game{
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
      * @param f is the ChessBoard GUI Frame
      */
-    public Game(JFrame f, int depth){
+    public Game(JFrame f, int depth, boolean whiteSelected){
         this.f = f;
         cb = new ChessBoard();
         dice = new Dice();
@@ -51,6 +52,7 @@ public class Game{
         buttonPanel= new ButtonPanel(this);
         this.noAgent=noAgent;
         this.depth=depth;
+        this.whiteSelected = whiteSelected;
     }
 
     public Game(int depth){
@@ -148,14 +150,14 @@ public class Game{
                 whichPiece();  
                 play();    
             }
-
-           updateBoard();
+            updateBoard();
         }
     }
 
     public DicePanel getDicePanel(){
         return dp;
     }
+
     public void setDicePanel(DicePanel dp){
         this.dp = dp;
     }
@@ -215,7 +217,7 @@ public class Game{
             // EXPECTIMAX AGENT
             } else if (wExpectiMaxActive) {
                 String chosen = dice.getChosen();
-                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
+                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, true);
                 expectiMaxPlayer.expectiMaxPlay();
             }
         }
@@ -253,6 +255,7 @@ public class Game{
         	// EXPECTIMAX AGENT
         	} else if (bEpectiMaxActive) {
                 String chosen = dice.getChosen();
+
                 expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
                 expectiMaxPlayer.expectiMaxPlay();
                 this.totalNumNodes += expectiMaxPlayer.numNodes;

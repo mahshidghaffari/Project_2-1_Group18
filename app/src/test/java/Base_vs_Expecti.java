@@ -27,9 +27,10 @@ public class Base_vs_Expecti {
         int eMax = 0;
         int base = 0;
         double avgMoves = 0;
+        boolean isWhite = true;
         for(int i=0;i<runs;i++){
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f, depth);
+            Game game = new Game(f, depth, isWhite);
             game.setwBaseLineActive(true);
             //game.getBaseLineAgent().setSimple(simpleAgent);
             game.setbEpectiMaxActive(true);
@@ -49,6 +50,7 @@ public class Base_vs_Expecti {
             else if(color.equals("White")){
                 base++;
             }
+            isWhite = !isWhite;
         }
         System.out.println("- Base Player won "+ base + " games out of "+ runs);
         System.out.println("- ExpectiMax Player won "+ eMax + " games out of "+ runs);

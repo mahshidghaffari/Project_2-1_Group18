@@ -118,6 +118,14 @@ public class Node {
         this.children.add(n);
     }
 
+    public boolean isLeaf() {
+        if (getChildren().equals(null)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public double getChildrenAvg(){
         int sum=0;
         for(Node n: children){
