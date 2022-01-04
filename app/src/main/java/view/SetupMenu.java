@@ -13,6 +13,7 @@ public class SetupMenu {
     private int HEIGHT=480;
     private String GameMode= "PvP";//default
     private String GameColour= "Black";//default
+    private boolean whiteSelected = true;
 
     public SetupMenu(){
         create();
@@ -194,6 +195,8 @@ public class SetupMenu {
                 ButtonBlack.setBackground(Color.LIGHT_GRAY);
                 ButtonWhite.setBackground(Color.WHITE);
                 GameColour="Black";
+                whiteSelected = false;
+
                 PrintGame();
             }
         });
@@ -210,6 +213,7 @@ public class SetupMenu {
                 ButtonBlack.setBackground(Color.WHITE);
                 ButtonWhite.setBackground(Color.LIGHT_GRAY);
                 GameColour="White";
+                whiteSelected = true;
                 PrintGame();
             }
         });
@@ -229,10 +233,10 @@ public class SetupMenu {
                 if ((GameMode.equals("PvAI"))||(GameMode.equals("AIvAI"))){
                     int depth = Integer.parseInt(
                             JOptionPane.showInputDialog("Depth of the game:", "3"));
-                    startGamebaord(GameMode,depth);
+                    startGamebaord(GameMode,depth, whiteSelected);
                 }
                 else{
-                    startGamebaord(GameMode,-1);
+                    startGamebaord(GameMode,-1, whiteSelected);
                 }
                 frame.dispose();
             }
@@ -248,11 +252,11 @@ public class SetupMenu {
         frame.setBounds(400, 100, WIDTH, HEIGHT);
     }
 
-    public void startGamebaord(String mode,int depth) {
+    public void startGamebaord(String mode,int depth, boolean whiteSelected) {
         if(mode.equals("PvP")){
             System.out.println("Mode: "+"PvP");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f, -1);
+            Game game = new Game(f, -1, whiteSelected);
 
             // Set agents that we want to use to true
             game.setwNoAgent(true);
@@ -273,11 +277,18 @@ public class SetupMenu {
         else if(mode.equals("PvAI")){
             System.out.println("Mode: "+"PvAI");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f, depth);
+            Game game = new Game(f, depth, whiteSelected);
 
             // Set agents that we want to use to true
-            game.setwNoAgent(true);
-            game.setbEpectiMaxActive(true);
+            if(whiteSelected){
+                game.setwNoAgent(true);
+                game.setbEpectiMaxActive(true);
+            } else {
+                game.setwExpectiMaxActive(true);
+                game.setbNoAgent(true);
+            }
+            
+            
 
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             f.setSize(screenSize.height + screenSize.height/2, screenSize.height - 50);
@@ -296,7 +307,7 @@ public class SetupMenu {
             //in that case, assume PvP
             System.out.println("Mode: "+"PvP");
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(f, depth);
+            Game game = new Game(f, depth, whiteSelected);
 
             // Set agents that we want to use to true
             game.setwBaseLineActive(true);
