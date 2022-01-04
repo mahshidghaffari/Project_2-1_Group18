@@ -148,14 +148,14 @@ public class Game{
                 whichPiece();  
                 play();    
             }
-
-           updateBoard();
+            updateBoard();
         }
     }
 
     public DicePanel getDicePanel(){
         return dp;
     }
+
     public void setDicePanel(DicePanel dp){
         this.dp = dp;
     }

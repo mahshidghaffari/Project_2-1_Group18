@@ -10,7 +10,6 @@ public class Node {
     private String piece;
     private double alpha;
     private double beta;
-    
 
     public Node(boolean isProbability, String piece, ChessBoard board) {
         this.isProbability = isProbability;
@@ -81,6 +80,14 @@ public class Node {
     // Methods
     public void addChild(Node n){
         this.children.add(n);
+    }
+
+    public boolean isLeaf() {
+        if (getChildren().equals(null)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public double getChildrenAvg(){
