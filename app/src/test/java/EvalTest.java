@@ -67,7 +67,7 @@ public class EvalTest{
         cb.addLivePiece(w);
         cb.getBoard()[0][0].placePiece(w);
         Evaluation eval = new Evaluation(cb);
-        assertEquals(10000.0, eval.getMaterialEval());
+        assertEquals(1000.0, eval.getMaterialEval());
     }
     
 

@@ -11,33 +11,6 @@ public class PawnTest {
     ChessBoard cb = new ChessBoard(true);
     Square[][] board = cb.getBoard();
     public static void main(String[]args){
-        ChessBoard cb = new ChessBoard(true);
-        Pawn wP = new Pawn(false);
-        cb.placePiece(cb.getSquare(6,0), wP);
-        Move move = new Move(cb.getSquare(6, 0), cb.getSquare(7,0), cb);
-        cb.playMove(move);
-        assertEquals("Queen", cb.getSquare(7,0).getPieceOnSq().getPieceName());
-        if(cb.getSquare(7,0).getPieceOnSq().getPieceName() == "Queen"){
-            System.out.println("Test 1 True");
-        } else {
-            System.out.println("Test 1 False");
-        }
-
-        
-        assertEquals(false, cb.getSquare(7,0).getPieceOnSq().isWhite());
-
-        if(!cb.getSquare(7,0).getPieceOnSq().isWhite()){
-            System.out.println("Test 2 True");
-        } else {
-            System.out.println("Test 2 False");
-        }
-        assertEquals(false, cb.getSquare(6,0).isTakenSquare());
-
-        if(!cb.getSquare(6,0).isTakenSquare()){
-            System.out.println("Test 3 True");
-        } else {
-            System.out.println("Test 3 False");
-        }
     }
         
     
@@ -228,7 +201,7 @@ public class PawnTest {
         ChessBoard cb = new ChessBoard(true);
         Pawn wP = new Pawn(true);
         cb.placePiece(cb.getSquare(1,0), wP);
-        Move move = new Move(cb.getSquare(1, 0), cb.getSquare(0,0), cb);
+        Move move = new Move(cb.getSquare(1, 0), cb.getSquare(0,0));
         cb.playMove(move);
         assertEquals("Queen", cb.getSquare(0,0).getPieceOnSq().getPieceName());
         assertEquals(true, cb.getSquare(0,0).getPieceOnSq().isWhite());
@@ -239,12 +212,12 @@ public class PawnTest {
     @Test public void testPromotionBlack(){
         ChessBoard cb = new ChessBoard(true);
         Pawn wP = new Pawn(false);
-        cb.placePiece(cb.getSquare(6,0), wP);
-        Move move = new Move(cb.getSquare(6, 0), cb.getSquare(7,0), cb);
+        cb.placePiece(cb.getSquare(6,7), wP);
+        Move move = new Move(cb.getSquare(6, 7), cb.getSquare(7,7));
         cb.playMove(move);
-        assertEquals("Queen", cb.getSquare(7,0).getPieceOnSq().getPieceName());
-        assertEquals(false, cb.getSquare(7,0).getPieceOnSq().isWhite());
-        assertEquals(false, cb.getSquare(6,0).isTakenSquare());
+        assertEquals("Queen", cb.getSquare(7,7).getPieceOnSq().getPieceName());
+        assertEquals(false, cb.getSquare(7,7).getPieceOnSq().isWhite());
+        assertEquals(false, cb.getSquare(6,7).isTakenSquare());
     }
     
     //Test En Passant to the left for white

@@ -189,7 +189,7 @@ public class Pawn extends Piece{
     }
     public void promote(ChessBoard cb){
         //Loop though all promotion square
-        for(int x = 0;x<7;x++){
+        for(int x = 0;x<8;x++){
             if(cb.getSquare(0,x).isTakenSquare()){
                 Piece p = cb.getSquare(0,x).getPieceOnSq();
                 

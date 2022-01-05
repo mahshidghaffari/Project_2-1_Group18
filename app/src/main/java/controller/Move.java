@@ -3,16 +3,22 @@ package controller;
 public class Move {
     Square origin;
     Square target;
-    ChessBoard cb;
+    String pieceName;
     Piece captured;
     double eval;
     public Move(){
 
     }
-    public Move(Square origin, Square target, ChessBoard cb){
+    public Move(Square origin, Square target){
         this.origin = origin;
         this.target = target;
-        this.cb = cb;
+        if(origin.isTakenSquare()){
+            this.pieceName = origin.getPieceOnSq().getPieceName();
+        } else{
+            if(target.isTakenSquare()){
+                this.pieceName = target.getPieceOnSq().pieceName;
+            }
+        }
         if(target.isTakenSquare()){
             this.captured = target.getPieceOnSq();
         }
