@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="Game ends stops when king is killed">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/controller/AlphaBetaPruning.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/MainPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/MainPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/SetupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/SetupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Node.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +36,15 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -95,6 +100,14 @@
       <option name="presentableId" value="Default" />
       <updated>1636634655110</updated>
     </task>
+    <task id="LOCAL-00001" summary="Game ends stops when king is killed">
+      <created>1638453750260</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1638453750260</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -108,6 +121,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Game ends stops when king is killed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game ends stops when king is killed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -129,7 +146,7 @@
     <SUITE FILE_PATH="coverage/Project_2_1_Group18$Launch.ic" NAME="Launch Coverage Results" MODIFIED="1636021331188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>view.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/DiceChess$App.ic" NAME="App Coverage Results" MODIFIED="1637230719730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/DiceChess$App.ic" NAME="App Coverage Results" MODIFIED="1638475543838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Project_2_1_Group18$KingTest.ic" NAME="KingTest Coverage Results" MODIFIED="1632916745436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Project_2_1_Group18$KnightTest.ic" NAME="KnightTest Coverage Results" MODIFIED="1632317683108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
