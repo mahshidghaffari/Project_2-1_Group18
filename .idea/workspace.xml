@@ -4,12 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="Game ends stops when king is killed">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/controller/AlphaBetaPruning.java" afterDir="false" />
+    <list default="true" id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_11_21__13_19__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_11_21__13_19__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_11_21__13_31__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_11_21__13_31__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_11_21__13_39__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_18_11_21__13_39__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_21__13_22__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_21__13_22__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_21__13_27__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_11_21__13_27__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/BaseLineAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/BaseLineAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/ExpectiMaxAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/ExpectiMaxAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Tree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/Base_vs_Expecti.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/Base_vs_Expecti.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +82,7 @@
       <recent name="$PROJECT_DIR$/app/src/main/java/controller" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Base_vs_Expecti">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-16" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -85,8 +92,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Base_vs_Expecti" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Base_vs_Expecti" />
+      <module name="DiceChess.app.test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Base_vs_Expecti" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
@@ -143,11 +158,11 @@
     </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Project_2_1_Group18$KnightTest.ic" NAME="KnightTest Coverage Results" MODIFIED="1632317683108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/DiceChess$App.ic" NAME="App Coverage Results" MODIFIED="1637230719730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Project_2_1_Group18$Launch.ic" NAME="Launch Coverage Results" MODIFIED="1636021331188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>view.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/DiceChess$App.ic" NAME="App Coverage Results" MODIFIED="1638475543838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Project_2_1_Group18$KingTest.ic" NAME="KingTest Coverage Results" MODIFIED="1632916745436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Project_2_1_Group18$KnightTest.ic" NAME="KnightTest Coverage Results" MODIFIED="1632317683108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

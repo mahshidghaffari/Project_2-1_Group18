@@ -60,9 +60,10 @@ public class Tree {
     }
 
     public void generateTree2(Node n){
-        if (!n.getBoard().missingKing()) {
+        //if (!n.getBoard().missingKing()) {
             if(depth==0){
-                n.setValue(n.getBoard().getBoardValue());
+                double temp = n.getBoard().getBoardValue();
+                n.setValue(temp);
                 return;
             }
             if(n.getPiece()!=null){  //if this is a piece and not a board
@@ -73,23 +74,29 @@ public class Tree {
                         .collect(Collectors.toList());
                 for(Piece p : pieceObjects){ 
                     for(Square move: p.getLegalMoves(n.getBoard())){
-                        Node childBoard = new Node(getScenerio(n.getBoard(), p, move), n.getisWhite());
-                        depth--;
-                        generateTree2(childBoard);
+                        ChessBoard scenario = getScenerio(n.getBoard(), p, move);
 
-                        if(n.getisWhite()){//MAXIMIZE
-                            if(n.getValue() <= childBoard.getValue()){
-                                n.setValue(childBoard.getValue());
-                                n.setBestChild(childBoard);
+                        Node childBoard = new Node(scenario, n.getisWhite());
+
+                        //if(!scenario.missingKing()) {
+                            depth--;
+
+                            generateTree2(childBoard);
+
+                            if(n.getisWhite()){//MAXIMIZE
+                                if(n.getValue() == 10000){n.setValue(-10000);}
+                                if(n.getValue() <= childBoard.getValue()){
+                                    n.setValue(childBoard.getValue());
+                                    n.setBestChild(childBoard);
+                                }
+                            }else{
+                                if(n.getValue() >= childBoard.getValue()){//MINIMAZE
+                                    n.setValue(childBoard.getValue());
+                                    n.setBestChild(childBoard);
+                                }
                             }
-                        }else{
-                            if(n.getValue() >= childBoard.getValue()){
-                                n.setValue(childBoard.getValue());
-                                n.setBestChild(childBoard);
-
-                            }    
-                        }
-                        depth++;
+                            depth++;
+//                        }
                     }
                 }
             }
@@ -99,13 +106,19 @@ public class Tree {
                     Node childPiece = new Node(n.getBoard(),name,isWhite);
                     depth--;
                     generateTree2(childPiece);
-                    n.setValue(n.getValue()+ childPiece.getValue()/movableNames.size());
+                    if(n.getValue() == 10000){
+                        n.setValue(0 + childPiece.getValue()/movableNames.size());
+                    }
+                    else{
+                        n.setValue(n.getValue()+ childPiece.getValue()/movableNames.size());
+                    }
+
 
                     depth++;
                 }
             }
         }
-    }
+    //}
 
     public ChessBoard getScenerio(ChessBoard originalCB, Piece movingPiece, Square target){
         ChessBoard copyBoard = this.copyBoard(originalCB);

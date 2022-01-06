@@ -8,7 +8,7 @@ public class BaseLineAgent extends WhitePlayer {
 
 	private Game game; 
 	String chosenPiece;
-	private boolean clever = false; //if not clever it will play completly random moves
+	private boolean clever = true; //if not clever it will play completly random moves
 	
 	public BaseLineAgent(Game game, ChessBoard cb) {
 		super(cb);

@@ -32,11 +32,7 @@ public class ExpectiMaxAgent extends BlackPlayer{
             
             tree.generateTree2(tree.getRoot());
             Tree t = tree;
-            //System.out.println("bestMOve : "); 
-           // Node b = tree.getRoot().getBestChild();
 
-            //tree.getRoot().getBestChild().getBoard().printBoard();
-            //tree.calculateTree(tree.getRoot().getChildren());
             Piece best = tree.getBestPiece();
             Square bestMove = tree.getBestSquare();
             Node child = tree.getRoot();
