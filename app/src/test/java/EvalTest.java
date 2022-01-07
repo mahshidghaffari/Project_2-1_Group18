@@ -198,5 +198,16 @@ public class EvalTest{
         eval.setKingDangerWeight(grid);
         assertEquals(-10.0, eval.getKingSafetyEval());
     }
+    @Test public void testEvalBounds(){
+        ChessBoard cb = new ChessBoard(true);
+        Evaluation eval = new Evaluation(cb);
+        assertEquals(11030.0, eval.getMaxEval());
+        eval.setPieceWeights(5.0, 20.0, 40.0, 55.0, 105.0);
+        assertEquals(11175.0, eval.getMaxEval());
+        eval.activateCenterControl();
+        assertEquals(11175.0 + 135.0, eval.getMaxEval());
+        eval.activateKingSafety();
+        assertEquals(11175.0 + 135.0 + 198.0, eval.getMaxEval());
+    }
 
 }
