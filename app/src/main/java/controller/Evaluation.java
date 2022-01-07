@@ -64,7 +64,7 @@ public class Evaluation {
 
             }
         }
-        score = this.getCenterControlEval() + this.getKingSafetyEval() + this.getMaterialEval() + this.getPiecesOnDiceEval();
+        score = this.getMaterialEval();
     }
     public double getPiecesOnDiceEval(){
         double whiteEval = 0.0;
@@ -627,6 +627,15 @@ public class Evaluation {
         this.rookWeight = rook;
         this.queenWeight = queen;
         this.kingWeight = king;
+    }
+    public void setPieceWeights(double[] weights){
+        this.pawnWeight =weights[0];
+        this.knightWeight = weights[1];
+        this.bishopWeight = weights[2];
+        this.rookWeight = weights[3];
+        this.rookWeight = weights[4];
+        this.queenWeight = weights[5];
+
     }
     public void setPieceOnDiceWeight(double w){
         this.pieceOnDiceWeight = w;
