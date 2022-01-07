@@ -14,9 +14,16 @@ public class Evaluation {
     private double bishopWeight;
     private double rookWeight;
     private double queenWeight;
-    private double kingWeight;
+    private final double kingWeight = 10000.0;
     private double pieceOnDiceWeight;
-    
+
+    private boolean kingSafety = false;
+    private boolean piecesOnDice = false;
+    private boolean centerControl = false;
+    public void activateKingSafety(){this.kingSafety = true;}
+    public void activateCenterControl(){this.centerControl = true;}
+    public void activatePiecesOnDice(){this.piecesOnDice = true;}
+
     
     
     private double[][] kingDangerWeight = { //Arbitrary weights of squares around the king,
@@ -51,7 +58,7 @@ public class Evaluation {
      * @param cb the chessboard to evaluate
      */
     public Evaluation(ChessBoard cb) {
-        this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0, 1000.0);
+        this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0);
         this.setPieceOnDiceWeight(15.0);
         this.cb = cb;
         this.board = cb.getBoard();
@@ -64,7 +71,30 @@ public class Evaluation {
 
             }
         }
-        score = this.getCenterControlEval() + this.getKingSafetyEval() + this.getMaterialEval() + this.getPiecesOnDiceEval();
+        score = this.getMaterialEval();
+        if(centerControl){score += this.getCenterControlEval();}
+        if(kingSafety){score += this.getKingSafetyEval();}
+        if(piecesOnDice){score += this.getPiecesOnDiceEval();}
+    }
+    public double getMaxEval(){
+        //Max score you can get is with all pawns promoted, so 9 queens + other pieces
+        double max = 9 * queenWeight + 2*knightWeight + 2*bishopWeight + 2*rookWeight + kingWeight;
+        if(centerControl){
+            for(int i=0; i<4; i++){
+                //Max number of threats you can put on a single square is 9
+                max += 9 * squareEval[i][i];
+            } 
+        }
+        if(kingSafety){
+            for(int i=0; i<3; i++){
+                max += 9*kingDangerWeight[i][i];
+                max += 9*kingProtectionWeight[i][i];
+            }
+        }
+        if(piecesOnDice){
+            max += 6*pieceOnDiceWeight;
+        }
+        return max;
     }
     public double getPiecesOnDiceEval(){
         double whiteEval = 0.0;
@@ -620,13 +650,21 @@ public class Evaluation {
     public void setKingProtectionWeight(double[][]grid){
         this.kingProtectionWeight = grid;
     }
-    public void setPieceWeights(double pawn, double knight, double bishop, double rook, double queen, double king){
+    public void setPieceWeights(double pawn, double knight, double bishop, double rook, double queen){
         this.pawnWeight = pawn;
         this.knightWeight = knight;
         this.bishopWeight = bishop;
         this.rookWeight = rook;
         this.queenWeight = queen;
-        this.kingWeight = king;
+    }
+    public void setPieceWeights(double[] weights){
+        this.pawnWeight =weights[0];
+        this.knightWeight = weights[1];
+        this.bishopWeight = weights[2];
+        this.rookWeight = weights[3];
+        this.rookWeight = weights[4];
+        this.queenWeight = weights[5];
+
     }
     public void setPieceOnDiceWeight(double w){
         this.pieceOnDiceWeight = w;
