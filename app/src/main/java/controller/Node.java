@@ -8,47 +8,68 @@ public class Node {
     private ArrayList<Node> children;
     private ChessBoard board;
     private String piece;
-    private double alpha;
-    private double beta;
+    private double alpha = 2000;
+    private double beta = -2000;
     private boolean isWhite;
     private Node bestChild;
-
+    private Node parent;
+    private Node grandParent;
+    private boolean isRoot= false;
+//    private boolean maximizing;
+    
     
 
-    public Node(boolean isProbability, String piece, ChessBoard board, boolean isWhite) {
-        this.isProbability = isProbability;
-        this.piece = piece;
-        this.board = board;
-        this.children = new ArrayList<Node>();
-        this.isWhite = isWhite;
-    }
+    // public Node(boolean isProbability, String piece, ChessBoard board, boolean isWhite) {
+    //     this.isProbability = isProbability;
+    //     this.piece = piece;
+    //     this.board = board;
+    //     this.children = new ArrayList<Node>();
+    //     this.isWhite = isWhite;
+    // }
 
-    public Node(boolean isProbability, ChessBoard board, int value, boolean isWhite) {
-        this.isProbability = isProbability;
-        this.board = board;
-        this.children = new ArrayList<Node>();
-        this.value = value;
-        this.isWhite = isWhite;
-    }
+    // public Node(boolean isProbability, ChessBoard board, int value, boolean isWhite, boolean isRoot) {
+    //     this.isProbability = isProbability;
+    //     this.board = board;
+    //     this.children = new ArrayList<Node>();
+    //     this.value = value;
+    //     this.isWhite = isWhite;
+    // }
 
-    public Node(ChessBoard board, boolean isWhite){
+    public Node(ChessBoard board, boolean isWhite, Node parent){
         this.board= board;
         this.children = new ArrayList<Node>();
         this.isWhite = isWhite;
-
+        this.parent = parent;
+        // alpha = parent.getAlpha();
+        // beta = parent.getBeta();
     }
-    public Node(ChessBoard board , String piece, boolean isWhite){
+    public Node(ChessBoard board , String piece, boolean isWhite, Node parent, boolean isRoot){
         this.board= board;
         this.children = new ArrayList<Node>();
         this.isWhite = isWhite;
         this.piece =piece;
+        this.parent = parent;
+        this.isRoot = isRoot;
+        if(!isRoot){
+            alpha = parent.getAlpha();
+            beta = parent.getBeta();
+        }
 
+        //if()    
     }
 
-    
     public ChessBoard getBoard() {
         return board;
     }
+    
+    public boolean getisRoot(){
+        return isRoot;
+    }
+    public void setIsRoot(boolean isRoot){
+        this.isRoot = isRoot;
+    }
+
+
 
     public boolean getisWhite(){
         return isWhite;
@@ -88,6 +109,20 @@ public class Node {
     public void setPiece(String piece) {
         this.piece = piece;
     }
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setGrandParent(Node abuelo) {
+        this.parent = abuelo;
+    }
+    public Node getGrandParent() {
+        return grandParent;
+    }
+
+    public void setParent(Node p) {
+        this.parent = p;
+    }
 
     public boolean isProbability() {
         return isProbability;
@@ -103,6 +138,19 @@ public class Node {
 
     public void setValue(double value) {
         this.value = value;
+        //updating alpha and beta for the piece nodes
+        if(this.piece !=null){     //if this is a piece node
+            if(isWhite){ //if its the maximizing player
+                if(value > alpha){
+                    alpha = value; //update alpha
+                }
+            }   
+            else{ //if this is the minimizing player
+                if(value < beta){
+                    beta = value; //update beta                
+                }
+            }
+        }
     }
 
     public ArrayList<Node> getChildren() {
@@ -133,4 +181,11 @@ public class Node {
         }
         return sum/children.size();
     }
+
+    // public void setMaximizing(boolean isMaxing){
+    //     maximizing = isMaxing;
+    // }
+    // public boolean getIsMaximzing(){
+    //     return maximizing;
+    // }
 }
