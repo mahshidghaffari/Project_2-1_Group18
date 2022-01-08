@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 public class Node {
-    private double value = 10000;
+    private double value = 100000;
     private boolean isProbability;
     private ArrayList<Node> children;
     private ChessBoard board;
