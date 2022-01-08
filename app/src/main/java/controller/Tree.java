@@ -11,8 +11,8 @@ public class Tree {
     private int depth;
     private Boolean isWhite;
     private int numNodes = 0;
-    private int upperBound = 2000;
-    private int lowerBound = -2000;
+    private int upperBound = 10001;
+    private int lowerBound = -10001;
 
     public Node getRoot() {
         return root;
@@ -29,7 +29,7 @@ public class Tree {
     }
 
     public void generateTree2(Node n){
-            if(depth==0){
+            if(depth==0 || n.getBoard().missingKing()){
                 double boardVal = n.getBoard().getBoardValue();
                 n.setValue(boardVal);
                 return;
@@ -67,7 +67,7 @@ public class Tree {
                 int counter=0;
                 for(String name: movableNames){
                     counter++;
-                    Node childPiece = new Node(n.getBoard(),name,isWhite,n, false);
+                    Node childPiece = new Node(n.getBoard(),name, !n.getisWhite(), n, false);
                     depth--;
                     generateTree2(childPiece);
                     
@@ -80,12 +80,12 @@ public class Tree {
                     depth++;
 
                     if(n.getisWhite()){ //if its maximizing
-                        if(n.getAlpha()>= childPiece.getValue() + (upperBound*(movableNames.size()- counter))/movableNames.size()){
+                        if(n.getAlpha() >= childPiece.getValue() + (upperBound*(movableNames.size()- counter))/movableNames.size()){
                             break;
                         }
                     }
                     else{ //if its manimizing
-                        if(n.getBeta()<= childPiece.getValue() + (lowerBound*(movableNames.size()- counter))/movableNames.size()){
+                        if(n.getBeta() <= childPiece.getValue() + (lowerBound*(movableNames.size()- counter))/movableNames.size()){
                             break;
                         }
                     }
@@ -103,20 +103,6 @@ public class Tree {
 
         return copyBoard;
     }
-
-//    public boolean checkCapture(){
-//
-//        boolean canCaptureKing = false;
-//
-//        for (Node child : this.root.getChildren())
-//        {
-//           if(child.getBoard().missingKing()){
-//               child.setValue(-10000);
-//               canCaptureKing = true;
-//           }
-//        }
-//        return canCaptureKing;
-//    }
 
     public ArrayList<Piece> getAllMovablePieces(ChessBoard cb, boolean isWhite){
         ArrayList<Piece> movablePieces = new ArrayList<Piece>();

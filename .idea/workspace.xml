@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="Game ends stops when king is killed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/ExpectiMaxAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/ExpectiMaxAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Node.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Tree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/Base_vs_Expecti.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/Base_vs_Expecti.java" afterDir="false" />

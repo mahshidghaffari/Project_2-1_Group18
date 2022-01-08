@@ -8,32 +8,14 @@ public class Node {
     private ArrayList<Node> children;
     private ChessBoard board;
     private String piece;
-    private double alpha = 2000;
-    private double beta = -2000;
+    private double alpha = 10001;
+    private double beta = -10001;
     private boolean isWhite;
     private Node bestChild;
     private Node parent;
     private Node grandParent;
     private boolean isRoot= false;
-//    private boolean maximizing;
-    
-    
 
-    // public Node(boolean isProbability, String piece, ChessBoard board, boolean isWhite) {
-    //     this.isProbability = isProbability;
-    //     this.piece = piece;
-    //     this.board = board;
-    //     this.children = new ArrayList<Node>();
-    //     this.isWhite = isWhite;
-    // }
-
-    // public Node(boolean isProbability, ChessBoard board, int value, boolean isWhite, boolean isRoot) {
-    //     this.isProbability = isProbability;
-    //     this.board = board;
-    //     this.children = new ArrayList<Node>();
-    //     this.value = value;
-    //     this.isWhite = isWhite;
-    // }
 
     public Node(ChessBoard board, boolean isWhite, Node parent){
         this.board= board;
@@ -55,7 +37,7 @@ public class Node {
             beta = parent.getBeta();
         }
 
-        //if()    
+        //if()
     }
 
     public ChessBoard getBoard() {
@@ -181,11 +163,4 @@ public class Node {
         }
         return sum/children.size();
     }
-
-    // public void setMaximizing(boolean isMaxing){
-    //     maximizing = isMaxing;
-    // }
-    // public boolean getIsMaximzing(){
-    //     return maximizing;
-    // }
 }
