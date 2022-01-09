@@ -10,13 +10,9 @@ public class Tree {
     private Node root;
     private int depth;
     private Boolean isWhite;
-    private String[] pieceNames ;
-    private List test; //generate
-    private int[]  bounds = {-1290,1290};
     private int numNodes = 0;
-    private boolean AIblack=true;
-    private int upperBound = 2000;
-    private int lowerBound = -2000;
+    private int upperBound = 10001;
+    private int lowerBound = -10001;
 
     public Node getRoot() {
         return root;
@@ -24,60 +20,18 @@ public class Tree {
     public int getNumberOfNodes(){
         return numNodes;
     }
-
     public Boolean getIsWhite(){ return this.isWhite;}
 
-    public void setRoot(Node root) {
-        this.root = root;
-        numNodes++;
-    }
-
     public Tree(int depth, Game game, String pieceName, Boolean isWhite) {
-        //this.root = new Node(false, pieceName, game.getChessBoard(), isWhite);
         this.root = new Node(game.getChessBoard(),pieceName,isWhite,null, true);
-       // root.setIsRoot(true);
-        // root.setAlpha(Double.MIN_VALUE);
-        // root.setBeta(Double.MAX_VALUE);
-        //System.out.println("Root is a "+ pieceName);
         this.depth = depth*2;
-        //this.isWhite = game.getWhitePlayer().getIsMyTurn();
         this.isWhite = isWhite;
-        this.pieceNames = new String[]{ "Rook", "Bishop", "Queen", "King", "Knight", "Pawn" };
-        this.test = new ArrayList();
-        this.generateTurns();
-    }
-
-    private void generateTurns(){
-        boolean toadd = isWhite;
-        for (int i = 0; i < depth; i++) {
-            this.test.add(toadd);
-            this.test.add(toadd);
-            toadd = !toadd;
-        }
-        Collections.reverse(test);
-    }
-    public Node getBestBoard2(){
-        return root.getBestChild();
     }
 
     public void generateTree2(Node n){
-        //if (!n.getBoard().missingKing()) {
-            if(depth==0){
+            if(depth==0 || n.getBoard().missingKing()){
                 double boardVal = n.getBoard().getBoardValue();
                 n.setValue(boardVal);
-                Node parent = n.getParent();
-               
-
-                // if(parent.getisWhite()){  //if the parent of this board is maximizing then,  
-                //     if(boardVal > parent.getValue()){ //if the value of the leaf is better for max then the current value 
-                //         parent.setValue(boardVal);   //update it to the new explored leafs value 
-                //     }
-                // }
-                // else if(!parent.getisWhite()){ //if the parent is minimizing
-                //     if(boardVal < parent.getValue()){
-                //         parent.setValue(boardVal);
-                //     }
-                // }
                 return;
             }
             if(n.getPiece()!=null){  //if this is a piece and not a board
@@ -89,7 +43,6 @@ public class Tree {
                 for(Piece p : pieceObjects){ 
                     for(Square move: p.getLegalMoves(n.getBoard())){
                         ChessBoard scenario = getScenerio(n.getBoard(), p, move);
-
                         Node childBoard = new Node(scenario, n.getisWhite(), n);
                         numNodes++;
 
@@ -99,9 +52,8 @@ public class Tree {
                         //if(!scenario.missingKing()) {
                             depth--;
                             generateTree2(childBoard);
-
                             if(n.getisWhite()){//MAXIMIZE
-                                if(n.getValue() == 10000){n.setValue(-10000);}
+                                if(n.getValue() == 100000){n.setValue(-100000);}
                                 if(n.getValue() <= childBoard.getValue()){
                                     n.setValue(childBoard.getValue());
                                     n.setBestChild(childBoard);
@@ -127,7 +79,7 @@ public class Tree {
                     depth--;
                     generateTree2(childPiece);
                     
-                    if(n.getValue() == 10000){
+                    if(n.getValue() == 100000){
                         n.setValue(0 + childPiece.getValue()/movableNames.size());
                     }
                     else{
@@ -136,15 +88,12 @@ public class Tree {
                     depth++;
 
                     if(n.getisWhite()){ //if its maximizing
-                        if(n.getAlpha()>= childPiece.getValue() + (upperBound*(movableNames.size()- counter))/movableNames.size()){
-                            //System.out.println("prunning alpha");
+                        if(n.getAlpha() >= childPiece.getValue() + (upperBound*(movableNames.size()- counter))/movableNames.size()){
                             break;
                         }
                     }
                     else{ //if its manimizing
-                        double g =childPiece.getValue() + (lowerBound*(movableNames.size()- counter))/movableNames.size();
-                        if(n.getBeta()<= childPiece.getValue() + (lowerBound*(movableNames.size()- counter))/movableNames.size()){
-                            //System.out.println("prunning beta");
+                        if(n.getBeta() <= childPiece.getValue() + (lowerBound*(movableNames.size()- counter))/movableNames.size()){
                             break;
                         }
                     }
@@ -159,21 +108,8 @@ public class Tree {
         ArrayList<Square> fakeLegalMoves = new ArrayList<Square>();
         fakeLegalMoves.add(toMove);
         movingPieceCopy.move(toMove, copyBoard , fakeLegalMoves);
+
         return copyBoard;
-    }
-
-    public boolean checkCapture(){
-
-        boolean canCaptureKing = false;
-
-        for (Node child : this.root.getChildren())
-        {
-           if(child.getBoard().missingKing()){
-               child.setValue(-10000);
-               canCaptureKing = true;
-           }
-        }
-        return canCaptureKing;
     }
 
     public ArrayList<Piece> getAllMovablePieces(ChessBoard cb, boolean isWhite){
@@ -227,31 +163,38 @@ public class Tree {
         return copy;
     }
 
-    public Square getBestSquare(){
-        //ChessBoard best = root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get().getBoard();
-        ChessBoard best = root.getBestChild().getBoard();
-        Square bestSquare = null;
-
-        List<Piece> pieceObjectsBestBoard = best
-                .getLivePieces().stream()
-                .filter(p -> p.getPieceName().equals(root.getPiece()))
-                .filter(p -> p.isWhite() == getRoot().getisWhite())
-                .collect(Collectors.toList());
-
-        for (Piece piece : pieceObjectsBestBoard)
-        {
-            Square squareOriginalBoard = root.getBoard().getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
-            if(!squareOriginalBoard.isTakenSquare() || squareOriginalBoard.getPieceOnSq().isWhite() != this.isWhite){
-                bestSquare = squareOriginalBoard;
+    public Square getBestSquare(Piece bestPiece) {
+        Square best = null;
+        ArrayList<Square> legalMoves = bestPiece.getLegalMoves(root.getBoard());
+        for (Square s : legalMoves) {
+            Square bestBoard = root.getBestChild().getBoard().getSquare(s.getYPos(), s.getXPos());
+            if (bestBoard.getPieceOnSq() != null) {
+                if (bestBoard.getPieceOnSq().getPieceName() == bestPiece.getPieceName()) {
+                    if(bestPiece.isWhite() == bestBoard.getPieceOnSq().isWhite()){
+                        best = s;
+                    }
+                }
             }
         }
-        return bestSquare;
+        if(best == null){
+            for (Square s : legalMoves) {
+                Square bestBoard = root.getBestChild().getBoard().getSquare(s.getYPos(), s.getXPos());
+                if (bestBoard.getPieceOnSq() != null) {
+                   if(bestPiece.getPieceName() == "Pawn" && bestBoard.getPieceOnSq().getPieceName() == "Queen"){
+                        if(bestPiece.isWhite() == bestBoard.getPieceOnSq().isWhite()){
+                            best = s;
+                        }
+                    }
+                }
+            }
+        }
+        return best;
     }
 
     public Piece getBestPiece(){
-        //ChessBoard best = root.getChildren().stream().min(Comparator.comparing(Node::getValue)).get().getBoard();
         ChessBoard best = root.getBestChild().getBoard();
         Piece bestPiece = null;
+
 
         List<Piece> pieceObjectsOriginalBoard = root.getBoard()
                 .getLivePieces().stream()
@@ -262,8 +205,34 @@ public class Tree {
         for (Piece piece : pieceObjectsOriginalBoard)
         {
             Square squareBestBoard = best.getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
-            if(!squareBestBoard.isTakenSquare()){
-                bestPiece = piece;
+            if(squareBestBoard.getPieceOnSq() == null){
+                for (Square s : piece.getLegalMoves(root.getBoard())) {
+                    Square bestBoard = root.getBestChild().getBoard().getSquare(s.getYPos(), s.getXPos());
+                    if(bestBoard.getPieceOnSq() != null){
+                        if (bestBoard.getPieceOnSq().getPieceName() == root.getPiece()) {
+                            if(piece.isWhite() == bestBoard.getPieceOnSq().isWhite())
+                                bestPiece = piece;
+                        }
+                    }
+                }
+            }
+        }
+        if(bestPiece == null){
+
+            for (Piece piece : pieceObjectsOriginalBoard)
+            {
+                Square squareBestBoard = best.getBoard()[piece.getCurrentPosition().getYPos()][piece.getCurrentPosition().getXPos()];
+                if(squareBestBoard.getPieceOnSq() == null){
+                    for (Square s : piece.getLegalMoves(root.getBoard())) {
+                        Square bestBoard = root.getBestChild().getBoard().getSquare(s.getYPos(), s.getXPos());
+                        if(bestBoard.getPieceOnSq() != null){
+                            if(bestBoard.getPieceOnSq().getPieceName() == "Queen" && root.getPiece() == "Pawn"){
+                                if(piece.isWhite() == bestBoard.getPieceOnSq().isWhite())
+                                    bestPiece = piece;
+                            }
+                        }
+                    }
+                }
             }
         }
         return bestPiece;

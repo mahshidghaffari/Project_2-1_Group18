@@ -39,6 +39,8 @@ public class Individual {
         this.rookWeight = rookWeight;
         this.queenWeight = queenWeight;
     }
+
+    public Individual(String empty){ }
     /*
     Method getFitness : returns a double that symbolizes the fitness of this individual
     the fitness will be asserted by the performance of the expectimax with evalFunction with individual's weights.
@@ -96,5 +98,23 @@ public class Individual {
         String r = "Pawn = "+ pawnWeight + ", Knight = " + knightWeight + ", Bishop = " + bishopWeight + ", Rook = " + rookWeight + ", Queen = "+queenWeight;
 
         return r;
+    }
+
+    public void randWeight(int whichWeight){
+        if(whichWeight==0){
+            pawnWeight = (Math.random() * ((ogPawn+pawnRange) - (ogPawn-pawnRange))) + (ogPawn-pawnRange);
+        }
+        else if(whichWeight==1){
+            knightWeight = (Math.random() * ((ogKnight+knightRange) - (ogKnight-knightRange))) + (ogKnight-knightRange);
+        }
+        else if(whichWeight==2){
+            bishopWeight = (Math.random() * ((ogBishop+bishopRange) - (ogBishop-bishopRange))) + (ogBishop-bishopRange);
+        }
+        else if(whichWeight==3){
+            rookWeight = (Math.random() * ((ogRook+rookRange) - (ogRook-rookRange))) + (ogRook-rookRange);
+        }
+        else if(whichWeight==4){
+            queenWeight = (Math.random() * ((ogQueen+queenRange) - (ogQueen-queenRange))) + (ogQueen-queenRange);
+        }
     }
 }

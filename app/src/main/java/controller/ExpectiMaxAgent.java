@@ -2,6 +2,9 @@ package controller;
 
 import org.apache.commons.configuration2.interpol.SystemPropertiesLookup;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ExpectiMaxAgent extends BlackPlayer{
 
     private ChessBoard cb;
@@ -29,12 +32,31 @@ public class ExpectiMaxAgent extends BlackPlayer{
 
         if (this.canMove(chosenPiece)) {
             noMoves = false;
-            
+            //System.out.println(".............");
+
             tree.generateTree2(tree.getRoot());
+
             Tree t = tree;
 
             Piece best = tree.getBestPiece();
-            Square bestMove = tree.getBestSquare();
+            Square bestMove = tree.getBestSquare(best);
+            if(best == null){
+                tree.getRoot().getBoard().printBoard();
+                tree.getRoot().getBestChild().getBoard().printBoard();
+//                System.out.println(",,,");
+//                List<Piece> pieceObjects = tree.getRoot().getBoard()  //getting the pieces that can move
+//                        .getLivePieces().stream()
+//                        .filter(p -> p.getPieceName().equals(tree.getRoot().getPiece()))
+//                        .filter(p -> p.isWhite() == isWhite)
+//                        .collect(Collectors.toList());
+//                for(Piece p : pieceObjects){
+//                    for(Square move: p.getLegalMoves(tree.getRoot().getBoard())){
+//                        ChessBoard cb = tree.getScenerio(tree.getRoot().getBoard(), p, move);
+//                        cb.printBoard();
+//                    }
+//                }
+            }
+            //Square bestMove = tree.getBestSquare();
             Node child = tree.getRoot();
 
             // System.out.println("Yes Moves");
