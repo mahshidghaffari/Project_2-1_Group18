@@ -91,7 +91,7 @@ public class Tree {
                         ChessBoard scenario = getScenerio(n.getBoard(), p, move);
 
                         Node childBoard = new Node(scenario, n.getisWhite(), n);
-
+                        numNodes++;
 
                         // System.out.println("next node is a board -->");
                         // childBoard.getBoard().printBoard();
@@ -122,6 +122,7 @@ public class Tree {
                 for(String name: movableNames){
                     counter++;
                     Node childPiece = new Node(n.getBoard(),name,isWhite,n, false);
+                    numNodes++;
                    // System.out.println("next node is a piece : "+ childPiece.getPiece());
                     depth--;
                     generateTree2(childPiece);

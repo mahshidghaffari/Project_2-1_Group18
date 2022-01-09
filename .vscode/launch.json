@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Individual",
+            "request": "launch",
+            "mainClass": "controller.Individual",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "Launch ChessBoardTest",
+            "request": "launch",
+            "mainClass": "ChessBoardTest",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "Launch PawnTest",
+            "request": "launch",
+            "mainClass": "PawnTest",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "Launch App",
             "request": "launch",
             "mainClass": "App",

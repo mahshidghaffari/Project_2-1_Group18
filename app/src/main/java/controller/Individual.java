@@ -8,7 +8,7 @@ public class Individual {
     public double queenWeight;
     //No king weigth : it is always going to be worth 100000 because it determines who wins the game
 
-    public double pawnRange = 5.0; //Pawn weight will be between 5 and 15
+    public double pawnRange = 5; //Pawn weight will be between 5 and 15
     public double knightRange = 10.0; //Knight weight will be between 20 and 40
     public double bishopRange = 10.0; //Bishop weight will be between 20 and 40
     public double rookRange = 15.0; //Rook weight will be between 35 and 65
@@ -64,8 +64,14 @@ public class Individual {
         //CODE HERE
         return 0.0;
     }
-
-
+    public double[] getOgValues(){
+        double arr[] = {ogPawn, ogKnight, ogBishop, ogRook, ogQueen};
+        return arr;
+    }
+    public double[] getRanges(){
+        double arr[] = {pawnRange, knightRange, bishopRange, rookRange, queenRange};
+        return arr;
+    }
     public double[] getWeights(){
         double[] arr = {pawnWeight, knightWeight, bishopWeight, rookWeight, queenWeight};
         return arr;
@@ -76,7 +82,15 @@ public class Individual {
         this.bishopWeight = weights[2];
         this.rookWeight = weights[3];
         this.queenWeight = weights[4];
-
+    }
+    public void setWeight(int index, double weight){
+        switch(index){
+            case 0: this.pawnWeight = weight; break;
+            case 1: this.knightWeight = weight; break;
+            case 2: this.bishopWeight = weight; break;
+            case 3: this.rookWeight = weight; break;
+            case 4: this.queenWeight = weight; break;
+        }
     }
     public String toString(){
         String r = "Pawn = "+ pawnWeight + ", Knight = " + knightWeight + ", Bishop = " + bishopWeight + ", Rook = " + rookWeight + ", Queen = "+queenWeight;
