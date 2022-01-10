@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 public class Game{
 
@@ -17,28 +18,30 @@ public class Game{
     private Player playing = null;
     private WhitePlayer wPlayer;
     private BaseLineAgent baseLinePlayer;
-    private ExpectiMaxAgent expectiMaxPlayer;
+    private ExpectiMaxAgent expectiMaxPlayer1;
+    private ExpectiMaxAgent expectiMaxPlayer2;
     private BlackPlayer bPlayer;
     private Piece heldPiece = null;
     private ButtonPanel buttonPanel;
     private boolean diceClicked=false;
     private JFrame f;
     private boolean noMoves = false;
-    // Booleans to select which agent is going to play against which other agent
     private boolean gameOver = false;
     private boolean wNoAgent = false;
     private boolean bNoAgent = false;
     private boolean wBaseLineActive  = false;
     private boolean bBaseLineActive = false;
     private boolean wExpectiMaxActive = false;
-    private boolean bEpectiMaxActive = false;
+    private boolean bExpectiMaxActive = false;
     private boolean noAgent = false;
+    private boolean whiteOgWeights;
     private boolean whiteSelected;
     private int depth=-1;                       //-1 means no depth (PvP)
     private DicePanel dp;
     private int moveCounter=0;
     private int totalNumNodes = 0;
-
+    final private double[] ogWeights = {10.0, 30.0, 30.0, 50.0, 90.0};
+    private double[] newWeights;
     /**
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations
      * @param f is the ChessBoard GUI Frame
@@ -142,7 +145,7 @@ public class Game{
             // else { System.out.println("Black Player Turn"); }
             diceClicked=false;
             wPlayer.flipTurns(bPlayer);
-            if(bEpectiMaxActive && bPlayer.getIsMyTurn() ){   // for black AI agent
+            if((bExpectiMaxActive && bPlayer.getIsMyTurn()) || (wExpectiMaxActive && wPlayer.getIsMyTurn())   ){   // for black AI agent
                 whichPiece();  
                 play();
             }
@@ -172,6 +175,10 @@ public class Game{
         return baseLinePlayer;
     }
 
+    public void setNewWeights(double[] newWeights){
+        this.newWeights = newWeights;
+    } 
+
     //public Castle getCastling(){ return castling;}
     public WhitePlayer getWhitePlayer(){return wPlayer;}
     public BlackPlayer getBlackPlayer(){return bPlayer;}
@@ -180,8 +187,9 @@ public class Game{
     public void setwNoAgent(boolean b) { this.wNoAgent = b; }
     public void setbBaseLineActive(boolean b) { this.bBaseLineActive = b; }
     public void setwBaseLineActive(boolean b) { this.wBaseLineActive = b; }
-    public void setbEpectiMaxActive(boolean b) { this.bEpectiMaxActive = b; }
+    public void setbEpectiMaxActive(boolean b) { this.bExpectiMaxActive = b; }
     public void setwExpectiMaxActive(boolean b) { this.wExpectiMaxActive = b; }
+    public void setWhichWeights(boolean isWhite){ whiteOgWeights = isWhite;}
 
     public void setDepth(int d) { this.depth = d; }
 
@@ -190,7 +198,6 @@ public class Game{
      */
     public void play(){
         //noMoves = false;
-
         if(wPlayer.getIsMyTurn()){        //if its w player's turn
 
             // Normal player (NO AGENT)
@@ -201,7 +208,6 @@ public class Game{
                 //String chosen = dice.getRoleDice(); //roll the dice
 
                 if (!wPlayer.canMove(chosen)) {         //if player has no pieces to move we switch turns
-                    //System.out.println("Sorry white , you have no possible moves. Turn goes to black");
                     noMoves = true;
                     newTurn();
                 } else {
@@ -217,8 +223,23 @@ public class Game{
             // EXPECTIMAX AGENT
             } else if (wExpectiMaxActive) {
                 String chosen = dice.getChosen();
-                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, true);
-                expectiMaxPlayer.expectiMaxPlay();
+                if(!bExpectiMaxActive){ 
+                    // System.out.println("3333333");
+                    expectiMaxPlayer1 = new ExpectiMaxAgent(this, cb, chosen, depth, true, ogWeights);
+                }
+                else{
+                    if(whiteOgWeights){
+                        expectiMaxPlayer1 = new ExpectiMaxAgent(this, cb, chosen, depth, true,ogWeights);
+                     //   System.out.println("white player has weight--->" + ogWeights[0]); 
+
+                    }
+                    else{
+                        expectiMaxPlayer1 = new ExpectiMaxAgent(this, cb, chosen, depth, true,newWeights);
+                        //System.out.println("white player has weight--->" + newWeights[0]); 
+   
+                    }
+                }
+                expectiMaxPlayer1.expectiMaxPlay(true);
             }
         }
 
@@ -253,12 +274,25 @@ public class Game{
             	baseLinePlayer.baseLinePlay(chosen);
 
         	// EXPECTIMAX AGENT
-        	} else if (bEpectiMaxActive) {
+        	} else if (bExpectiMaxActive) {
                 String chosen = dice.getChosen();
-
-                expectiMaxPlayer = new ExpectiMaxAgent(this, cb, chosen, depth, false);
-                expectiMaxPlayer.expectiMaxPlay();
-                this.totalNumNodes += expectiMaxPlayer.numNodes;
+                if(!wExpectiMaxActive){
+                    expectiMaxPlayer2 = new ExpectiMaxAgent(this,cb,chosen,depth,false,ogWeights);
+                }
+                else{
+                    if(whiteOgWeights){
+                        expectiMaxPlayer2 = new ExpectiMaxAgent(this, cb, chosen, depth, false,newWeights);
+                        //System.out.println("black player has weight--->" + newWeights[0]); 
+                    }
+                    else{
+                        expectiMaxPlayer2 = new ExpectiMaxAgent(this, cb, chosen, depth, false,ogWeights); 
+                        //System.out.println("black player has weight--->" + ogWeights[0]); 
+  
+                    }
+                }
+                expectiMaxPlayer2.expectiMaxPlay(false);
+                
+                //this.totalNumNodes += expectiMaxPlayer2.numNodes;
             }
         }
     }

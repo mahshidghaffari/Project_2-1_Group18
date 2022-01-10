@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch TestFitness",
+            "request": "launch",
+            "mainClass": "controller.TestFitness",
+            "projectName": "DiceChess"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestFitness",
+            "request": "launch",
+            "mainClass": "controller.TestFitness",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "Launch ChessBoardTest",
+            "request": "launch",
+            "mainClass": "ChessBoardTest",
+            "projectName": "DiceChess"
+        },
+        {
+            "type": "java",
+            "name": "Launch GeneticAlgo",
+            "request": "launch",
+            "mainClass": "controller.GeneticAlgo",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
             "name": "Launch App",
             "request": "launch",
             "mainClass": "App",

@@ -662,8 +662,7 @@ public class Evaluation {
         this.knightWeight = weights[1];
         this.bishopWeight = weights[2];
         this.rookWeight = weights[3];
-        this.rookWeight = weights[4];
-        this.queenWeight = weights[5];
+        this.queenWeight = weights[4];
 
     }
     public void setPieceOnDiceWeight(double w){

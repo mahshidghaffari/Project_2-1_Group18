@@ -20,6 +20,8 @@ public class Individual {
     double ogRook = 50.0;
     double ogQueen = 90.0;
 
+    public double fitness=-1;
+
     public Individual(){
         //The following formula is to obtain a random number between a min and a max range
         //Math.random() outputs a pseudorandom number between 0 and 1
@@ -43,15 +45,16 @@ public class Individual {
     public Individual(String empty){ }
     /*
     Method getFitness : returns a double that symbolizes the fitness of this individual
-    the fitness will be asserted by the performance of the expectimax with evalFunction with individual's weights.
+    the fitness will be asserted by the performance of the expectimax with evalFunction 
+    with individual's weights.
 
     Descrition of task :
-    - Create base Agent(with Evaluation function with weights {10,30,30,50,90,10000}), that uses expectimax to depth X
+    - Create base Agent(with Evaluation function with weights {10,30,30,50,90,10000}), 
+      that uses expectimax to depth X.
 
-        (Here we still have to determine X, the depth we will use. 
+    (Here we still have to determine X, the depth we will use. 
         Many individuals will play many games, so it will be computationally expensive
-        Therefore we'll test our expectiPruning correctly and decide then what depth we use
-        )
+        Therefore we'll test our expectiPruning correctly and decide then what depth we use)
 
     - Create player Agent (with Evaluation funciton with the new random weights).
 
@@ -59,12 +62,16 @@ public class Individual {
         (Y has to be high enough to draw out statistical noise,
         but not too high so we can compute large enough populations)
 
-    - Get fitness from results of the games (e.g. fitness could just be ratio of win/loss, or also just number of wins)
+    - Get fitness from results of the games (e.g. fitness could just be ratio of win/loss,
+     or also just number of wins)
 
     */
     public double getFitness(){
-        //CODE HERE
-        return 0.0;
+        if(fitness==-1){
+            TestFitness tf = new TestFitness(getWeights());
+            fitness = tf.getFitness();
+        }
+        return fitness;
     }
 
 
