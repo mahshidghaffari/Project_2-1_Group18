@@ -41,6 +41,11 @@ public class  Dice {
     
     public String getRndPiece(ArrayList<String> movableP){
         ArrayList<String> movablePieces = movableP;
+        if(movableP.size() == 0){
+            //System.out.println("movableP.size() = " + movableP.size());
+            return "";
+        }
+        
         int rndPiece = rand.nextInt(movableP.size()); 
         chosen  = movablePieces.get(rndPiece);
         return chosen;
