@@ -483,6 +483,7 @@ public class ChessBoard{
 
     public double getBoardValue(){
         Evaluation eval = new Evaluation(this);
+        //eval.setPieceWeights();
         return eval.getScore();
     }
     

@@ -13,6 +13,7 @@ public class Tree {
     private int numNodes = 0;
     private int upperBound = 10001;
     private int lowerBound = -10001;
+    private double[] weights;
 
     public Node getRoot() {
         return root;
@@ -27,11 +28,19 @@ public class Tree {
         this.depth = depth*2;
         this.isWhite = isWhite;
     }
+    public Tree(int depth, Game game, String pieceName, Boolean isWhite, double [] weights) {
+        this.root = new Node(game.getChessBoard(),pieceName,isWhite,null, true);
+        this.depth = depth*2;
+        this.isWhite = isWhite;
+        this.weights = weights;
+    }
 
     public void generateTree2(Node n){
             if(depth==0 || n.getBoard().missingKing()){
-                double boardVal = n.getBoard().getBoardValue();
-                n.setValue(boardVal);
+                //double boardVal = n.getBoard().getBoardValue();
+                Evaluation eval = new Evaluation(n.getBoard());
+                eval.setPieceWeights(weights);
+                n.setValue(eval.getScore());
                 return;
             }
             if(n.getPiece()!=null){  //if this is a piece and not a board

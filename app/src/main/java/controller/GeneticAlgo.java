@@ -5,11 +5,16 @@ import java.util.Random;
 
 public class GeneticAlgo {
 
+    
+    final private int POP_SIZE=20;            //population size
+    final private double MUTATION_RATE = 0.15;     //MUTATION RATE
+    final private double GAMES_TO_PLAY = 50;   // games to play to determine fitness
+    final private int DEPTH_TO_PLAY=3;         //in which depth should the games be played 
+    final private double GENERATIONS = 10;  // generations to run
+    
     private ArrayList<Individual> parents;
-    private int pop_size=100;
-    private double mutRate = 0.5; //MUTATION RATE
-    private double targetFitness =100;
-    private int iterations=0;
+    //private double targetFitness = 8; 
+    private double parents_totalFitness=-1;
 
     public static void main(String[] args) {
         new GeneticAlgo();
@@ -18,34 +23,45 @@ public class GeneticAlgo {
     public GeneticAlgo(){
         parents= new ArrayList<>();
         initializeRndPop();
-
-        while(getTotalFitness(parents)<targetFitness){
+        int iterations=0;
+        while(iterations<GENERATIONS){
             iterations++;
+            System.out.println("Generation #" + iterations);
             breed();
+            System.out.println("Best weights are :" + getFittest(parents).toString()+ " and the fitness score is" + getFittest(parents).getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY));
         }
-        System.out.println("Reached target! it took "+ iterations+ " generations to reach this target");
+
+        //System.out.println("Reached target! it took "+ iterations+ " generations to reach this target");
+        double[] bestWeights = getFittest(parents).getWeights();
+        //System.out.println("Best weights are :" + getFittest(parents).toString());
     }
 
     public void breed(){
+        System.out.println("breeding . . . ");
         ArrayList<Individual> kids = new ArrayList<>();
-        while(kids.size()< pop_size){
+        while(kids.size()< POP_SIZE){
             Individual momma = selectParent();
             Individual papa = selectParent();
+            //System.out.println("Selected parents");
             Individual child1= new Individual("f");
             Individual child2= new Individual("g"); 
-            crossOver(momma, papa,child1,child2);
+            crossOver(momma,papa,child1,child2);
+            //System.out.println("created children");
             mutate(child1);
             mutate(child2);
             kids.add(child1);
             kids.add(child2);
+           //System.out.println("kids size currently: "+kids.size() );
         }
-        System.out.println("Old population total fitness" + getTotalFitness(parents));
-        System.out.println("New population total fitness" + getTotalFitness(kids));
+        double kids_totalFitness = getTotalFitness(kids,true);
+        System.out.println("Old population total fitness" + parents_totalFitness);
+        System.out.println("New population total fitness" + kids_totalFitness);
         parents= kids;
+        parents_totalFitness = kids_totalFitness;
     }
 
     public void initializeRndPop(){ 
-        for(int i=0; i<100; i++){
+        for(int i=0; i<POP_SIZE; i++){
             parents.add(new Individual());
         }
     } 
@@ -57,11 +73,14 @@ public class GeneticAlgo {
      */
 
     public Individual selectParent(){
+        if(parents_totalFitness==-1){
+            parents_totalFitness = getTotalFitness(parents,false);
+        }
         while(true){
-            double chance = Math.random()*(getTotalFitness(parents)+1);
-            double fitnessMinus = getTotalFitness(parents);
+            double chance = Math.random()*(parents_totalFitness+1);
+            double fitnessMinus = parents_totalFitness;
             for(Individual indi:parents){
-                fitnessMinus -= indi.getFitness();
+                fitnessMinus -= indi.getFitness(GAMES_TO_PLAY, DEPTH_TO_PLAY);
                 if(fitnessMinus<=chance){
                     return indi;
                 }
@@ -107,7 +126,8 @@ public class GeneticAlgo {
 	 * @param child
 	 */
 	public void mutate(Individual child){
-	    if(Math.random() <= mutRate){
+	    if(Math.random() <= MUTATION_RATE){
+            //System.out.println("A mutation occured");
 	    	Random rnd = new Random(); 
             int wSize = child.getWeights().length; 
             int switchWeight = rnd.nextInt(wSize);
@@ -116,16 +136,48 @@ public class GeneticAlgo {
 	}
 
 
-    public double getTotalFitness(ArrayList<Individual> gen){
+    public double getTotalFitness(ArrayList<Individual> gen, boolean isKids){
         double sum=0;
-        for(Individual individual: gen){
-            sum+=individual.getFitness();
+        if((!isKids && parents_totalFitness==-1)){
+            int i=0;
+            for(Individual individual: gen){
+                double fit = individual.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY);
+                //System.out.println( "for individual " +i + " fitness is: " +fit);
+                i++;
+                sum+=fit;
+            }
+            parents_totalFitness=sum;
+            return parents_totalFitness;
+        }
+        else if(isKids){
+            int i=0;
+            for(Individual individual: gen){
+                double fit = individual.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY);
+                //System.out.println( "for individual " +i + " fitness is: " +fit);
+                i++;
+                sum+=fit;
+            }   
         }
         return sum;
     }
+/**
+ * 
+ * @param gen input the generation
+ * @param isKids input whether or not this is the parents generation or the kids
+ * @return
+ */
+    public double getAvgFitness(ArrayList<Individual> gen,boolean isKids){
+        return getTotalFitness(gen,isKids)/gen.size();
+    }
 
-    public double getAvgFitness(ArrayList<Individual> gen){
-        return getTotalFitness(gen)/gen.size();
+    public Individual getFittest(ArrayList<Individual> gen){
+        Individual max= new Individual();
+        for(Individual indi:gen){
+            if(indi.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY)>max.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY)){
+                max = indi;
+            }
+        }
+        return max;
     }
 
 }

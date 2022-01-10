@@ -1,4 +1,5 @@
 package controller;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -44,4 +45,36 @@ public abstract class Player {
 
     public boolean getIsMyTurn(){ return isMyTurn;}
     public void setIsMyTurn(boolean a){ isMyTurn=a;}
+
+    public boolean canMove(String chosenPiece, boolean isWhite){
+
+        if(getMovablePieces(chosenPiece,isWhite).size()>0){
+            return true;
+        }
+        return false;
+    }
+
+   public ArrayList<Piece> getMovablePieces(String chosenPiece, boolean isWhite){
+        ArrayList<Piece> movablePieces = new ArrayList<Piece>();
+        if(isWhite){
+            for(Piece p: cb.getLivePieces()){
+                if(p.isWhite() && p.pieceName.equals(chosenPiece)){
+                    if(p.getLegalMoves(cb).size()>0){
+                        movablePieces.add(p);
+                    }
+                }
+            }
+        }
+        else{
+            for(Piece p: cb.getLivePieces()){
+                if(!p.isWhite() && p.pieceName.equals(chosenPiece)){
+                    if(p.getLegalMoves(cb).size()>0){
+                        movablePieces.add(p);
+                    }
+                }
+            }
+
+        }
+        return movablePieces;
+    } 
 }
