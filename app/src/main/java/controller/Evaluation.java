@@ -51,7 +51,9 @@ public class Evaluation {
         {0.0,2.0,5.0,8.0,8.0,5.0,2.0,0.0},
         {0.0,2.0,5.0,5.0,5.0,5.0,2.0,0.0},
         {0.0,2.0,2.0,2.0,2.0,2.0,2.0,0.0},
-        {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}, 
+        {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0},
+
+        //{0.0, 2.0, 5.0, 8.0}
     };
     /**
      * Constructor Evaluation : when constructed, everything is computed, and you can access the score with Evaluation.getScore()

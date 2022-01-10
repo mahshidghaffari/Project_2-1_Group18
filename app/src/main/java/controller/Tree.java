@@ -53,6 +53,12 @@ public class Tree {
                     for(Square move: p.getLegalMoves(n.getBoard())){
                         ChessBoard scenario = getScenerio(n.getBoard(), p, move);
                         Node childBoard = new Node(scenario, n.getisWhite(), n);
+                        numNodes++;
+
+                        // System.out.println("next node is a board -->");
+                        // childBoard.getBoard().printBoard();
+
+                        //if(!scenario.missingKing()) {
                             depth--;
                             generateTree2(childBoard);
                             if(n.getisWhite()){//MAXIMIZE
@@ -76,7 +82,9 @@ public class Tree {
                 int counter=0;
                 for(String name: movableNames){
                     counter++;
-                    Node childPiece = new Node(n.getBoard(),name, !n.getisWhite(), n, false);
+                    Node childPiece = new Node(n.getBoard(),name,isWhite,n, false);
+                    numNodes++;
+                   // System.out.println("next node is a piece : "+ childPiece.getPiece());
                     depth--;
                     generateTree2(childPiece);
                     

@@ -4,18 +4,12 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
             "type": "java",
-            "name": "Launch TestFitness",
+            "name": "Launch Individual",
             "request": "launch",
-            "mainClass": "controller.TestFitness",
-            "projectName": "DiceChess"
-        },
-        {
-            "type": "java",
-            "name": "Launch TestFitness",
-            "request": "launch",
-            "mainClass": "controller.TestFitness",
+            "mainClass": "controller.Individual",
             "projectName": "app"
         },
         {
@@ -23,13 +17,13 @@
             "name": "Launch ChessBoardTest",
             "request": "launch",
             "mainClass": "ChessBoardTest",
-            "projectName": "DiceChess"
+            "projectName": "app"
         },
         {
             "type": "java",
-            "name": "Launch GeneticAlgo",
+            "name": "Launch PawnTest",
             "request": "launch",
-            "mainClass": "controller.GeneticAlgo",
+            "mainClass": "PawnTest",
             "projectName": "app"
         },
         {
