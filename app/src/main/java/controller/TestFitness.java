@@ -6,13 +6,16 @@ public class TestFitness {
 
     double[] newWeights ;
      double games=50;
+     int depth;
     // public static void main(String[] args) {
     //     double[] hh = {2000,2,3,2,1,1};
     //     new TestFitness(hh);
     // }
     
-    public TestFitness(double[] newWeights){
+    public TestFitness(double[] newWeights, double games, int depth){
         this.newWeights=newWeights;
+        this.games =games;
+        this.depth = depth;
     }
     public double getFitness(){
 
@@ -23,7 +26,7 @@ public class TestFitness {
         while(i<games){
             isWhite= !isWhite;
             JFrame f = new JFrame("Dice Chess");
-            Game game = new Game(3);
+            Game game = new Game(depth);
             game.setNewWeights(newWeights);
             game.setwExpectiMaxActive(true);
             game.setbEpectiMaxActive(true);

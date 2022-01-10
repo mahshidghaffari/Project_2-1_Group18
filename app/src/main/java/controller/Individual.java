@@ -66,9 +66,9 @@ public class Individual {
      or also just number of wins)
 
     */
-    public double getFitness(){
+    public double getFitness(double gamesToPlay,int depth){
         if(fitness==-1){
-            TestFitness tf = new TestFitness(getWeights());
+            TestFitness tf = new TestFitness(getWeights(),gamesToPlay,depth);
             fitness = tf.getFitness();
         }
         return fitness;

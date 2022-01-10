@@ -5,11 +5,15 @@ import java.util.Random;
 
 public class GeneticAlgo {
 
+    
+    final private int POP_SIZE=20;            //population size
+    final private double MUTATION_RATE = 0.15;     //MUTATION RATE
+    final private double GAMES_TO_PLAY = 50;   // games to play to determine fitness
+    final private int DEPTH_TO_PLAY=3;         //in which depth should the games be played 
+    final private double GENERATIONS = 10;  // generations to run
+    
     private ArrayList<Individual> parents;
-    private int pop_size=20;
-    private double mutRate = 0.15; //MUTATION RATE
-    //private double targetFitness = 8;
-    private int iterations=0;
+    //private double targetFitness = 8; 
     private double parents_totalFitness=-1;
 
     public static void main(String[] args) {
@@ -19,11 +23,12 @@ public class GeneticAlgo {
     public GeneticAlgo(){
         parents= new ArrayList<>();
         initializeRndPop();
-        while(iterations<10){
+        int iterations=0;
+        while(iterations<GENERATIONS){
             iterations++;
             System.out.println("Generation #" + iterations);
             breed();
-            System.out.println("Best weights are :" + getFittest(parents).toString()+ " and the fitness score is" + getFittest(parents).getFitness());
+            System.out.println("Best weights are :" + getFittest(parents).toString()+ " and the fitness score is" + getFittest(parents).getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY));
         }
 
         //System.out.println("Reached target! it took "+ iterations+ " generations to reach this target");
@@ -34,7 +39,7 @@ public class GeneticAlgo {
     public void breed(){
         System.out.println("breeding . . . ");
         ArrayList<Individual> kids = new ArrayList<>();
-        while(kids.size()< pop_size){
+        while(kids.size()< POP_SIZE){
             Individual momma = selectParent();
             Individual papa = selectParent();
             //System.out.println("Selected parents");
@@ -56,7 +61,7 @@ public class GeneticAlgo {
     }
 
     public void initializeRndPop(){ 
-        for(int i=0; i<pop_size; i++){
+        for(int i=0; i<POP_SIZE; i++){
             parents.add(new Individual());
         }
     } 
@@ -75,7 +80,7 @@ public class GeneticAlgo {
             double chance = Math.random()*(parents_totalFitness+1);
             double fitnessMinus = parents_totalFitness;
             for(Individual indi:parents){
-                fitnessMinus -= indi.getFitness();
+                fitnessMinus -= indi.getFitness(GAMES_TO_PLAY, DEPTH_TO_PLAY);
                 if(fitnessMinus<=chance){
                     return indi;
                 }
@@ -121,7 +126,7 @@ public class GeneticAlgo {
 	 * @param child
 	 */
 	public void mutate(Individual child){
-	    if(Math.random() <= mutRate){
+	    if(Math.random() <= MUTATION_RATE){
             //System.out.println("A mutation occured");
 	    	Random rnd = new Random(); 
             int wSize = child.getWeights().length; 
@@ -136,7 +141,7 @@ public class GeneticAlgo {
         if((!isKids && parents_totalFitness==-1)){
             int i=0;
             for(Individual individual: gen){
-                double fit = individual.getFitness();
+                double fit = individual.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY);
                 //System.out.println( "for individual " +i + " fitness is: " +fit);
                 i++;
                 sum+=fit;
@@ -147,7 +152,7 @@ public class GeneticAlgo {
         else if(isKids){
             int i=0;
             for(Individual individual: gen){
-                double fit = individual.getFitness();
+                double fit = individual.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY);
                 //System.out.println( "for individual " +i + " fitness is: " +fit);
                 i++;
                 sum+=fit;
@@ -168,7 +173,7 @@ public class GeneticAlgo {
     public Individual getFittest(ArrayList<Individual> gen){
         Individual max= new Individual();
         for(Individual indi:gen){
-            if(indi.getFitness()>max.getFitness()){
+            if(indi.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY)>max.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY)){
                 max = indi;
             }
         }
