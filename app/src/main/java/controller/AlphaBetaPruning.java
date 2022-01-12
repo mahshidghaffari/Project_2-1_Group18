@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class AlphaBetaPruning {
 
-    private final double MAX = 1390;
-    private final double MIN = -1390;
+    private final double MAX = 11030;
+    private final double MIN = -11030;
     private Node node;
     private int depth;
     private boolean isMax;

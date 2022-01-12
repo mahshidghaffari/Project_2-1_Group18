@@ -4,7 +4,10 @@ import controller.*;
 
 public class Base_vs_Expecti {
     public static void main(String[] args) {
-        new Base_vs_Expecti();
+        //for(int i=0; i<5; i++){
+            new Base_vs_Expecti();
+        //}
+        
     }
 
     /**
@@ -15,8 +18,8 @@ public class Base_vs_Expecti {
      */
 
     public Base_vs_Expecti(){
-        int runs = 1000;
-        int max_depth=3;
+        int runs = 10;
+        int max_depth=5;
         //for each of the depths run 100 games
         //for(int depth = 1 ; depth <= max_depth ; depth++){
             System.out.println("In depth "+ max_depth+" ");
@@ -39,6 +42,7 @@ public class Base_vs_Expecti {
             if(isWhite){
                 game.setwExpectiMaxActive(true); //Expecti will be white on iterations 0,2,4
                 game.setbBaseLineActive(true);
+                
                 //System.out.println("Expecti : white player");
                 //System.out.println("BaseLine : black player");
             } else{
@@ -56,13 +60,26 @@ public class Base_vs_Expecti {
             
             
             String color="";
+            int kingCount = 0;
             //checking which team won the game
             for(Piece p: game.getChessBoard().getLivePieces()){
                 if(p.getPieceName().equals("King")){
                     color = p.getColorName();
-                    break;
+                    kingCount++;
                 }
             }
+            System.out.println(kingCount);
+            if(color.equals("White")){
+                if(i%2 == 0){
+                    eMax[0]++;
+                    System.out.println("Expecti won!");
+                } else{
+                    base[0]++;
+                    System.out.println("Base won!");
+                }
+                avgMoves+=game.getMoveCounter()/2;
+                //eMax[0]++;
+            } else
             if(color.equals("Black")){
                 if(i%2 == 0){
                     base[1]++;
@@ -71,20 +88,14 @@ public class Base_vs_Expecti {
                     eMax[1]++;
                     System.out.println("Expecti won!");
                 }
-                avgMoves+=game.getMoveCounter()/2;
+                avgMoves+=game.getMoveCounter()/2; 
+                //base[1] ++;              
             }
-            else if(color.equals("White")){
-                if(i%2 == 0){
-                    eMax[0]++;
-                    System.out.println("Expecti won!");
-                } else{
-                    base[0]++;
-                    System.out.println("Base won!");
-                }
-            }
+             
             //System.out.println("eMax array : " + eMax[0] + ", " + eMax[1]);
             //System.out.println("base array : " + base[0] + ", " + base[1]);
             isWhite = !isWhite;
+            System.out.println(isWhite);
         }
         double sum = 0;
         for(double x:gameTimes){

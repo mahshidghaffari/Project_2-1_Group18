@@ -11,8 +11,8 @@ public class Tree {
     private int depth;
     private Boolean isWhite;
     private int numNodes = 0;
-    private int upperBound = 10001;
-    private int lowerBound = -10001;
+    private int upperBound = 11030;
+    private int lowerBound = -11030;
     private double[] weights;
 
     public Node getRoot() {
@@ -47,7 +47,7 @@ public class Tree {
                     List<Piece> pieceObjects = n.getBoard()  //getting the pieces that can move
                         .getLivePieces().stream()
                         .filter(p -> p.getPieceName().equals(n.getPiece()))
-                        .filter(p -> p.isWhite() == isWhite)
+                        .filter(p -> p.isWhite() == n.getisWhite())
                         .collect(Collectors.toList());
                 for(Piece p : pieceObjects){ 
                     for(Square move: p.getLegalMoves(n.getBoard())){
@@ -82,7 +82,7 @@ public class Tree {
                 int counter=0;
                 for(String name: movableNames){
                     counter++;
-                    Node childPiece = new Node(n.getBoard(),name,isWhite,n, false);
+                    Node childPiece = new Node(n.getBoard(),name,!n.getisWhite(),n, false);
                     numNodes++;
                    // System.out.println("next node is a piece : "+ childPiece.getPiece());
                     depth--;
@@ -97,12 +97,12 @@ public class Tree {
                     depth++;
 
                     if(n.getisWhite()){ //if its maximizing
-                        if(n.getAlpha() >= childPiece.getValue() + (upperBound*(movableNames.size()- counter))/movableNames.size()){
+                        if(n.getValue() >= childPiece.getValue() + (upperBound*(movableNames.size()- counter))/movableNames.size()){
                             break;
                         }
                     }
                     else{ //if its manimizing
-                        if(n.getBeta() <= childPiece.getValue() + (lowerBound*(movableNames.size()- counter))/movableNames.size()){
+                        if(n.getValue() <= childPiece.getValue() + (lowerBound*(movableNames.size()- counter))/movableNames.size()){
                             break;
                         }
                     }
