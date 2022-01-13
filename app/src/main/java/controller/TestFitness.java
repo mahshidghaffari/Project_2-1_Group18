@@ -30,7 +30,7 @@ public class TestFitness {
             game.setNewWeights(newWeights);
             game.setwExpectiMaxActive(true);
             game.setbEpectiMaxActive(true);
-            game.setWhichWeights(isWhite);
+            game.setWhichOGWeights(isWhite);
             game.play();
             String color="";
         
