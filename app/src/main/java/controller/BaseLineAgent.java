@@ -2,17 +2,19 @@ package controller;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BaseLineAgent extends WhitePlayer {
+public class BaseLineAgent extends Player {
 
 
 
 	private Game game; 
+	private boolean isWhite;
 	String chosenPiece;
 	private boolean clever = true; //if not clever it will play completly random moves
 	
-	public BaseLineAgent(Game game, ChessBoard cb) {
+	public BaseLineAgent(Game game, ChessBoard cb, boolean isWhite) {
 		super(cb);
 		this.game = game;
+		this.isWhite = isWhite;
 	}
 	
     public boolean baseLinePlay(String chosenPiece) {
@@ -23,7 +25,7 @@ public class BaseLineAgent extends WhitePlayer {
     	//System.out.println(chosenPiece);
     	
     	// go for select the piece with randomization action
-    	ArrayList<Piece> movablePieces = this.getMovablePieces(chosenPiece);
+    	ArrayList<Piece> movablePieces = this.getMovablePieces(chosenPiece, isWhite);
     	
      	if(movablePieces.size() == 0) {
      		//System.out.println("there is no movable piece");

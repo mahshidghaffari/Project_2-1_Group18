@@ -149,7 +149,7 @@ public class Game{
                 whichPiece();  
                 play();
             }
-            if(wBaseLineActive && wPlayer.getIsMyTurn() ){
+            if(wBaseLineActive && wPlayer.getIsMyTurn() || (bBaseLineActive && bPlayer.getIsMyTurn())){
                 whichPiece();  
                 play();    
             }
@@ -216,7 +216,7 @@ public class Game{
 
             // BASELINE AGENT
             } else if (wBaseLineActive) {
-                baseLinePlayer = new BaseLineAgent(this, cb);
+                baseLinePlayer = new BaseLineAgent(this, cb, true);
                 String chosen = dice.getChosen();
                 baseLinePlayer.baseLinePlay(chosen);
 
@@ -269,7 +269,7 @@ public class Game{
 
         	// BASELINE AGENT
         	} else if (bBaseLineActive) {
-                baseLinePlayer = new BaseLineAgent(this, cb);
+                baseLinePlayer = new BaseLineAgent(this, cb, false);
                 String chosen = dice.getChosen();
             	baseLinePlayer.baseLinePlay(chosen);
 

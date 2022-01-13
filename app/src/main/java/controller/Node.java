@@ -8,8 +8,8 @@ public class Node {
     private ArrayList<Node> children;
     private ChessBoard board;
     private String piece;
-    private double alpha = 10001;
-    private double beta = -10001;
+    private double alpha = 11030;
+    private double beta = -11030;
     private boolean isWhite;
     private Node bestChild;
     private Node parent;
