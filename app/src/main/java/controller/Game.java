@@ -189,7 +189,7 @@ public class Game{
     public void setwBaseLineActive(boolean b) { this.wBaseLineActive = b; }
     public void setbEpectiMaxActive(boolean b) { this.bExpectiMaxActive = b; }
     public void setwExpectiMaxActive(boolean b) { this.wExpectiMaxActive = b; }
-    public void setWhichWeights(boolean isWhite){ whiteOgWeights = isWhite;}
+    public void setWhichOGWeights(boolean isWhite){ whiteOgWeights = isWhite;}
 
     public void setDepth(int d) { this.depth = d; }
 

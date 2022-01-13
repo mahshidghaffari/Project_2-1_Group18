@@ -44,8 +44,8 @@ public class King extends Piece {
                 }
             }
         }
-        closeCastle(legalMoves, cb); //checking for king side castling option
-        farCastle(legalMoves, cb); //checking for queen side castling option
+        //closeCastle(legalMoves, cb); //checking for king side castling option
+        //farCastle(legalMoves, cb); //checking for queen side castling option
 
         return legalMoves;
     }

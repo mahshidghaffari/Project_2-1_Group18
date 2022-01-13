@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="Game ends stops when king is killed">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/controller/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controller/Tree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/Base_vs_Expecti.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/Base_vs_Expecti.java" afterDir="false" />
-    </list>
+    <list default="true" id="53ff0006-823d-4690-9ad1-ed594f607a95" name="Changes" comment="Game ends stops when king is killed" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,7 +74,7 @@
       <recent name="$PROJECT_DIR$/app/src/main/java/controller" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Base_vs_Expecti">
+  <component name="RunManager" selected="Application.GeneticAlgo">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-16" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -96,8 +91,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GeneticAlgo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="controller.GeneticAlgo" />
+      <module name="DiceChess.app.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GeneticAlgo" />
         <item itemvalue="Application.Base_vs_Expecti" />
         <item itemvalue="Application.App" />
       </list>
