@@ -532,7 +532,9 @@ public class Game{
                 }
             }
         }
-        //game.newTurn();
+        if(name.equals("")){
+            this.newTurn();
+        }
         setDiceClicked(true);
         if(dp!=null){
             switch (name){
