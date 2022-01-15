@@ -11,8 +11,8 @@ public class Tree {
     private int depth;
     private Boolean isWhite;
     private int numNodes = 0;
-    private int upperBound = 11030;
-    private int lowerBound = -11030;
+    private int upperBound = 1000;
+    private int lowerBound = -1000;
     private double[] weights;
 
     public Node getRoot() {

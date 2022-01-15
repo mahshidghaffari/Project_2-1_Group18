@@ -6,9 +6,9 @@ import java.util.Random;
 public class GeneticAlgo {
 
     
-    final private int POP_SIZE=20;            //population size
-    final private double MUTATION_RATE = 0.15;     //MUTATION RATE
-    final private double GAMES_TO_PLAY = 50;   // games to play to determine fitness
+    final private int POP_SIZE=10;            //population size
+    final private double MUTATION_RATE = 0.1;     //MUTATION RATE
+    final private double GAMES_TO_PLAY = 15;   // games to play to determine fitness
     final private int DEPTH_TO_PLAY=3;         //in which depth should the games be played 
     final private double GENERATIONS = 10;  // generations to run
     

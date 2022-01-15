@@ -4,7 +4,20 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "type": "java",
+            "name": "Launch Test_Refined_weights",
+            "request": "launch",
+            "mainClass": "Test_Refined_weights",
+            "projectName": "app"
+        },
+        {
+            "type": "java",
+            "name": "Launch GeneticAlgo",
+            "request": "launch",
+            "mainClass": "controller.GeneticAlgo",
+            "projectName": "app"
+        },
         {
             "type": "java",
             "name": "Launch Individual",
