@@ -187,7 +187,7 @@ public class Individual {
                 tf = new TestFitness(getCCWeights(), gamesToPlay, depth);
             }
             if(kingSafetyEval){
-                tf = new TestFitness(getKSDWeights(), getKSPWeights(), gamesToPlay, depth);
+                //tf = new TestFitness(getKSDWeights(), getKSPWeights(), gamesToPlay, depth);
 
             }
             fitness = tf.getFitness();

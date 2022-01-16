@@ -32,7 +32,7 @@ public class GeneticAlgo {
         }
 
         //System.out.println("Reached target! it took "+ iterations+ " generations to reach this target");
-        double[] bestWeights = getFittest(parents).getWeights();
+        double[] bestWeights = getFittest(parents).getPieceWeights();
         //System.out.println("Best weights are :" + getFittest(parents).toString());
     }
 
@@ -62,7 +62,7 @@ public class GeneticAlgo {
 
     public void initializeRndPop(){ 
         for(int i=0; i<POP_SIZE; i++){
-            parents.add(new Individual());
+            parents.add(new Individual(true,false,false));
         }
     } 
 
@@ -100,23 +100,23 @@ public class GeneticAlgo {
 
     public void crossOver(Individual parent1,Individual parent2,Individual child1,Individual child2 ){
         Random rand = new Random();
-        int wSize = parent1.getWeights().length; //the amount of weights we are dealing with
+        int wSize = parent1.getPieceWeights().length; //the amount of weights we are dealing with
         double [] weights1 = new double[wSize];
         double [] weights2 = new double[wSize];
         int randSplit = rand.nextInt(wSize);    //spot in which the split will occur, taking all the weight up to this point
 
         for(int i=0; i< wSize; i++){
             if(i<randSplit){
-                weights1[i] = parent1.getWeights()[i];
-                weights2[i] = parent2.getWeights()[i];
+                weights1[i] = parent1.getPieceWeights()[i];
+                weights2[i] = parent2.getPieceWeights()[i];
             }
             else{
-                weights1[i] = parent2.getWeights()[i];
-                weights2[i] = parent1.getWeights()[i];
+                weights1[i] = parent2.getPieceWeights()[i];
+                weights2[i] = parent1.getPieceWeights()[i];
             }
         }
-        child1.setWeights(weights1);
-        child2.setWeights(weights2);
+        child1.setPieceWeights(weights1);
+        child2.setPieceWeights(weights2);
     }
 
     /**
@@ -129,7 +129,7 @@ public class GeneticAlgo {
 	    if(Math.random() <= MUTATION_RATE){
             //System.out.println("A mutation occured");
 	    	Random rnd = new Random(); 
-            int wSize = child.getWeights().length; 
+            int wSize = child.getPieceWeights().length; 
             int switchWeight = rnd.nextInt(wSize);
             child.randWeight(switchWeight);   
 		}
@@ -171,7 +171,7 @@ public class GeneticAlgo {
     }
 
     public Individual getFittest(ArrayList<Individual> gen){
-        Individual max= new Individual();
+        Individual max= new Individual(true, false,false);
         for(Individual indi:gen){
             if(indi.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY)>max.getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY)){
                 max = indi;
