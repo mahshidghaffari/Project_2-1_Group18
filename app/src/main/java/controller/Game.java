@@ -35,7 +35,10 @@ public class Game{
     private boolean bExpectiMaxActive = false;
     private boolean noAgent = false;
     private boolean whiteOgWeights;
+    private boolean testOg;
+    private boolean testNew;
     private boolean whiteSelected;
+    private boolean testing_refined_weights = false;
     private int depth=-1;                       //-1 means no depth (PvP)
     private DicePanel dp;
     private int moveCounter=0;
@@ -190,6 +193,9 @@ public class Game{
     public void setbEpectiMaxActive(boolean b) { this.bExpectiMaxActive = b; }
     public void setwExpectiMaxActive(boolean b) { this.wExpectiMaxActive = b; }
     public void setWhichOGWeights(boolean isWhite){ whiteOgWeights = isWhite;}
+    public void setTest_refined(boolean b){ this.testing_refined_weights=b;}
+    public void setTestOg(boolean b){ testOg=b;}
+    public void setTestNew(boolean b){ testNew=b;}
 
     public void setDepth(int d) { this.depth = d; }
 
@@ -223,15 +229,23 @@ public class Game{
             // EXPECTIMAX AGENT
             } else if (wExpectiMaxActive) {
                 String chosen = dice.getChosen();
-                if(!bExpectiMaxActive){ 
+                if(testing_refined_weights){
+                    if(testOg){
+                        expectiMaxPlayer1 = new ExpectiMaxAgent(this, cb, chosen, depth, true, ogWeights);
+                    }
+                    else if (testNew){
+                        expectiMaxPlayer1 = new ExpectiMaxAgent(this, cb, chosen, depth, true, newWeights);
+                    }
+                }
+                else if(!bExpectiMaxActive){ 
                     // System.out.println("3333333");
+                    
                     expectiMaxPlayer1 = new ExpectiMaxAgent(this, cb, chosen, depth, true, ogWeights);
                 }
                 else{
                     if(whiteOgWeights){
                         expectiMaxPlayer1 = new ExpectiMaxAgent(this, cb, chosen, depth, true,ogWeights);
                      //   System.out.println("white player has weight--->" + ogWeights[0]); 
-
                     }
                     else{
                         expectiMaxPlayer1 = new ExpectiMaxAgent(this, cb, chosen, depth, true,newWeights);
@@ -276,7 +290,15 @@ public class Game{
         	// EXPECTIMAX AGENT
         	} else if (bExpectiMaxActive) {
                 String chosen = dice.getChosen();
-                if(!wExpectiMaxActive){
+                if(testing_refined_weights){
+                    if(testOg){
+                        expectiMaxPlayer2 = new ExpectiMaxAgent(this, cb, chosen, depth, false, ogWeights);
+                    }
+                    else if (testNew){
+                        expectiMaxPlayer2 = new ExpectiMaxAgent(this, cb, chosen, depth, false, newWeights);
+                    }
+                }
+                else if(!wExpectiMaxActive){
                     expectiMaxPlayer2 = new ExpectiMaxAgent(this,cb,chosen,depth,false,ogWeights);
                 }
                 else{
