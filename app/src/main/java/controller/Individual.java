@@ -10,11 +10,11 @@ public class Individual {
     public double rookWeight;
     public double queenWeight;
 
-    public double pawnRange = 5.0; // Pawn weight will be between 5 and 15
-    public double knightRange = 10.0; // Knight weight will be between 20 and 40
-    public double bishopRange = 10.0; // Bishop weight will be between 20 and 40
-    public double rookRange = 15.0; // Rook weight will be between 35 and 65
-    public double queenRange =10.0; // Queen weight will be between 60 and 120
+    public double pawnRange = 2.5; // Pawn weight will be between 5 and 15
+    public double knightRange = 5.0; // Knight weight will be between 20 and 40
+    public double bishopRange = 5.0; // Bishop weight will be between 20 and 40
+    public double rookRange = 7.5; // Rook weight will be between 35 and 65
+    public double queenRange =15.0; // Queen weight will be between 60 and 120
 
     public double ogPawn = 10.0;
     public double ogKnight = 30.0;
@@ -180,16 +180,16 @@ public class Individual {
     public double getFitness(double gamesToPlay, int depth) {
         if (fitness == -1) {
             TestFitness tf = null;
-            if(pieceWeightsEval){
+            //if(pieceWeightsEval){
                 tf = new TestFitness(getPieceWeights(), gamesToPlay, depth);
-            }
-            if(centerControlEval){
-                tf = new TestFitness(getCCWeights(), gamesToPlay, depth);
-            }
-            if(kingSafetyEval){
+            //}
+            // if(centerControlEval){
+            //     tf = new TestFitness(getCCWeights(), gamesToPlay, depth);
+            // }
+            //if(kingSafetyEval){
                 //tf = new TestFitness(getKSDWeights(), getKSPWeights(), gamesToPlay, depth);
 
-            }
+            //}
             fitness = tf.getFitness();
         }
         return fitness;

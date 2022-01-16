@@ -9,7 +9,7 @@ public class GeneticAlgo {
     final private int POP_SIZE=10;            //population size
     final private double MUTATION_RATE = 0.1;     //MUTATION RATE
     final private double GAMES_TO_PLAY = 15;   // games to play to determine fitness
-    final private int DEPTH_TO_PLAY=3;         //in which depth should the games be played 
+    final private int DEPTH_TO_PLAY=1;         //in which depth should the games be played 
     final private double GENERATIONS = 10;  // generations to run
     
     private ArrayList<Individual> parents;
@@ -28,7 +28,7 @@ public class GeneticAlgo {
             iterations++;
             System.out.println("Generation #" + iterations);
             breed();
-            System.out.println("Best weights are :" + getFittest(parents).toString()+ " and the fitness score is" + getFittest(parents).getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY));
+            System.out.println("Best weights are : " + getFittest(parents).toString()+ " with fitness score : " + getFittest(parents).getFitness(GAMES_TO_PLAY,DEPTH_TO_PLAY));
         }
 
         //System.out.println("Reached target! it took "+ iterations+ " generations to reach this target");
@@ -54,8 +54,8 @@ public class GeneticAlgo {
            //System.out.println("kids size currently: "+kids.size() );
         }
         double kids_totalFitness = getTotalFitness(kids,true);
-        System.out.println("Old population total fitness" + parents_totalFitness);
-        System.out.println("New population total fitness" + kids_totalFitness);
+        System.out.println("Old population total fitness : " + parents_totalFitness);
+        System.out.println("New population total fitness : " + kids_totalFitness);
         parents= kids;
         parents_totalFitness = kids_totalFitness;
     }
