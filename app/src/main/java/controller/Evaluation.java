@@ -60,8 +60,9 @@ public class Evaluation {
      * @param cb the chessboard to evaluate
      */
     public Evaluation(ChessBoard cb) {
-        this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0);
-        this.setPieceOnDiceWeight(15.0);
+        //this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0);
+        //this.setPieceOnDiceWeight(15.0);
+
         this.cb = cb;
         this.board = cb.getBoard();
         this.livePieces = cb.getLivePieces();
@@ -131,6 +132,69 @@ public class Evaluation {
     }
     public double getScore(){
         return this.score;
+    }
+    public void setDangerWeights(double[] weights){
+        this.kingDangerWeight[2][2] = weights[2];
+        for(int i=0; i<5; i++){
+            this.kingDangerWeight[i][0] = weights[0];
+            this.kingDangerWeight[i][4] = weights[0];
+            this.kingDangerWeight[0][i] = weights[0];
+            this.kingDangerWeight[4][i] = weights[0];
+        }
+        for(int i=0; i<3; i++){
+            this.kingDangerWeight[i][1] = weights[1];
+            this.kingDangerWeight[i][3] = weights[1];
+            this.kingDangerWeight[1][i] = weights[1];
+            this.kingDangerWeight[3][i] = weights[1];
+        }
+    }
+    public void setProtectionWeights(double[] weights){
+        this.kingProtectionWeight[2][2] = weights[2];
+        for(int i=0; i<5; i++){
+            this.kingProtectionWeight[i][0] = weights[0];
+            this.kingProtectionWeight[i][4] = weights[0];
+            this.kingProtectionWeight[0][i] = weights[0];
+            this.kingProtectionWeight[4][i] = weights[0];
+        }
+        for(int i=0; i<3; i++){
+            this.kingProtectionWeight[i][1] = weights[1];
+            this.kingProtectionWeight[i][3] = weights[1];
+            this.kingProtectionWeight[1][i] = weights[1];
+            this.kingProtectionWeight[3][i] = weights[1];
+        }
+    }
+    public void setSquareWeights(double[] weights){
+        for(int i=0; i<8; i++){
+            this.squareEval[i][7] = weights[0];
+            this.squareEval[i][0] = weights[0];
+            this.squareEval[0][i] = weights[0];
+            this.squareEval[7][i] = weights[0];
+        }
+        for(int i=0; i<6; i++){
+            this.squareEval[i][6] = weights[1];
+            this.squareEval[i][1] = weights[1];
+            this.squareEval[1][i] = weights[1];
+            this.squareEval[6][i] = weights[1];
+        }
+        for(int i=0; i<4; i++){
+            this.squareEval[i][2] = weights[2];
+            this.squareEval[i][5] = weights[2];
+            this.squareEval[2][i] = weights[2];
+            this.squareEval[5][i] = weights[2];
+        }
+        this.squareEval[3][3] = weights[3];
+        this.squareEval[3][4] = weights[3];
+        this.squareEval[4][3] = weights[3];
+        this.squareEval[4][4] = weights[3];
+
+    }
+    public void setOuterRingWeights(double weight){
+        for(int i=0; i<8; i++){
+            this.squareEval[i][7] = weight;
+            this.squareEval[i][0] = weight;
+            this.squareEval[0][i] = weight;
+            this.squareEval[7][i] = weight;
+        }
     }
     /*
     public double getMobilityEval(){
