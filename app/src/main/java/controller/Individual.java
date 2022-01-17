@@ -98,9 +98,9 @@ public class Individual {
         }
         if(squareWeights){
             this.d1Weight = (Math.random() * ((d1OgValue+d1Range) - (d1OgValue-d1Range))) + (d1OgValue-d1Range);
-            this.d2Weight = (Math.random() * ((d2OgValue+d2Range) - (d1OgValue-d2Range))) + (d1OgValue-d2Range);
-            this.d3Weight = (Math.random() * ((d3OgValue+d3Range) - (d1OgValue-d3Range))) + (d1OgValue-d3Range);
-            this.d4Weight = (Math.random() * ((d4OgValue+d4Range) - (d1OgValue-d4Range))) + (d1OgValue-d4Range);
+            this.d2Weight = (Math.random() * ((d2OgValue+d2Range) - (d2OgValue-d2Range))) + (d2OgValue-d2Range);
+            this.d3Weight = (Math.random() * ((d3OgValue+d3Range) - (d3OgValue-d3Range))) + (d3OgValue-d3Range);
+            this.d4Weight = (Math.random() * ((d4OgValue+d4Range) - (d4OgValue-d4Range))) + (d4OgValue-d4Range);
             if(d1Weight<0){ d1Weight = -d1Weight;}
             if(d2Weight<0){ d2Weight = -d2Weight;}
             if(d3Weight<0){ d3Weight = -d3Weight;}
@@ -152,6 +152,11 @@ public class Individual {
      */
     public double[] getSquareWeights(){
         double[] weights ={d1Weight, d2Weight, d3Weight, d4Weight};
+        return weights;
+    }
+    /* Method getOgCCWeights : returns array of Center Control weights*/
+    public double[] getOgCCWeights(){
+        double[] weights ={d1OgValue, d2OgValue, d3OgValue, d4OgValue};
         return weights;
     }
     /**
