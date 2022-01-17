@@ -38,8 +38,8 @@ public class Tree {
     public void generateTree2(Node n){
             if(depth==0 || n.getBoard().missingKing()){
                 //double boardVal = n.getBoard().getBoardValue();
-                Evaluation eval = new Evaluation(n.getBoard());
-                eval.setPieceWeights(weights);
+                Evaluation eval = new Evaluation(n.getBoard(), weights);
+                //eval.setSquareWeights(weights);
                 n.setValue(eval.getScore());
                 return;
             }

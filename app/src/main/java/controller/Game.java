@@ -43,7 +43,8 @@ public class Game{
     private DicePanel dp;
     private int moveCounter=0;
     private int totalNumNodes = 0;
-    final private double[] ogWeights = {10.0, 30.0, 30.0, 50.0, 90.0};
+    final private double[] ogSquareWeights = {1.0, 2.0, 3.0, 5.0};
+    final private double[] ogWeights = {1.0, 2.0, 3.0, 5.0};
     private double[] newWeights;
     /**
      * Main Game Class, takes care of all buttons clicked by the listener and Gameplay situations

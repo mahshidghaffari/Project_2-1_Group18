@@ -4,13 +4,14 @@ public class Test_Refined_weights {
     
     boolean checked_new_Weight=false;
     boolean checked_og_Weights=false;
+    double[] newSquareWeights = {0.8799210485005461, 2.9349973480987495, 4.322591169108735, 5.493702210305353};
     double[] newWeights = {9.720980133600229,  29.542732308055086, 30.68359217160083, 55.710377964516184, 68.72427084012212};
     double[] ogWeights = {10.0, 30.0, 30.0, 50.0, 90.0};
     public static void main(String[] args) {
         new Test_Refined_weights();
     }
     public Test_Refined_weights(){
-        experiment(100, 3);
+        experiment(1000, 1);
     }
     public void experiment(int runs, int depth){
         while(!checked_new_Weight ||!checked_og_Weights){    
@@ -28,7 +29,7 @@ public class Test_Refined_weights {
                     Game game = new Game(f, depth, isWhite);
                     game.setTest_refined(true);
                     game.setTestNew(true);
-                    game.setNewWeights(newWeights);
+                    game.setNewWeights(newSquareWeights);
                     if(i<runs/2){
                         game.setwExpectiMaxActive(true);
                         game.setbBaseLineActive(true);
@@ -37,7 +38,7 @@ public class Test_Refined_weights {
                         game.setwBaseLineActive(true);
                         game.setbEpectiMaxActive(true);
                     }
-                    System.out.print("Game "+i + " : ");
+                    //System.out.print("Game "+i + " : ");
                     double startTime = System.nanoTime();
                     game.play();
                     //game.getChessBoard().printBoard();
@@ -57,20 +58,24 @@ public class Test_Refined_weights {
                     if(color.equals("White")){
                         if(i<runs/2){
                             eMax[0]++;
-                            System.out.println("Expecti won as white!");
+                            //System.out.println("Expecti won as white!");
+                            //System.out.print(".");
                         } else{
                             base[0]++;
-                            System.out.println("Base won as white!");
+                            //System.out.println("Base won as white!");
+                            //System.out.print(".");
                         }
                         avgMoves+=game.getMoveCounter()/2;
                         //eMax[0]++;
                     } else if(color.equals("Black")){
                         if(i>runs/2){
                             eMax[1]++;
-                            System.out.println("Expecti won as black!");
+                            //System.out.println("Expecti won as black!");
+                            //System.out.print(".");
                         } else{
                             base[1]++;
-                            System.out.println("Base won as black!");
+                            //System.out.println("Base won as black!");
+                            //System.out.println(".");
                         }
                         avgMoves+=game.getMoveCounter()/2; 
                         //base[1] ++;              
@@ -83,6 +88,7 @@ public class Test_Refined_weights {
                 for(double x:gameTimes){
                     sum += x;
                 }
+                System.out.println("");
                 System.out.println("- Games played :" + runs);
                 System.out.println("- ExpectiMax Player won "+ (eMax[0]+eMax[1]));
 
@@ -106,6 +112,7 @@ public class Test_Refined_weights {
                     Game game = new Game(f, depth, isWhite);
                     game.setTest_refined(true);
                     game.setTestNew(true);
+
                     game.setNewWeights(ogWeights);
                     if(i<runs/2){
                         game.setwExpectiMaxActive(true);
@@ -115,7 +122,7 @@ public class Test_Refined_weights {
                         game.setwBaseLineActive(true);
                         game.setbEpectiMaxActive(true);
                     }
-                    System.out.print("Game "+i + " : ");
+                    //System.out.print("Game "+i + " : ");
                     double startTime = System.nanoTime();
                     game.play();
                     //game.getChessBoard().printBoard();
@@ -135,20 +142,26 @@ public class Test_Refined_weights {
                     if(color.equals("White")){
                         if(i<runs/2){
                             eMax[0]++;
-                            System.out.println("Expecti won as white!");
+                            //System.out.println("Expecti won as white!");
+                            //System.out.println(".");
+
                         } else{
                             base[0]++;
-                            System.out.println("Base won as white!");
+                            //System.out.println("Base won as white!");
+                            //System.out.println(".");
+
                         }
                         avgMoves+=game.getMoveCounter()/2;
                         //eMax[0]++;
                     } else if(color.equals("Black")){
                         if(i>runs/2){
                             eMax[1]++;
-                            System.out.println("Expecti won as black!");
+                            //System.out.println("Expecti won as black!");
+                            //System.out.println(".");
                         } else{
                             base[1]++;
-                            System.out.println("Base won as black!");
+                            //System.out.println("Base won as black!");
+                            //System.out.println(".");
                         }
                         avgMoves+=game.getMoveCounter()/2; 
                         //base[1] ++;              
@@ -161,6 +174,7 @@ public class Test_Refined_weights {
                 for(double x:gameTimes){
                     sum += x;
                 }
+                System.out.println("");
                 System.out.println("- Games played :" + runs);
                 System.out.println("- ExpectiMax Player won "+ (eMax[0]+eMax[1]));
 

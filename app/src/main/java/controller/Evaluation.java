@@ -59,8 +59,30 @@ public class Evaluation {
      * Constructor Evaluation : when constructed, everything is computed, and you can access the score with Evaluation.getScore()
      * @param cb the chessboard to evaluate
      */
+    public Evaluation(ChessBoard cb, double[] wArr) {
+        this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0);
+        //this.setPieceOnDiceWeight(15.0);
+
+        this.cb = cb;
+        this.board = cb.getBoard();
+        this.livePieces = cb.getLivePieces();
+
+        for(int i =0; i<8; i++){
+            for(int j = 0; j<8; j++){
+                this.whiteThreatGrid[i][j] = this.getNumThreats(board[i][j],true);
+                this.blackThreatGrid[i][j] = this.getNumThreats(board[i][j],false);
+
+            }
+        }
+        this.setSquareWeights(wArr);
+        score = this.getMaterialEval() + this.getCenterControlEval();
+        
+        if(centerControl){score += this.getCenterControlEval();}
+        if(kingSafety){score += this.getKingSafetyEval();}
+        if(piecesOnDice){score += this.getPiecesOnDiceEval();}
+    }
     public Evaluation(ChessBoard cb) {
-        //this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0);
+        this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0);
         //this.setPieceOnDiceWeight(15.0);
 
         this.cb = cb;
@@ -75,6 +97,7 @@ public class Evaluation {
             }
         }
         score = this.getMaterialEval();
+        
         if(centerControl){score += this.getCenterControlEval();}
         if(kingSafety){score += this.getKingSafetyEval();}
         if(piecesOnDice){score += this.getPiecesOnDiceEval();}

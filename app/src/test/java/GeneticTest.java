@@ -9,11 +9,11 @@ public class GeneticTest {
     so test everything seperatly
     */
     @Test public void testIndividual(){
-        Individual m = new Individual();
-        assertEquals(true, m.getWeights()[0] >= 5.0 && m.getWeights()[0] <= 15.0);
-        assertEquals(true, m.getWeights()[1] >= 20.0 && m.getWeights()[1] <= 40.0);
-        assertEquals(true, m.getWeights()[2] >= 20.0 && m.getWeights()[2] <= 40.0);
-        assertEquals(true, m.getWeights()[3] >= 35.0 && m.getWeights()[3] <= 65.0);
-        assertEquals(true, m.getWeights()[4] >= 60.0 && m.getWeights()[4] <= 120.0);
+        Individual m = new Individual(true, false, false);
+        assertEquals(true, m.getPieceWeights()[0] >= 5.0 && m.getPieceWeights()[0] <= 15.0);
+        assertEquals(true, m.getPieceWeights()[1] >= 20.0 && m.getPieceWeights()[1] <= 40.0);
+        assertEquals(true, m.getPieceWeights()[2] >= 20.0 && m.getPieceWeights()[2] <= 40.0);
+        assertEquals(true, m.getPieceWeights()[3] >= 35.0 && m.getPieceWeights()[3] <= 65.0);
+        assertEquals(true, m.getPieceWeights()[4] >= 60.0 && m.getPieceWeights()[4] <= 120.0);
     }
 }

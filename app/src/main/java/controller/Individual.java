@@ -10,11 +10,11 @@ public class Individual {
     public double rookWeight;
     public double queenWeight;
 
-    public double pawnRange = 2.5; // Pawn weight will be between 5 and 15
-    public double knightRange = 5.0; // Knight weight will be between 20 and 40
-    public double bishopRange = 5.0; // Bishop weight will be between 20 and 40
-    public double rookRange = 7.5; // Rook weight will be between 35 and 65
-    public double queenRange =15.0; // Queen weight will be between 60 and 120
+    public double pawnRange = 5.0; // Pawn weight will be between 5 and 15
+    public double knightRange = 15.0; // Knight weight will be between 20 and 40
+    public double bishopRange = 15.0; // Bishop weight will be between 20 and 40
+    public double rookRange = 25.0; // Rook weight will be between 35 and 65
+    public double queenRange =45.0; // Queen weight will be between 60 and 120
 
     public double ogPawn = 10.0;
     public double ogKnight = 30.0;
@@ -30,15 +30,19 @@ public class Individual {
     public double d3Weight;
     public double d4Weight;
 
-    public double d1OgValue = 0.5202320588728317;
-    public double d2OgValue = 1.6396821346508677;
-    public double d3OgValue = 1.8715389206457845;
-    public double d4OgValue = 2.1227005286165497;
+    public double d1OgValue = 1.0;
+    public double d2OgValue = 2.0;
+    public double d3OgValue = 3.0;
+    public double d4OgValue = 5.0;
+    //0.5202320588728317
+    //1.6396821346508677
+    //1.8715389206457845
+    //2.1227005286165497
 
-    public double d1Range = 0.2;
-    public double d2Range = 0.3;
-    public double d3Range = 0.3;
-    public double d4Range = 0.3;
+    public double d1Range = 0.5;
+    public double d2Range = 1.0;
+    public double d3Range = 1.5;
+    public double d4Range = 2.0;
 
 
     //Variables for king protection (ally threats around the king)
@@ -125,15 +129,6 @@ public class Individual {
         this.queenWeight = queenWeight;
     }
 
-    public Individual(double[] weights, boolean pieceWeights, boolean squareWeights, boolean kingWeights) {
-        this.pieceWeightsEval = pieceWeights;
-        this.centerControlEval = squareWeights;
-        this.kingSafetyEval = kingWeights;
-
-        if(pieceWeightsEval){
-
-        }
-    }
     public Individual(boolean cc, double[]weights){
         this.d1Weight = weights[0];
         this.d2Weight = weights[1];
@@ -181,7 +176,7 @@ public class Individual {
         if (fitness == -1) {
             TestFitness tf = null;
             //if(pieceWeightsEval){
-                tf = new TestFitness(getPieceWeights(), gamesToPlay, depth);
+                tf = new TestFitness(getCCWeights(), gamesToPlay, depth);
             //}
             // if(centerControlEval){
             //     tf = new TestFitness(getCCWeights(), gamesToPlay, depth);
@@ -332,6 +327,12 @@ public class Individual {
                 this.d4Weight = weight;
                 break;
         }
+    }
+    public void setCCWeights(double[] weights){
+        this.d1Weight = weights[0];
+        this.d2Weight = weights[1];
+        this.d3Weight = weights[2];
+        this.d4Weight = weights[3];
     }
     public void setKSWeight(int index, double weightD, double weightP) {
         switch (index) {
