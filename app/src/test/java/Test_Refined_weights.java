@@ -1,6 +1,12 @@
 import javax.swing.JFrame;
 import controller.*;
 public class Test_Refined_weights {
+
+    /**
+     * In this class we test the refined weights obtained from the gentic algorithm 
+     * against the original weights that were  {10.0, 30.0, 30.0, 50.0, 90.0}
+     * Thus we can conclude which agent performs better.
+     */
     
     boolean checked_new_Weight=false;
     boolean checked_og_Weights=false;
@@ -11,7 +17,7 @@ public class Test_Refined_weights {
         new Test_Refined_weights();
     }
     public Test_Refined_weights(){
-        experiment(1000, 1);
+        experiment(500, 2);
     }
     public void experiment(int runs, int depth){
         while(!checked_new_Weight ||!checked_og_Weights){    

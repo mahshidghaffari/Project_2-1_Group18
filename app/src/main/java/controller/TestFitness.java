@@ -3,15 +3,16 @@ package controller;
 import javax.swing.JFrame;
 
 public class TestFitness {
-    //Class TestFitness is used to compute the fitness of Individuals in the Genetic Algortihm
-
+    /** 
+     * Class TestFitness is used to compute the fitness of Individuals in the Genetic Algortihm
+     * It checks how many games an agent with double[] new weights wins against an agent with 
+     * original weights.
+     * The get fitness method returns games_won/ games_played
+     **/
     double[] newWeights ;
     double games=50;
     int depth;
-    // public static void main(String[] args) {
-    //     double[] hh = {2000,2,3,2,1,1};
-    //     new TestFitness(hh);
-    // }
+ 
     
     public TestFitness(double[] newWeights, double games, int depth){
         this.newWeights=newWeights;

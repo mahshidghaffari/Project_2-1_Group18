@@ -8,9 +8,12 @@ from which you can choose the game style:
     - Player vs. AI
     - Baseline agent vs. AI
 
+Then, you can choose which color you would like to play in on the left.
+After clicking play, a window will apear in which you can select the depth until which the
+agent will search to. 
+
 If no game style is selected Player vs. Player will take place. 
 If the AI is involved, the depth of the tree should also be specified.
-(For now the AI is able to play up to a depth of 3)
-(For now it also not possible to choose the color thus, the AI will always be the black player)
+(For now the AI is able to play up to a depth of 5)
 
 Enjoy
