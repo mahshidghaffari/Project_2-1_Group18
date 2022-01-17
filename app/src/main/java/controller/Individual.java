@@ -10,12 +10,12 @@ public class Individual {
     public double rookWeight;
     public double queenWeight;
 
-    public double pawnRange = 5.0; // Pawn weight will be between 5 and 15
-    public double knightRange = 15.0; // Knight weight will be between 20 and 40
-    public double bishopRange = 15.0; // Bishop weight will be between 20 and 40
-    public double rookRange = 25.0; // Rook weight will be between 35 and 65
-    public double queenRange =45.0; // Queen weight will be between 60 and 120
-
+    public double pawnRange = 5.0; 
+    public double knightRange = 15.0;
+    public double bishopRange = 15.0;
+    public double rookRange = 25.0;
+    public double queenRange =45.0;
+    //Store the OG, arbitrary values
     public double ogPawn = 10.0;
     public double ogKnight = 30.0;
     public double ogBishop = 30.0;
@@ -34,10 +34,6 @@ public class Individual {
     public double d2OgValue = 2.0;
     public double d3OgValue = 3.0;
     public double d4OgValue = 5.0;
-    //0.5202320588728317
-    //1.6396821346508677
-    //1.8715389206457845
-    //2.1227005286165497
 
     public double d1Range = 0.5;
     public double d2Range = 1.0;
@@ -77,19 +73,23 @@ public class Individual {
     public boolean centerControlEval;
     public boolean kingSafetyEval;
     public double fitness = -1;
+    /**
+     * Constructor Individual : constructs a new Individual with random weights depending on the config
+     * @param pieceWeights : if true, constructor will init random weights for the pieces
+     * @param squareWeights : if true constructor will init random weights for the squares
+     * @param kingWeights : if true constructor will init random weights for the king safety squares
+     */
 
     public Individual(boolean pieceWeights, boolean squareWeights, boolean kingWeights) {
-        // The following formula is to obtain a random number between a min and a max
-        // range
+        // The following formula is to obtain a random number between a min and a max range
         // Math.random() outputs a pseudorandom number between 0 and 1
-        // The formula : ((Math.random() * (max - min)) + min) gives us a random in a
-        // range of max and min
-        // Here max = ogPiece + pieceRange
-        // and min = ogPiece - pieceRange
+        // The formula : ((Math.random() * (max - min)) + min) gives us a random in a range of max and min
+        // Here max = ogPiece + pieceRange and min = ogPiece - pieceRange
+
         this.pieceWeightsEval = pieceWeights;
         this.centerControlEval = squareWeights;
         this.kingSafetyEval = kingWeights;
-        if(pieceWeights){
+        if(pieceWeights){ 
             this.pawnWeight = (Math.random() * ((ogPawn + pawnRange) - (ogPawn - pawnRange))) + (ogPawn - pawnRange);
             this.knightWeight = (Math.random() * ((ogKnight + knightRange) - (ogKnight - knightRange)))+ (ogKnight - knightRange);
             this.bishopWeight = (Math.random() * ((ogBishop + bishopRange) - (ogBishop - bishopRange)))+ (ogBishop - bishopRange);
@@ -119,7 +119,14 @@ public class Individual {
         
     }
 
-
+    /**
+     * Constructor for Individual : given piece weights
+     * @param pawnWeight : given pawn weight
+     * @param knightWeight: given knight weight
+     * @param bishopWeight: given bishop weight
+     * @param rookWeight: given rook weight
+     * @param queenWeight: given queen weight
+     */
     public Individual(double pawnWeight, double knightWeight, double bishopWeight, double rookWeight,
             double queenWeight) {
         this.pawnWeight = pawnWeight;
@@ -128,18 +135,29 @@ public class Individual {
         this.rookWeight = rookWeight;
         this.queenWeight = queenWeight;
     }
-
+    /**
+     * Constructor Individual : constructor used for given square weigths
+     * @param cc determines which constructor to use
+     * @param weights given weights to use
+     */
     public Individual(boolean cc, double[]weights){
         this.d1Weight = weights[0];
         this.d2Weight = weights[1];
         this.d3Weight = weights[2];
         this.d4Weight = weights[3];
     }
+    /**
+     * Method getSquareWeights : 
+     * @return double[] for the weights of the squares
+     */
     public double[] getSquareWeights(){
         double[] weights ={d1Weight, d2Weight, d3Weight, d4Weight};
         return weights;
     }
-
+    /**
+     * Empty Constructor, used when we later SET the weights
+     * @param empty
+     */
     public Individual(String empty) {
     }
 
@@ -189,12 +207,15 @@ public class Individual {
         }
         return fitness;
     }
-
+    /**
+     * Method mutate : Mutates the pieceWeights of Individual
+     * @param mutationRate 0 < mutationRate < 1. Probability of mutation on an individual
+     */
     public void mutate(double mutationRate) {
         if (Math.random() < mutationRate) { // Randomly choose whether to mutate
             System.out.println("Mutation happening!");
             Random rand = new Random();
-            int pieceIndex = rand.nextInt(5); // Randomly choose pieceIndex
+            int pieceIndex = rand.nextInt(5); // Randomly choose piece Index
             double delta = Math.random() * this.getPieceRanges()[pieceIndex]; // Randomly choose change of weight
             boolean plusMinus = Math.random() < 0.5; // Randomly choose whether to addition or substract
             // Define new weights
@@ -207,13 +228,17 @@ public class Individual {
             this.setPieceWeight(pieceIndex, newWeights);
         }
     }
+    /**
+     * Method mutateCC : mutate Individual, by changing its CenterControl (/square) weights
+     * @param mutationRate : 0 < mutationRate < 1. Probability of mutation on an individual
+     */
     public void mutateCC(double mutationRate) {
         if (Math.random() < mutationRate) { // Randomly choose whether to mutate
             System.out.println("Mutation happening!");
             Random rand = new Random();
-            int pieceIndex = rand.nextInt(4); // Randomly choose pieceIndex
+            int pieceIndex = rand.nextInt(4); // Randomly choose squareIndex
             double delta = Math.random() * this.getCCRanges()[pieceIndex]; // Randomly choose change of weight
-            boolean plusMinus = Math.random() < 0.5; // Randomly choose whether to addition or substract
+            boolean plusMinus = Math.random() < 0.5; // Randomly choose whether to add or substract
             // Define new weights
             double newWeights = this.getCCWeights()[pieceIndex];
             if (plusMinus) {
@@ -224,6 +249,10 @@ public class Individual {
             this.setCCWeight(pieceIndex, newWeights);
         }
     }
+    /**
+     * Method mutateKS : mutates individual by changing its King Safety Weights
+     * @param mutationRate : 0 < mutationRate < 1. Probability of mutation on an individual
+     */
     public void mutateKS(double mutationRate) {
         if (Math.random() < mutationRate) { // Randomly choose whether to mutate
             System.out.println("Mutation happening!");
@@ -245,46 +274,53 @@ public class Individual {
             this.setKSWeight(pieceIndex, newWeightsD, newWeightsP);
         }
     }
-
+    /*Method getOgPieceValues : return the original weights of the pieces */
     public double[] getOgPieceValues() {
         double arr[] = { ogPawn, ogKnight, ogBishop, ogRook, ogQueen };
         return arr;
     }
-
+    /* Method getPieceRanges : return the ranges of weight for the pieces*/
     public double[] getPieceRanges() {
         double arr[] = { pawnRange, knightRange, bishopRange, rookRange, queenRange };
         return arr;
     }
+    /*Method getCCRanges : return the ranges of the centercontrol weights for the squares */
     public double[] getCCRanges(){
         double arr[] = {d1Range, d2Range, d3Range, d4Range};
         return arr;
     }
+    /*Method getKSPRanges : return the ranges of the king protection weights*/
     public double[] getKSPRanges(){
         double arr[] = {kd1ProtectionRange, kd2ProtectionRange, kd3ProtectionRange};
         return arr;
     }
+    /*Method getKSDRanges : return the ranges of the king danger weights*/
     public double[] getKSDRanges(){
         double arr[] = {kd1ProtectionRange, kd2ProtectionRange, kd3ProtectionRange};
 
         return arr;
     }
+    /* Method getPieceWeights : returns the current weights of the pieces*/
     public double[] getPieceWeights() {
         double[] arr = { pawnWeight, knightWeight, bishopWeight, rookWeight, queenWeight };
         return arr;
     }
+    /* Method getCCWeights : returns the current weights for the centercontrol*/
     public double[] getCCWeights(){
         double[] arr = {d1Weight, d2Weight, d3Weight, d4Weight};
         return arr;
     }
+    /* Method getKSDWeights : returns the current weights for the king danger*/
     public double[] getKSDWeights(){
         double arr[] = {kd1DangerWeight, kd2DangerWeight, kd3DangerWeight};
         return arr;
     }
+    /* Method getKSPWeights : returns the current weights for the king protection*/
     public double[] getKSPWeights(){
         double arr[] = {kd1ProtectionWeight, kd2ProtectionWeight, kd3ProtectionWeight};
         return arr;
     }
-
+    /* Method setPieceWeights : sets piece weights to the given array*/
     public void setPieceWeights(double[] weights) {
         this.pawnWeight = weights[0];
         this.knightWeight = weights[1];
@@ -292,7 +328,7 @@ public class Individual {
         this.rookWeight = weights[3];
         this.queenWeight = weights[4];
     }
-
+    /* Method setPieceWeight : sets the pieceWeight at index to the weight  */
     public void setPieceWeight(int index, double weight) {
         switch (index) {
             case 0:
@@ -312,6 +348,7 @@ public class Individual {
                 break;
         }
     }
+    /* Method setCCWeight : sets the squareWeight at index to weight*/
     public void setCCWeight(int index, double weight) {
         switch (index) {
             case 0:
@@ -328,12 +365,14 @@ public class Individual {
                 break;
         }
     }
+    /* Method setCCWeights : sets the center control weights to the input array*/
     public void setCCWeights(double[] weights){
         this.d1Weight = weights[0];
         this.d2Weight = weights[1];
         this.d3Weight = weights[2];
         this.d4Weight = weights[3];
     }
+    /* Method setKSWeight : sets king safety D & P weight at index to weightD and weightP*/
     public void setKSWeight(int index, double weightD, double weightP) {
         switch (index) {
             case 0:
@@ -350,6 +389,7 @@ public class Individual {
                 break; 
         }
     }
+    /* Method setKSWeight : sets the danger and protection weights to the input values*/
     public void setKSWeight(double[] weightD, double[] weightP) {
         this.kd1DangerWeight = weightD[0];
         this.kd1ProtectionWeight = weightP[0];
@@ -360,25 +400,29 @@ public class Individual {
         this.kd2DangerWeight = weightD[2];
         this.kd2ProtectionWeight = weightP[2]; 
     }
+    /* get king danger weights to String*/
     public String DToString(){
         String r = kd1DangerWeight + ", " + kd2DangerWeight + ", " + kd3DangerWeight;
         return r;
     }
+    /* get king protection weights to String*/
     public String PToString(){
         String r = kd1ProtectionWeight + ", " + kd2ProtectionWeight + ", " + kd3ProtectionWeight;
         return r;
     }
+    /* get center control weights to String*/
     public String squareToString(){
         String r = d1Weight + ", " + d2Weight + ", "+d3Weight + ", "+d4Weight;
         return r;
     }
+    /* get piece weights to String*/
     public String toString() {
         String r = "Pawn = " + pawnWeight + ", Knight = " + knightWeight + ", Bishop = " + bishopWeight + ", Rook = "
                 + rookWeight + ", Queen = " + queenWeight;
 
         return r;
     }
-
+    /* set piece weight at index to a new random weight */
     public void randWeight(int whichWeight) {
         if (whichWeight == 0) {
             pawnWeight = (Math.random() * ((ogPawn + pawnRange) - (ogPawn - pawnRange))) + (ogPawn - pawnRange);

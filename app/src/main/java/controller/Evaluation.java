@@ -2,13 +2,14 @@ package controller;
 import java.util.ArrayList;
 
 public class Evaluation {
+
     private ChessBoard cb;
     private Square[][] board;
     private ArrayList<Piece> livePieces;
     private double[][] whiteThreatGrid = new double[8][8];
     private double[][] blackThreatGrid = new double[8][8];
     private double score;
-    
+    //Define piece Weights variables
     private double pawnWeight;
     private double knightWeight;
     private double bishopWeight;
@@ -58,6 +59,7 @@ public class Evaluation {
     /**
      * Constructor Evaluation : when constructed, everything is computed, and you can access the score with Evaluation.getScore()
      * @param cb the chessboard to evaluate
+     * @param wArr the array of weights for the center control
      */
     public Evaluation(ChessBoard cb, double[] wArr) {
         this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0);
@@ -66,7 +68,7 @@ public class Evaluation {
         this.cb = cb;
         this.board = cb.getBoard();
         this.livePieces = cb.getLivePieces();
-
+        //Define threatGrids
         for(int i =0; i<8; i++){
             for(int j = 0; j<8; j++){
                 this.whiteThreatGrid[i][j] = this.getNumThreats(board[i][j],true);
@@ -74,6 +76,7 @@ public class Evaluation {
 
             }
         }
+        //Define score value
         this.setSquareWeights(wArr);
         score = this.getMaterialEval() + this.getCenterControlEval();
         
@@ -81,6 +84,10 @@ public class Evaluation {
         if(kingSafety){score += this.getKingSafetyEval();}
         if(piecesOnDice){score += this.getPiecesOnDiceEval();}
     }
+    /**
+     * Constructor Evaluation : this constructor is for normal evaluation, without centercontrol
+     * @param cb : the ChessBoard to read
+     */
     public Evaluation(ChessBoard cb) {
         this.setPieceWeights(10.0, 30.0, 30.0, 50.0, 90.0);
         //this.setPieceOnDiceWeight(15.0);
@@ -88,7 +95,7 @@ public class Evaluation {
         this.cb = cb;
         this.board = cb.getBoard();
         this.livePieces = cb.getLivePieces();
-
+        //Define threat gridq
         for(int i =0; i<8; i++){
             for(int j = 0; j<8; j++){
                 this.whiteThreatGrid[i][j] = this.getNumThreats(board[i][j],true);
@@ -96,12 +103,18 @@ public class Evaluation {
 
             }
         }
+        //Define score value
         score = this.getMaterialEval();
         
         if(centerControl){score += this.getCenterControlEval();}
         if(kingSafety){score += this.getKingSafetyEval();}
         if(piecesOnDice){score += this.getPiecesOnDiceEval();}
     }
+    /**
+     * Method getMaxEval : not used in the code, but was thought for the Star1 pruning,
+     * which needs min and max bounds of the evaluation function
+     * @return the max value a board could obtain
+     */
     public double getMaxEval(){
         //Max score you can get is with all pawns promoted, so 9 queens + other pieces
         double max = 9 * queenWeight + 2*knightWeight + 2*bishopWeight + 2*rookWeight + kingWeight;
@@ -122,6 +135,11 @@ public class Evaluation {
         }
         return max;
     }
+    /**
+     * Method getPiecesOnDiceEval : evaluates the number of different types of pieces each player can move
+     * (was not used in expecti, nor GA)
+     * @return double representing who has advantage
+     */
     public double getPiecesOnDiceEval(){
         double whiteEval = 0.0;
         double blackEval = 0.0;
@@ -153,9 +171,17 @@ public class Evaluation {
         }
         return whiteEval - blackEval;
     }
+    /* Method getScore : returns the value of the board*/
     public double getScore(){
         return this.score;
     }
+    /**
+     * Methid setDangerWeights : input example : {1.0, 2.0, 4.0}
+     * Here all square in outer ring get 1.0,
+     * all squares in middle ring get 2.0,
+     * all square in inner ring get 4.0
+     * @param weights the weight values to set
+     */
     public void setDangerWeights(double[] weights){
         this.kingDangerWeight[2][2] = weights[2];
         for(int i=0; i<5; i++){
@@ -171,6 +197,13 @@ public class Evaluation {
             this.kingDangerWeight[3][i] = weights[1];
         }
     }
+    /**
+     * Methid setProtectionWeights : input example : {1.0, 2.0, 4.0}
+     * Here all square in outer ring get 1.0,
+     * all squares in middle ring get 2.0,
+     * all square in inner ring get 4.0
+     * @param weights the weight values to set
+     */
     public void setProtectionWeights(double[] weights){
         this.kingProtectionWeight[2][2] = weights[2];
         for(int i=0; i<5; i++){
@@ -186,6 +219,13 @@ public class Evaluation {
             this.kingProtectionWeight[3][i] = weights[1];
         }
     }
+    /**
+     * Methid setSquareWeights : input example : {1.0, 2.0, 4.0, 6.0}
+     * Here all square in outer ring get 1.0,
+     * all squares in middle ring get 2.0,
+     * all square in inner ring get 4.0
+     * @param weights the weight values to set
+     */
     public void setSquareWeights(double[] weights){
         for(int i=0; i<8; i++){
             this.squareEval[i][7] = weights[0];
@@ -210,14 +250,6 @@ public class Evaluation {
         this.squareEval[4][3] = weights[3];
         this.squareEval[4][4] = weights[3];
 
-    }
-    public void setOuterRingWeights(double weight){
-        for(int i=0; i<8; i++){
-            this.squareEval[i][7] = weight;
-            this.squareEval[i][0] = weight;
-            this.squareEval[0][i] = weight;
-            this.squareEval[7][i] = weight;
-        }
     }
     /*
     public double getMobilityEval(){

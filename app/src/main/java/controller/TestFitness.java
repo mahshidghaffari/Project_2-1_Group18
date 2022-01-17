@@ -3,10 +3,11 @@ package controller;
 import javax.swing.JFrame;
 
 public class TestFitness {
+    //Class TestFitness is used to compute the fitness of Individuals in the Genetic Algortihm
 
     double[] newWeights ;
-     double games=50;
-     int depth;
+    double games=50;
+    int depth;
     // public static void main(String[] args) {
     //     double[] hh = {2000,2,3,2,1,1};
     //     new TestFitness(hh);
@@ -24,6 +25,7 @@ public class TestFitness {
         boolean isWhite=false;
         int i = 0;
         while(i<games){
+            
             isWhite= !isWhite;
             JFrame f = new JFrame("Dice Chess");
             Game game = new Game(depth);
@@ -55,7 +57,8 @@ public class TestFitness {
             }
             i++;
         }
-        System.out.println("ogWeights won: " + og_Weights_Wins+" newWeights won: "+ new_Weights_Wins);
+        //System.out.println("ogWeights won: " + og_Weights_Wins+" newWeights won: "+ new_Weights_Wins);
+        System.out.print(".");
         return new_Weights_Wins/games;
     }
 
