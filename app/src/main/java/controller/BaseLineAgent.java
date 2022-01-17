@@ -4,7 +4,12 @@ import java.util.Random;
 
 public class BaseLineAgent extends Player {
 
-
+/**
+ * This object represents the BaseLine agent. 
+ * This can be represented as a player in the game class and play against variuos opponents.
+ * By changing the clever boolean to true, one can expect to play against a greedy semi-random player.
+ * If the clever boolean is false then it the agent will be completly random, making it a less challenging rival 
+ */
 
 	private Game game; 
 	private boolean isWhite;

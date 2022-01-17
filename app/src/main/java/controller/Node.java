@@ -3,6 +3,14 @@ package controller;
 import java.util.ArrayList;
 
 public class Node {
+
+
+
+    /**
+     * Base class for the tree class.
+     * Each element in the tree is a node, a node can either be a board node or a 
+     * chance/piece node depending on its location on the tree.
+     */
     private double value = 100000;
     private boolean isProbability;
     private ArrayList<Node> children;
